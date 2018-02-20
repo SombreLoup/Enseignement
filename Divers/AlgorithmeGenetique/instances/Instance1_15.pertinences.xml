@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<PERTINENCES>
+    <IPTABLES>
+        <ARC origine="10" extremite="2" impact="19" />
+        <ARC origine="10" extremite="11" impact="23" />
+        <ARC origine="11" extremite="9" impact="43" />
+        <ARC origine="13" extremite="7" impact="24" />
+        <ARC origine="6" extremite="12" impact="12" />
+        <ARC origine="1" extremite="6" impact="25" />
+        <ARC origine="2" extremite="3" impact="17" />
+        <ARC origine="3" extremite="8" impact="21" />
+        <ARC origine="6" extremite="8" impact="39" />
+        <ARC origine="4" extremite="7" impact="18" />
+        <ARC origine="8" extremite="7" impact="3.40282e+38" />
+        <ARC origine="1" extremite="2" impact="10" />
+        <ARC origine="14" extremite="7" impact="29" />
+        <ARC origine="11" extremite="7" impact="41" />
+    </IPTABLES>
+    <Appliance_CISCO>
+        <ARC origine="0" extremite="10" impact="3.40282e+38" />
+        <ARC origine="1" extremite="3" impact="10" />
+        <ARC origine="11" extremite="8" impact="42" />
+        <ARC origine="2" extremite="3" impact="3.40282e+38" />
+        <ARC origine="3" extremite="8" impact="6" />
+        <ARC origine="13" extremite="12" impact="25" />
+        <ARC origine="2" extremite="13" impact="33" />
+        <ARC origine="0" extremite="2" impact="21" />
+        <ARC origine="11" extremite="13" impact="22" />
+    </Appliance_CISCO>
+    <Appliance_JUNIPER>
+        <ARC origine="0" extremite="1" impact="7" />
+        <ARC origine="10" extremite="11" impact="49" />
+        <ARC origine="2" extremite="4" impact="40" />
+        <ARC origine="6" extremite="14" impact="26" />
+        <ARC origine="6" extremite="12" impact="7" />
+        <ARC origine="1" extremite="6" impact="3.40282e+38" />
+        <ARC origine="3" extremite="8" impact="21" />
+        <ARC origine="6" extremite="8" impact="31" />
+        <ARC origine="11" extremite="5" impact="32" />
+        <ARC origine="8" extremite="7" impact="42" />
+        <ARC origine="2" extremite="11" impact="3.40282e+38" />
+        <ARC origine="0" extremite="2" impact="37" />
+        <ARC origine="2" extremite="14" impact="25" />
+        <ARC origine="1" extremite="11" impact="3.40282e+38" />
+        <ARC origine="11" extremite="13" impact="20" />
+    </Appliance_JUNIPER>
+    <Antivir>
+        <ARC origine="0" extremite="10" impact="3.40282e+38" />
+        <ARC origine="10" extremite="2" impact="3.40282e+38" />
+        <ARC origine="1" extremite="3" impact="5" />
+        <ARC origine="2" extremite="6" impact="26" />
+        <ARC origine="10" extremite="11" impact="22" />
+        <ARC origine="11" extremite="9" impact="3.40282e+38" />
+        <ARC origine="6" extremite="13" impact="48" />
+        <ARC origine="6" extremite="14" impact="36" />
+        <ARC origine="13" extremite="7" impact="8" />
+        <ARC origine="6" extremite="12" impact="34" />
+        <ARC origine="4" extremite="7" impact="38" />
+        <ARC origine="9" extremite="12" impact="33" />
+        <ARC origine="13" extremite="12" impact="12" />
+        <ARC origine="2" extremite="13" impact="40" />
+        <ARC origine="0" extremite="2" impact="33" />
+        <ARC origine="2" extremite="14" impact="24" />
+        <ARC origine="1" extremite="2" impact="19" />
+        <ARC origine="1" extremite="11" impact="31" />
+        <ARC origine="10" extremite="6" impact="41" />
+        <ARC origine="14" extremite="7" impact="5" />
+    </Antivir>
+    <Norton>
+        <ARC origine="0" extremite="10" impact="20" />
+        <ARC origine="10" extremite="2" impact="19" />
+        <ARC origine="1" extremite="3" impact="42" />
+        <ARC origine="2" extremite="6" impact="21" />
+        <ARC origine="6" extremite="13" impact="45" />
+        <ARC origine="6" extremite="12" impact="19" />
+        <ARC origine="3" extremite="8" impact="23" />
+        <ARC origine="13" extremite="12" impact="39" />
+        <ARC origine="2" extremite="13" impact="28" />
+        <ARC origine="1" extremite="11" impact="15" />
+        <ARC origine="10" extremite="6" impact="19" />
+        <ARC origine="14" extremite="7" impact="31" />
+        <ARC origine="11" extremite="7" impact="26" />
+    </Norton>
+    <Symantec>
+        <ARC origine="0" extremite="1" impact="45" />
+        <ARC origine="10" extremite="11" impact="37" />
+        <ARC origine="8" extremite="5" impact="26" />
+        <ARC origine="1" extremite="6" impact="3.40282e+38" />
+        <ARC origine="2" extremite="3" impact="37" />
+        <ARC origine="6" extremite="8" impact="38" />
+        <ARC origine="8" extremite="7" impact="49" />
+        <ARC origine="9" extremite="12" impact="10" />
+        <ARC origine="14" extremite="5" impact="45" />
+        <ARC origine="2" extremite="13" impact="39" />
+        <ARC origine="2" extremite="11" impact="3.40282e+38" />
+        <ARC origine="0" extremite="2" impact="33" />
+        <ARC origine="10" extremite="6" impact="38" />
+        <ARC origine="11" extremite="7" impact="28" />
+    </Symantec>
+    <Migration_IPCOP>
+        <ARC origine="10" extremite="2" impact="14" />
+        <ARC origine="2" extremite="6" impact="11" />
+        <ARC origine="6" extremite="13" impact="8" />
+        <ARC origine="1" extremite="6" impact="48" />
+        <ARC origine="6" extremite="8" impact="24" />
+        <ARC origine="11" extremite="5" impact="42" />
+        <ARC origine="13" extremite="12" impact="35" />
+        <ARC origine="2" extremite="11" impact="37" />
+        <ARC origine="0" extremite="2" impact="41" />
+        <ARC origine="2" extremite="14" impact="6" />
+        <ARC origine="10" extremite="6" impact="30" />
+        <ARC origine="11" extremite="7" impact="41" />
+        <ARC origine="11" extremite="13" impact="28" />
+    </Migration_IPCOP>
+    <Migration_Windows_Server>
+        <ARC origine="10" extremite="2" impact="5" />
+        <ARC origine="10" extremite="11" impact="35" />
+        <ARC origine="2" extremite="4" impact="3.40282e+38" />
+        <ARC origine="11" extremite="8" impact="46" />
+        <ARC origine="11" extremite="9" impact="12" />
+        <ARC origine="6" extremite="13" impact="6" />
+        <ARC origine="6" extremite="14" impact="24" />
+        <ARC origine="13" extremite="7" impact="32" />
+        <ARC origine="6" extremite="12" impact="24" />
+        <ARC origine="1" extremite="6" impact="11" />
+        <ARC origine="6" extremite="8" impact="34" />
+        <ARC origine="9" extremite="12" impact="33" />
+        <ARC origine="2" extremite="13" impact="3.40282e+38" />
+        <ARC origine="2" extremite="11" impact="23" />
+        <ARC origine="1" extremite="11" impact="40" />
+        <ARC origine="14" extremite="7" impact="14" />
+        <ARC origine="11" extremite="7" impact="15" />
+    </Migration_Windows_Server>
+    <Proxy>
+        <ARC origine="0" extremite="10" impact="41" />
+        <ARC origine="10" extremite="2" impact="33" />
+        <ARC origine="2" extremite="6" impact="20" />
+        <ARC origine="10" extremite="11" impact="3.40282e+38" />
+        <ARC origine="11" extremite="8" impact="24" />
+        <ARC origine="13" extremite="7" impact="14" />
+        <ARC origine="6" extremite="12" impact="13" />
+        <ARC origine="1" extremite="6" impact="8" />
+        <ARC origine="2" extremite="3" impact="22" />
+        <ARC origine="3" extremite="8" impact="47" />
+        <ARC origine="4" extremite="7" impact="38" />
+        <ARC origine="8" extremite="7" impact="18" />
+        <ARC origine="9" extremite="12" impact="14" />
+        <ARC origine="14" extremite="5" impact="44" />
+        <ARC origine="2" extremite="13" impact="45" />
+        <ARC origine="2" extremite="14" impact="6" />
+        <ARC origine="14" extremite="7" impact="49" />
+    </Proxy>
+    <Chroot>
+        <ARC origine="0" extremite="1" impact="28" />
+        <ARC origine="0" extremite="10" impact="25" />
+        <ARC origine="2" extremite="6" impact="44" />
+        <ARC origine="10" extremite="11" impact="3.40282e+38" />
+        <ARC origine="2" extremite="4" impact="3.40282e+38" />
+        <ARC origine="11" extremite="8" impact="30" />
+        <ARC origine="6" extremite="14" impact="24" />
+        <ARC origine="8" extremite="5" impact="11" />
+        <ARC origine="13" extremite="7" impact="44" />
+        <ARC origine="6" extremite="12" impact="3.40282e+38" />
+        <ARC origine="2" extremite="3" impact="15" />
+        <ARC origine="3" extremite="8" impact="49" />
+        <ARC origine="11" extremite="5" impact="10" />
+        <ARC origine="8" extremite="7" impact="27" />
+        <ARC origine="9" extremite="12" impact="44" />
+        <ARC origine="14" extremite="5" impact="36" />
+        <ARC origine="2" extremite="11" impact="16" />
+        <ARC origine="2" extremite="14" impact="7" />
+        <ARC origine="1" extremite="2" impact="37" />
+        <ARC origine="1" extremite="11" impact="25" />
+        <ARC origine="11" extremite="13" impact="24" />
+    </Chroot>
+    <WMWare>
+        <ARC origine="0" extremite="1" impact="26" />
+        <ARC origine="1" extremite="3" impact="9" />
+        <ARC origine="2" extremite="4" impact="18" />
+        <ARC origine="11" extremite="9" impact="45" />
+        <ARC origine="11" extremite="5" impact="5" />
+        <ARC origine="8" extremite="7" impact="10" />
+        <ARC origine="13" extremite="12" impact="8" />
+        <ARC origine="14" extremite="5" impact="44" />
+        <ARC origine="11" extremite="7" impact="11" />
+    </WMWare>
+    <Smartcard>
+        <ARC origine="10" extremite="2" impact="3.40282e+38" />
+        <ARC origine="1" extremite="3" impact="47" />
+        <ARC origine="2" extremite="6" impact="29" />
+        <ARC origine="11" extremite="8" impact="26" />
+        <ARC origine="6" extremite="13" impact="46" />
+        <ARC origine="8" extremite="5" impact="18" />
+        <ARC origine="6" extremite="8" impact="19" />
+        <ARC origine="8" extremite="7" impact="23" />
+        <ARC origine="13" extremite="12" impact="30" />
+        <ARC origine="0" extremite="2" impact="9" />
+        <ARC origine="1" extremite="2" impact="12" />
+    </Smartcard>
+    <CAPTCHA>
+        <ARC origine="0" extremite="10" impact="8" />
+        <ARC origine="2" extremite="4" impact="43" />
+        <ARC origine="13" extremite="7" impact="5" />
+        <ARC origine="1" extremite="6" impact="45" />
+        <ARC origine="2" extremite="3" impact="32" />
+        <ARC origine="4" extremite="7" impact="31" />
+        <ARC origine="8" extremite="7" impact="8" />
+        <ARC origine="1" extremite="11" impact="24" />
+        <ARC origine="14" extremite="7" impact="24" />
+        <ARC origine="11" extremite="7" impact="12" />
+    </CAPTCHA>
+    <MotDePasse>
+        <ARC origine="1" extremite="3" impact="11" />
+        <ARC origine="10" extremite="11" impact="5" />
+        <ARC origine="2" extremite="4" impact="9" />
+        <ARC origine="6" extremite="14" impact="16" />
+        <ARC origine="13" extremite="7" impact="35" />
+        <ARC origine="6" extremite="8" impact="16" />
+        <ARC origine="9" extremite="12" impact="27" />
+        <ARC origine="2" extremite="13" impact="19" />
+        <ARC origine="0" extremite="2" impact="9" />
+        <ARC origine="1" extremite="2" impact="8" />
+        <ARC origine="1" extremite="11" impact="14" />
+        <ARC origine="11" extremite="13" impact="3.40282e+38" />
+    </MotDePasse>
+    <VPN>
+        <ARC origine="1" extremite="3" impact="22" />
+        <ARC origine="2" extremite="6" impact="35" />
+        <ARC origine="11" extremite="9" impact="37" />
+        <ARC origine="2" extremite="3" impact="3.40282e+38" />
+        <ARC origine="3" extremite="8" impact="36" />
+        <ARC origine="6" extremite="8" impact="11" />
+        <ARC origine="4" extremite="7" impact="40" />
+        <ARC origine="8" extremite="7" impact="40" />
+        <ARC origine="13" extremite="12" impact="11" />
+        <ARC origine="14" extremite="5" impact="24" />
+        <ARC origine="2" extremite="13" impact="46" />
+        <ARC origine="0" extremite="2" impact="28" />
+        <ARC origine="14" extremite="7" impact="22" />
+        <ARC origine="11" extremite="7" impact="48" />
+    </VPN>
+    <IDS>
+        <ARC origine="0" extremite="1" impact="32" />
+        <ARC origine="0" extremite="10" impact="43" />
+        <ARC origine="8" extremite="5" impact="5" />
+        <ARC origine="13" extremite="7" impact="35" />
+        <ARC origine="6" extremite="12" impact="34" />
+        <ARC origine="2" extremite="3" impact="19" />
+        <ARC origine="3" extremite="8" impact="42" />
+        <ARC origine="6" extremite="8" impact="18" />
+        <ARC origine="11" extremite="5" impact="24" />
+        <ARC origine="4" extremite="7" impact="26" />
+        <ARC origine="2" extremite="11" impact="39" />
+        <ARC origine="1" extremite="11" impact="8" />
+        <ARC origine="10" extremite="6" impact="11" />
+        <ARC origine="14" extremite="7" impact="43" />
+    </IDS>
+    <NULL>
+        <ARC origine="0" extremite="10" impact="40" />
+        <ARC origine="10" extremite="2" impact="23" />
+        <ARC origine="1" extremite="3" impact="28" />
+        <ARC origine="2" extremite="6" impact="21" />
+        <ARC origine="10" extremite="11" impact="8" />
+        <ARC origine="8" extremite="5" impact="29" />
+        <ARC origine="6" extremite="12" impact="35" />
+        <ARC origine="2" extremite="3" impact="12" />
+        <ARC origine="3" extremite="8" impact="22" />
+        <ARC origine="4" extremite="7" impact="5" />
+        <ARC origine="9" extremite="12" impact="3.40282e+38" />
+        <ARC origine="13" extremite="12" impact="3.40282e+38" />
+        <ARC origine="2" extremite="13" impact="3.40282e+38" />
+        <ARC origine="0" extremite="2" impact="46" />
+        <ARC origine="14" extremite="7" impact="35" />
+        <ARC origine="11" extremite="13" impact="38" />
+    </NULL>
+</PERTINENCES>

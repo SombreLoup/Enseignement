@@ -1,0 +1,421 @@
+/*
+ * Graphe.cpp
+ *
+ *  Created on: 13 nov. 2011
+ *      Author: yann
+ */
+#include	<math.h>
+#include	<string.h>
+#include	<stdio.h>
+
+#include	<algorithm>
+#include 	"Graphe.h"
+#include	"Chemin.h"
+#include	"../commun/Exception.h"
+
+#define MAXFLOAT	3.40282347e+38F
+
+Graphe::Graphe()
+{}
+
+Graphe::Graphe(const Graphe& g)
+: tableListeAdjacence(g.tableListeAdjacence), tableListePoids(g.tableListePoids), tableauNoeud(g.tableauNoeud), tableauArc(g.tableauArc)
+{}
+
+Graphe::~Graphe()
+{}
+
+bool	Graphe::existeNoeud(const Noeud& n)	const
+{
+	unsigned int	i = 0;
+
+	while (i<tableauNoeud.size())
+		if (tableauNoeud[i]==n)
+			return true;
+		else
+			i++;
+
+	return false;
+}
+
+void	Graphe::addNoeud(const Noeud& n)
+{
+	if (!existeNoeud(n))
+	{
+		tableauNoeud.push_back(n);
+		tableListeAdjacence.push_back(vector<Noeud>());
+		tableListePoids.push_back(vector<double>());
+	}
+	else
+		throw Exception("Graphe::addNoeud --> le noeud "+n.getLabel()+" existe d�j� dans le graphe");
+}
+
+int Graphe::getIndiceNoeud(const Noeud& n) const
+{
+	unsigned int 	i = 0;
+
+	while (i<Graphe::tableauNoeud.size())
+		if (Graphe::tableauNoeud[i]==n)
+			return i;
+		else
+			i++;
+
+	return -1;
+}
+
+bool	Graphe::existeArc(const Arc& a) const
+{
+	unsigned int i = 0;
+
+	while (i != tableauArc.size())
+	{
+		if (tableauArc[i] == a)
+			return true;
+		else
+			i++;
+	}
+
+	return false;
+}
+
+bool	Graphe::existeArc(const Noeud& n1, const Noeud& n2) const
+{
+		return existeArc(Arc(n1,n2));
+}
+
+int	Graphe::getIndiceArc(unsigned int indiceNoeud, const Arc& a) const
+{
+	unsigned int i = 0;
+
+	while (i != tableListeAdjacence[indiceNoeud].size())
+	{
+		if (tableListeAdjacence[indiceNoeud][i] == a.getExtremite())
+			return i;
+		else
+			i++;
+	}
+
+	return -1;
+}
+
+
+int	Graphe::getIndiceArcDansLaListe(const Arc& a) const
+{
+	unsigned int i = 0;
+
+	while (i != tableauArc.size())
+	{
+		if (tableauArc[i] == a)
+			return i;
+		else
+			i++;
+	}
+
+	return -1;
+}
+
+void	Graphe::addArc(const Arc& a)
+{
+	int	indiceOrigine = getIndiceNoeud(a.getOrigine());
+	int indiceExtremite = getIndiceNoeud(a.getExtremite());
+
+	if ((indiceOrigine != -1) && (indiceExtremite != -1))
+	{
+		if (!existeArc(a))
+		{
+			tableListeAdjacence[indiceOrigine].push_back(a.getExtremite());
+			tableListePoids[indiceOrigine].push_back(a.getPoids());
+			tableauArc.push_back(a);
+		}
+	}
+}
+
+void	Graphe::setArc(const Arc& a)
+{
+	int	indiceOrigine = getIndiceNoeud(a.getOrigine());
+
+	if (indiceOrigine == -1)
+		throw Exception("Graphe::setArc --> L'origine de l'arc n'existe pas");
+
+	int indiceAreteListeAdjacence = getIndiceArc(indiceOrigine, a); // Dans la liste d'adjacence
+	if (indiceOrigine == -1)
+		throw Exception("Graphe::setArc --> L'arc n'existe pas dans la liste d'adjacence");
+
+	tableListePoids[indiceOrigine][indiceAreteListeAdjacence] = a.getPoids();
+
+	int indiceAreteDansLaListe = getIndiceArcDansLaListe(a); // Dans la liste de tous les arcs
+	if (indiceAreteDansLaListe == -1)
+		throw Exception("Graphe::setArc --> L'arc n'existe pas dans la liste de tous les arcs");
+
+	tableauArc[indiceAreteDansLaListe] = a;
+}
+
+const Arc&	Graphe::getArc(const Noeud& n1, const Noeud& n2) const
+{
+	int	indiceArcDansLaListe = getIndiceArcDansLaListe(Arc(n1,n2));
+
+	if (indiceArcDansLaListe == -1)
+		throw Exception("Graphe::getArc(n1,n2) --> L'arc n'existe pas dans la liste de tous les arcs");
+
+	return tableauArc[indiceArcDansLaListe];
+}
+
+const vector<Arc>&	Graphe::getTousLesArcs()	const
+{
+	return tableauArc;
+}
+
+ostream&	operator<<(ostream& f, const Graphe& g)
+{
+	f << "digraph G {" << endl;
+
+	for (unsigned int i=0; i<g.tableauNoeud.size(); i++)
+	{
+		f << g.tableauNoeud[i].getLabel() << ";" << endl;
+
+		for (unsigned int j=0; j!=g.tableListeAdjacence[i].size(); j++)
+		{
+			f << g.tableauNoeud[i].getLabel() << "->" << g.tableListeAdjacence[i][j].getLabel();
+			f << "[label=" << g.tableListePoids[i][j] << "]" << endl;
+		}
+	}
+
+	f << "}" << endl;
+	return f;
+}
+
+int	Graphe::trouverMin(const vector<Noeud>& Q, const vector<double>& d) const
+{
+	unsigned int 	i = 1;
+	unsigned int	min = 0;
+
+
+	while (i<Q.size())
+	{
+		if (d[getIndiceNoeud(Q[i])]<d[getIndiceNoeud(Q[min])])
+			min = i;
+		i++;
+	}
+
+	return min;
+}
+
+void Graphe::miseAJour(const Noeud& n1, double d1, const vector<Noeud>& Q, vector<double> &D, vector<Noeud> &P) const
+{
+	for (unsigned int i=0; i<Q.size(); i++)
+		if (existeArc(n1,Q[i]))
+		{
+
+			unsigned int indice_d2 = getIndiceNoeud(Q[i]);
+			Arc	a = getArc(n1,Q[i]);
+
+			double  d2 = D[indice_d2];
+
+			if (d2 > d1+a.getPoids())
+			{
+				D[indice_d2] = d1+a.getPoids();
+				P[indice_d2] = n1;
+			}
+		}
+}
+
+Chemin	Graphe::PlusCourtChemin(const Noeud& source, const Noeud& destination) const
+{
+	Chemin	chemin;
+	vector<Noeud>	precedent(tableauNoeud);
+
+	vector<Noeud>	Q = tableauNoeud;
+	vector<Noeud>::iterator position = find(Q.begin(), Q.end(), source);
+
+	vector<double>	distance(Q.size());
+	vector<double>::iterator positionPoids;
+	for (unsigned int i=0; i<Q.size(); i++)
+	{
+		distance[i] = MAXFLOAT;
+		precedent[i] = tableauNoeud[i];
+	}
+
+	unsigned int indiceSource = getIndiceNoeud(source);
+	distance[indiceSource] = 0;
+
+
+	while (Q.size() != 0)
+	{
+		int	min = trouverMin(Q,distance);
+		position = Q.begin();
+		advance(position,min);
+
+
+		positionPoids = distance.begin();
+		advance(positionPoids,getIndiceNoeud(Q[min]));
+
+		Noeud n = *position;
+		double d = *positionPoids;
+
+		Q.erase(position);
+
+		miseAJour(n,d,Q,distance,precedent);
+
+	}
+
+	Noeud	n = destination;
+	list<Noeud>	c;
+	while (n != source)
+	{
+		c.push_front(n);
+		n = precedent[getIndiceNoeud(n)];
+	}
+	c.push_front(n);
+
+
+	list<Noeud>::const_iterator it = c.begin();
+	for (unsigned int i=0; i<c.size();i++)
+	{
+		chemin.add(*it);
+		it++;
+	}
+
+	return chemin;
+}
+
+istream& operator>>(istream& f, Graphe& graphe)
+{
+	char	s[1024];
+	f.getline(s,1024);
+
+	if (strcmp(s,"digraph G {"))
+		throw Exception("operator>> --> le flux ne commence pas par \"digraph G {\"");
+
+	f.getline(s,1024);
+	while (!f.eof() && strcmp(s,"}"))
+	{
+		if (s[strlen(s)-1] == ';')
+		{
+			s[strlen(s)-1] = '\0';
+			Noeud noeud(s);
+			if (!graphe.existeNoeud(noeud))
+				graphe.addNoeud(noeud);
+		}
+		else if (s[strlen(s)-1] == ']')
+		{
+			char *n1, *n2, *mot, *p;
+			n1 = strtok(s,"-");
+			n2 = strtok(NULL,">[");
+			mot = strtok(NULL,"=");
+			p = strtok(NULL,"]");
+
+			Noeud	noeud1(n1), noeud2(n2);
+			double	poids = atof(p);
+			if (!graphe.existeNoeud(noeud1))
+				graphe.addNoeud(noeud1);
+			if (!graphe.existeNoeud(noeud2))
+				graphe.addNoeud(noeud2);
+			graphe.addArc(Arc(noeud1,noeud2,poids));
+		}
+		f.getline(s,1024);
+	}
+
+	cout << "Analyse termin�e correctement" << endl;
+	return f;
+}
+
+static int	getValeurAleatoire(int min, int max)
+{
+	return	min+rand()%(max-min);
+}
+
+
+void	Graphe::genererInstance(Graphe& graphe, int nbNoeuds, int nbNiveaux, double densite, double poidsMin, double PoidsMax)
+{
+	vector< vector<int> > niveaux(nbNiveaux);
+	char	noeud[100];
+
+	/**
+	 * On ajoute syst�matiquement un noeud dans chaque niveau
+	 */
+	for (int n=0; n<nbNiveaux; n++)
+	{
+		sprintf(noeud,"%d",n);
+		niveaux[n].push_back(n);
+		graphe.addNoeud(Noeud(noeud));
+	}
+
+	/**
+	 * On ajoute les autres noeuds dans des niveaux al�atoires
+	 */
+	for (int n=nbNiveaux; n<nbNoeuds; n++)
+	{
+		sprintf(noeud,"%d",n);
+		niveaux[getValeurAleatoire(1,nbNiveaux)].push_back(n);
+		graphe.addNoeud(Noeud(noeud));
+	}
+
+
+	/**
+	 * On s'assure que tous les noeuds ont un pred�cesseur
+	 */
+	for (int niveau2=1; niveau2<nbNiveaux; niveau2++)
+	{
+		int nbNoeudDansNiveau = niveaux[niveau2].size();
+		for (int i=0;i<nbNoeudDansNiveau;i++)
+		{
+			int niveauInf = (niveau2-2<0?0:niveau2-2);
+			int niveau1 = getValeurAleatoire(niveauInf,niveau2);
+			int noeud1 = niveaux[niveau1][getValeurAleatoire(0,niveaux[niveau1].size())];
+			int noeud2 = niveaux[niveau2][i];
+
+			char	n1[100], n2[100];
+			sprintf(n1,"%d",noeud1);
+			sprintf(n2,"%d",noeud2);
+
+			graphe.addArc(Arc(Noeud(n1),Noeud(n2),getValeurAleatoire(poidsMin, PoidsMax)));
+		}
+	}
+
+	/**
+	 * On s'assure maintenant qu'ils ont tous un successeur
+	 */
+	for (int niveau1=1; niveau1<nbNiveaux-1; niveau1++)
+	{
+		int nbNoeudDansNiveau = niveaux[niveau1].size();
+		for (int i=0;i<nbNoeudDansNiveau;i++)
+		{
+			int niveauSup = (niveau1+3>nbNiveaux?nbNiveaux:niveau1+3);
+
+			int niveau2 = getValeurAleatoire(niveau1+1,niveauSup);
+			int noeud2 = niveaux[niveau2][getValeurAleatoire(0,niveaux[niveau2].size())];
+			int noeud1 = niveaux[niveau1][i];
+
+			char	n1[100], n2[100];
+			sprintf(n1,"%d",noeud1);
+			sprintf(n2,"%d",noeud2);
+
+			graphe.addArc(Arc(Noeud(n1),Noeud(n2),getValeurAleatoire(poidsMin, PoidsMax)));
+		}
+	}
+
+	for (int a=nbNoeuds; a<densite*nbNoeuds*nbNoeuds; a++)
+	{
+		int	niveau1 = 0;
+		int	niveau2 = 0;
+		while ((niveau2 == niveau1) || (fabs(niveau1-niveau2)>2))
+		{
+			niveau1 = getValeurAleatoire(0,nbNiveaux);
+			niveau2 = getValeurAleatoire(0,nbNiveaux);
+		}
+
+		int noeud1 = niveaux[niveau1][getValeurAleatoire(0,niveaux[niveau1].size())];
+		int noeud2 = niveaux[niveau2][getValeurAleatoire(0,niveaux[niveau2].size())];
+
+		char	n1[100], n2[100];
+		sprintf(n1,"%d",noeud1);
+		sprintf(n2,"%d",noeud2);
+
+		if (niveau1<niveau2)
+			graphe.addArc(Arc(Noeud(n1),Noeud(n2),getValeurAleatoire(poidsMin, PoidsMax)));
+		else
+			graphe.addArc(Arc(Noeud(n2),Noeud(n1),getValeurAleatoire(poidsMin, PoidsMax)));
+	}
+}
+
+

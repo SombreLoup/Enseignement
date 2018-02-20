@@ -1,0 +1,38 @@
+/*
+ * Parser.h
+ *
+ *  Created on: 13 juil. 2012
+ *      Author: yann
+ */
+
+#ifndef PARSER_H_
+#define PARSER_H_
+
+#include	<vector>
+#include	<fstream>
+using namespace std;
+
+#include	"../securite/ContreMesure.h"
+#include	"../graphe/Graphe.h"
+#include	"../AG/AlgoGenetique.h"
+#include	"../xml/tinyxml.h"
+
+class Parser {
+private:
+	Parser();
+	virtual ~Parser();
+    static TiXmlNode* lireNoeud(TiXmlNode *parent, const char*) throw(Exception);
+    static TiXmlNode* lireRacine(TiXmlDocument &doc, const char* nom) throw(Exception);
+    static const char* lireAttribut(TiXmlNode *parent, const char* nom) throw(Exception);
+    static char*	itoa(int n);
+
+
+public:
+    static bool parserGraphe(const char *nomInstance, Graphe&) throw(Exception);
+	static bool	parserFichierPertinences(const char *nomInstance, vector<ContreMesure>&) throw(Exception);
+	static void	enregistrerFichierPertinences(const char *nomInstance, const vector<ContreMesure>&) throw(Exception);
+	static void	parserFichierContresMesures(const char *nomInstance, vector<ContreMesure>&) throw(Exception);
+	static void	parserFichierParametres(const char *nomInstance, AlgoGenetique**) throw (Exception);
+};
+
+#endif /* PARSER_H_ */

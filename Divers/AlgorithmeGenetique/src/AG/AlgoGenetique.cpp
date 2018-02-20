@@ -1,0 +1,392 @@
+/*
+ * AlgoGenetique.cpp
+ *
+ *  Created on: 17 nov. 2011
+ *      Author: yann
+ */
+#include	<time.h>
+#include	<stdlib.h>
+#include	<string.h>
+#include	<fstream>
+#include	<vector>
+#include	<string>
+using namespace std;
+
+#include 	"AlgoGenetique.h"
+#include	"../graphe/Chemin.h"
+
+AlgoGenetique::AlgoGenetique()
+:	  budget(100), E0("a"), Ef("b"),
+ 	  nombreIndividus(50),
+ 	  nombreGeneration(50),
+ 	  tauxMutation(0.05),
+ 	  numeroGeneration(0),
+ 	  nomFichierStat(NULL),
+ 	  estInstancie(false),
+ 	  traceur(new Traceur())
+{
+	srand( time(NULL) );
+}
+
+AlgoGenetique::AlgoGenetique(	const Graphe& g,
+								const vector<ContreMesure>& M,
+								const Noeud& n0,
+								const Noeud& nf,
+								double b,
+								unsigned int nbIndividus,
+								unsigned int nbGenerations,
+								double txMutation)
+: graphe(g),
+  ensembleMesure(M),
+  budget(b),
+  E0(n0),
+  Ef(nf),
+  nombreIndividus(nbIndividus),
+  nombreGeneration(nbGenerations),
+  tauxMutation(txMutation),
+  numeroGeneration(0),
+  nomFichierStat(NULL),
+  traceur(new Traceur())
+{
+	srand( time(NULL) );
+	tousLesArcs = graphe.getTousLesArcs();
+	estInstancie = true;
+}
+
+
+void AlgoGenetique::instancier(const Graphe& g,
+								const vector<ContreMesure>& M,
+								const Noeud& n0,
+								const Noeud& nf)
+{
+	graphe = g;
+	ensembleMesure = M;
+	E0 = n0;
+	Ef = nf;
+
+	tousLesArcs = graphe.getTousLesArcs();
+
+	estInstancie = true;
+}
+
+Population	AlgoGenetique::creerPopulation()
+{
+	Population	population;
+
+	while (population.getNombreIndividus() < nombreIndividus)
+			population.add(creerIndividu());
+
+	return	population;
+}
+
+
+static double	getReelNormeAleatoire()
+{
+	return (rand() % MAX_INPUT)/(double)MAX_INPUT;
+}
+
+static unsigned int	getIndiceAleatoire(unsigned int borneSup)
+{
+	return rand() % borneSup;
+}
+
+Population&	AlgoGenetique::getPopulationCourante() {
+	return populationCourante;
+}
+
+unsigned int AlgoGenetique::getNumeroGeneration() const {
+	return numeroGeneration;
+}
+
+Traceur*	AlgoGenetique::getTraceur() const {
+	return traceur;
+}
+
+double AlgoGenetique::getValeurTotale(Population& population)
+{
+    double somme = 0;
+    for(unsigned int i = 0;i < population.getNombreIndividus();i++)
+        somme += evaluer(population.getIndividu(i));
+
+    return somme;
+}
+
+void 	AlgoGenetique::setTraceur(Traceur *t) {
+	traceur = t;
+}
+
+void	AlgoGenetique::setNombreIndividus(int n)
+{
+	nombreIndividus = n;
+}
+
+void	AlgoGenetique::setNomStat(const char* n)
+{
+	nomFichierStat = strdup(n);
+}
+
+void	AlgoGenetique::setTauxMutation(double t)
+{
+	tauxMutation = t;
+}
+
+void	AlgoGenetique::setNombreGenerations(int n)
+{
+	nombreGeneration = n;
+}
+
+void	AlgoGenetique::setBudget(double b)
+{
+	budget = b;
+}
+
+bool	appartient(int indice, const vector<int>tabIndices)
+{
+	unsigned int i=0;
+	while (i<tabIndices.size())
+		if (indice==tabIndices[i])
+			return true;
+		else
+			i++;
+
+	return false;
+}
+
+Affectation	AlgoGenetique::creerIndividu()
+{
+	if (!estInstancie)
+		throw Exception("AlgoGenetique::creerIndividu --> l'algorithme g�n�tique n'est pas correctement instanci�");
+
+	Affectation	affectation(tousLesArcs.size());
+	vector<int>	indicesArcsAffectes;
+
+	for (unsigned int indiceArc=0; indiceArc<tousLesArcs.size(); indiceArc++)
+	{
+		int				indiceMesure = getIndiceAleatoire(ensembleMesure.size());
+		ContreMesure	m = ensembleMesure[indiceMesure];
+
+		affectation.affecterMesure(indiceArc,m);
+	}
+
+	affectation.mettreAJour(graphe, E0, Ef);
+
+	return affectation;
+}
+
+void	AlgoGenetique::croiser(const Affectation& pere, const Affectation& mere, Affectation& fils, Affectation& fille)
+{
+	if (!estInstancie)
+		throw Exception("AlgoGenetique::croiser --> l'algorithme g�n�tique n'est pas correctement instanci�");
+
+	if (pere.getNombreMesure() != mere.getNombreMesure())
+		throw Exception("AlgoGenetique::croiser --> les parents n'ont pas la m�me longueur");
+
+	unsigned int position = 1+getIndiceAleatoire(pere.getNombreMesure()-1);
+
+	fils = Affectation(pere.getNombreMesure());
+
+	unsigned int i=0;
+	for (; i<position; i++)
+	{
+		ContreMesure m = pere.getMesure(i);
+		fils.affecterMesure(i,m);
+	}
+	while ((i<mere.getNombreMesure()))
+	{
+		ContreMesure m = mere.getMesure(i);
+		fils.affecterMesure(i,m);
+		i++;
+	}
+
+	fils.mettreAJour(graphe, E0,Ef);
+
+	fille = Affectation(mere.getNombreMesure());
+	for (i=0; i<position; i++)
+	{
+		ContreMesure m = mere.getMesure(i);
+		fille.affecterMesure(i,m);
+	}
+	while ((i<pere.getNombreMesure()))
+	{
+		ContreMesure m = pere.getMesure(i);
+		fille.affecterMesure(i,m);
+		i++;
+	}
+
+	fille.mettreAJour(graphe, E0,Ef);
+}
+
+void	AlgoGenetique::muter(const Affectation& original, Affectation& mutant)
+{
+	if (!estInstancie)
+		throw Exception("AlgoGenetique::muter --> l'algorithme g�n�tique n'est pas correctement instanci�");
+
+	mutant = original;
+
+	unsigned int position = getIndiceAleatoire(original.getNombreMesure());
+	Arc	a = tousLesArcs[position];
+	unsigned int indiceContreMesure = getIndiceAleatoire(ensembleMesure.size());
+
+	while (!ensembleMesure[indiceContreMesure].peutAmeliorer(a))
+		indiceContreMesure = getIndiceAleatoire(ensembleMesure.size());
+
+
+	mutant.affecterMesure(position, ensembleMesure[indiceContreMesure]);
+	mutant.mettreAJour(graphe, E0,Ef);
+}
+
+double	AlgoGenetique::evaluer(Affectation& affectation)
+{
+	return affectation.getLongueur();
+}
+
+
+double	AlgoGenetique::moyenne(Population& population)
+{
+	return getValeurTotale(population)/population.getNombreIndividus();
+}
+
+
+void	AlgoGenetique::selectionner()
+{
+	if (!estInstancie)
+		throw Exception("AlgoGenetique::selectionner --> l'algorithme g�n�tique n'est pas correctement instanci�");
+
+	if (nouvellePopulation.getNombreIndividus() <= nombreIndividus)
+		throw Exception("AlgoGenetique::selectionner --> La nouvelle population ne contient pas assez d'individu");
+
+	double	valeurTotale = getValeurTotale(nouvellePopulation);
+
+	Affectation meilleure = meilleureAffectation(populationCourante);
+	populationCourante = Population();
+	populationCourante.add(meilleure);
+
+	for (unsigned int i=1; i<nombreIndividus; i++)
+	{
+		double	valeurAleatoire = getReelNormeAleatoire()*valeurTotale;
+
+		double			valeurCourante = 0;
+		bool			trouve = false;
+		unsigned int 	indiceIndividuExamine = 0;
+		while (!trouve)
+		{
+			double	valeurIndividuExamine = evaluer(nouvellePopulation.getIndividu(indiceIndividuExamine));
+			valeurCourante += valeurIndividuExamine;
+
+			if ( valeurCourante >= valeurAleatoire)
+			{
+				trouve = true;
+				populationCourante.add(nouvellePopulation.getIndividu(indiceIndividuExamine));
+				nouvellePopulation.remove(indiceIndividuExamine);
+				valeurTotale -= valeurIndividuExamine;
+			}
+			else
+			{
+				indiceIndividuExamine++;
+			}
+		}
+	}
+
+
+}
+
+
+Affectation&	AlgoGenetique::meilleureAffectation(Population& population)
+{
+	double			meilleurScore = evaluer(population.getIndividu(0));
+	unsigned int	indiceMeilleur = 0;
+
+	for (unsigned int i = 1; i < population.getNombreIndividus(); ++i)
+	{
+		double	score = evaluer(population.getIndividu(i));
+		if (score > meilleurScore)
+		{
+			meilleurScore = score;
+			indiceMeilleur = i;
+		}
+	}
+
+	return population.getIndividu(indiceMeilleur);
+}
+
+
+void AlgoGenetique::reproduire()
+{
+	if (!estInstancie)
+		throw Exception("AlgoGenetique::reproduire --> l'algorithme g�n�tique n'est pas correctement instanci�");
+
+	nouvellePopulation = populationCourante;
+	while (nouvellePopulation.getNombreIndividus()<2*populationCourante.getNombreIndividus())
+	{
+		unsigned int	indicePere, indiceMere;
+
+		indicePere = getIndiceAleatoire(populationCourante.getNombreIndividus());
+		indiceMere = getIndiceAleatoire(populationCourante.getNombreIndividus());
+
+		Affectation	pere = populationCourante.getIndividu(indicePere);
+		Affectation	mere = populationCourante.getIndividu(indiceMere);
+		Affectation fils = pere;
+		Affectation fille = mere;
+
+		croiser(pere,mere,fils,fille);
+
+		if (fils.getBudget() <= budget)
+			nouvellePopulation.add(fils);
+		else
+			cout << "Le fils est incorrect" << endl;
+
+		if (fille.getBudget() <= budget)
+			nouvellePopulation.add(fille);
+		else
+			cout << "La fille est incorrecte" << endl;
+
+	}
+}
+
+
+void AlgoGenetique::muter()
+{
+	if (!estInstancie)
+		throw Exception("AlgoGenetique::muter --> l'algorithme g�n�tique n'est pas correctement instanci�");
+
+	if (getReelNormeAleatoire()<tauxMutation)
+	{
+		unsigned indiceOriginal = getIndiceAleatoire(populationCourante.getNombreIndividus());
+
+		Affectation original = populationCourante.getIndividu(indiceOriginal);
+
+		Affectation	mutant;
+		muter(original,mutant);
+
+		if (mutant.getBudget() <= budget)
+		{
+			populationCourante.remove(indiceOriginal);
+			populationCourante.add(mutant);
+		}
+	}
+}
+
+void AlgoGenetique::evoluer()
+{
+	if (!estInstancie)
+		throw Exception("AlgoGenetique::evoluer --> l'algorithme g�n�tique n'est pas correctement instanci�");
+
+	populationCourante = creerPopulation();
+
+	traceur->tracer("Generation", this);
+
+	numeroGeneration = 1;
+
+	while (numeroGeneration<nombreGeneration)
+	{
+		reproduire();
+		selectionner();
+		muter();
+
+		traceur->tracer("Generation",this);
+
+		numeroGeneration++;
+	}
+}
+
+

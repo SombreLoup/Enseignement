@@ -1,0 +1,44 @@
+#include	<iostream>
+#include	<fstream>
+using namespace std;
+
+#include	<time.h>
+
+#include	"../graphe/Graphe.h"
+#include	"../graphe/Chemin.h"
+#include	"../securite/ContreMesure.h"
+#include	"../AG/Affectation.h"
+#include	"../AG/AlgoGenetique.h"
+#include	"../AG/AlgoGenetiqueRelache.h"
+#include	"../AG/Population.h"
+
+#include	"../AG/Traceur/TraceurGeneration.h"
+#include	"../AG/Traceur/TraceurCSV.h"
+
+#include	"../xml/Parser.h"
+
+
+
+AlgoGenetique	*ag = NULL;
+
+
+int main(int argc, char **argv) {
+
+	AlgoGenetique			*algo;
+
+	try {
+		Parser::parserFichierParametres("instances/Instance1_15.parametres.xml",&algo);
+	}
+	catch (Exception &e) {
+		cout << e.getMessage();
+	}
+
+
+	try {
+		algo->setTraceur(new TraceurCSV("instances/Instance1_15.csv",new TraceurGeneration(algo->getTraceur())));
+		algo->evoluer();
+	} catch (Exception& e) {
+		cerr << e.getMessage();
+	}
+}
+

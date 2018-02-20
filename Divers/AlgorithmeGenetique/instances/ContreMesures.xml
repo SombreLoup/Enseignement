@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MESURES>
+    <MESURE nom="IPTABLES" cout="48"/>
+    <MESURE nom="Appliance_CISCO" cout="40"/>
+    <MESURE nom="Appliance_JUNIPER" cout="45"/>
+    <MESURE nom="Antivir" cout="5"/>
+    <MESURE nom="Norton" cout="15"/>
+    <MESURE nom="Symantec" cout="20"/>
+    <MESURE nom="Migration_IPCOP" cout="36"/>
+    <MESURE nom="Migration_Windows_Server" cout="45"/>
+    <MESURE nom="Proxy" cout="23"/>
+    <MESURE nom="Chroot" cout="8"/>
+    <MESURE nom="WMWare" cout="32"/>
+    <MESURE nom="Smartcard" cout="80"/>
+    <MESURE nom="CAPTCHA" cout="9"/>
+    <MESURE nom="MotDePasse" cout="16"/>
+    <MESURE nom="VPN" cout="20"/>
+    <MESURE nom="IDS" cout="68"/>
+    <MESURE nom="NULL" cout="0"/>
+</MESURES>
