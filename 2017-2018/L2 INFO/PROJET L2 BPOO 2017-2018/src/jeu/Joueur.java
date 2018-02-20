@@ -55,15 +55,13 @@ public class Joueur {
 	}
 	
 
-	public Carte prendreCarte(String nom) throws ExceptionHearthstone {
-		for (Carte carte : deck) {
-			if (carte.getNom().contains(nom)) {
-				deck.remove(carte);
-				return carte;
-			}
-		}
-	
-		throw new ExceptionHearthstone("La carte "+nom+" est introuvable");
+	public Carte piocher() throws ExceptionHearthstone {
+		int	nb = deck.size();
+		int num = (int) (Math.random()*nb);
+		Carte	carte = deck.get(num);
+		deck.remove(num);
+		
+		return carte;
 	}
 
 
