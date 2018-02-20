@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="TP NOTE ADW 2017-2018 ETUDIANT">
-        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/"/>
-        <property name="context-root" value="TP_NOTE_ADW_2017-2018_ETUDIANT"/>
-        <property name="java-output-path" value="/TP NOTE ADW 2017-2018 ETUDIANT/build/classes"/>
-    </wb-module>
-</project-modules>
