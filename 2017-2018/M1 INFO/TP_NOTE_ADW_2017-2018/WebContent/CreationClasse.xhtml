@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>Creation d'une classe</title>
+</h:head>
+
+<h:body>
+	<div align="center">
+		<h1>Création de la classe 1ère S 4</h1>
+		Ajoutez les matières au programme de cette classe
+		<p/>
+
+		<h:dataTable border="1" value="#{beanMatiere.listeMatieres}"
+			var="matiere">
+			<h:column id="column1">
+				<f:facet name="header">
+					<h:outputText value="Matières"></h:outputText>
+				</f:facet>
+			#{matiere.nom}
+		</h:column>
+			<h:column id="column2">
+				<f:facet name="header">
+				</f:facet>
+				<h:form id="form_ajouter"
+					rendered="#{not beanClasse.estDansClasse(matiere.numero)}">
+					<h:commandButton value="Ajouter"
+						action="#{beanClasse.ajouterMatiere(matiere.numero)}" />
+				</h:form>
+			</h:column>
+		</h:dataTable>
+		<p />
+		<h:form id="form_ajouter_MAJ">
+			<h:commandButton value="Mettre à jour"
+				action="#{beanClasse.mettreAJour}" />
+		</h:form>
+	</div>
+</h:body>
+</html>

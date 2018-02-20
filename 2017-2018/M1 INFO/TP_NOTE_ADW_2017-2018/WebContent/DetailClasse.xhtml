@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>Creation d'une classe</title>
+</h:head>
+
+<h:body>
+
+	<div align="center">
+		<h1>Détail de la classe <h:outputText value="#{beanClasse.classe.nom}"/></h1>
+		<p/>
+
+		
+		<h:dataTable border="1" value="#{beanClasse.classe.listeMatieres}"
+			var="matiere">
+			<h:column id="column1">
+				<f:facet name="header">
+					<h:outputText value="Matières"></h:outputText>
+				</f:facet>
+			#{matiere.nom}
+		</h:column>
+
+		</h:dataTable>
+	</div>
+</h:body>
+</html>

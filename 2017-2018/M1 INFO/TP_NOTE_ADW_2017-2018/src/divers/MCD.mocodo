@@ -1,0 +1,7 @@
+CLASSE: id_cl, nom_cl
+DONNE, 11 DEVOIR, 0N CLASSE
+DEVOIR: code_dev, desc_dev, date_lim
+
+EST COMPOSE, 0N CLASSE, 0N MATIERE
+MATIERE: num_mat, nom_mat, epreuve_bac
+CONCERNE, 11 DEVOIR, 0N MATIERE

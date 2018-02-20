@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+	<title>Insert title here</title>
+</h:head>
+<h:body>
+	<div align="center">
+		<h1>Sélection d'une classe</h1>
+		<p />
+
+
+		<h:form id="form_mat">
+			<table border="0">
+				<tr>
+					<td>Liste des classes :</td>
+					<td><h:selectOneMenu value="#{beanClasse.classeSelectionnee}">
+							<f:selectItems value="#{beanClasse.listeClasses}" var="classe"
+								itemLabel="#{classe.identifiant}" itemValue="#{classe.identifiant}" />
+						</h:selectOneMenu></td>
+				</tr>
+			</table>
+			<h:commandButton value="Créer" action="#{beanClasse.creerClasse}"/>
+		</h:form>
+	</div>
+
+</h:body>
+</html>
