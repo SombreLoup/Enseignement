@@ -2,9 +2,11 @@ package jeu;
 
 import java.util.ArrayList;
 
+import jeu.cartes.Carte;
+
 public class Heros implements Cloneable {
 	/******
-	 * Gestion de la tablea contenant tous les héros possibles
+	 * Gestion de la table contenant tous les héros possibles
 	 */
 	private	static	ArrayList<Heros>		listeDesHeros = new ArrayList<Heros>();
 	
@@ -36,7 +38,11 @@ public class Heros implements Cloneable {
 
 
 	private static void initialiserLesHeros() {
-		listeDesHeros.add(new Heros("Jaina Portvaillant", 30));
+		Carte c;
+
+		Heros jaina = new Heros("Jaina Portvaillant", 30);
+		listeDesHeros.add(jaina);
+			
 		listeDesHeros.add(new Heros("Rexxar", 30));
 		listeDesHeros.add(new Heros("Uther le Porteur de Lumière", 30));
 		listeDesHeros.add(new Heros("Garrosh Hurlenfer", 30));
@@ -51,9 +57,9 @@ public class Heros implements Cloneable {
 	/*****
 	 * Un héros
 	 */
-	private		String		nom;
-	private		int			pointsDeVieCourant;
-	private		int			pointsDeVieMax;
+	private		String				nom;
+	private		int					pointsDeVieCourant;
+	private		int					pointsDeVieMax;
 	
 	private Heros(String nom, int pointsDeVieMax) {
 		this.nom = nom;
@@ -61,11 +67,11 @@ public class Heros implements Cloneable {
 		this.pointsDeVieCourant = pointsDeVieMax;
 	}
 	
+	@SuppressWarnings("unchecked")
 	private	Heros(Heros heros) {
 		this.nom = heros.nom;
 		this.pointsDeVieMax = heros.pointsDeVieMax;
 		this.pointsDeVieCourant = heros.pointsDeVieCourant;
-		
 	}
 	
 	@Override
@@ -88,6 +94,8 @@ public class Heros implements Cloneable {
 	public int getPointsDeVieMax() {
 		return pointsDeVieMax;
 	}
+	
+	
 
 	@Override
 	public String toString() {
