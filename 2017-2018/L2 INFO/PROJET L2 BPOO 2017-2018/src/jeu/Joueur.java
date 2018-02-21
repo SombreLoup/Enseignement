@@ -145,4 +145,21 @@ public class Joueur implements IJoueur {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void perdre(ICarte carte) throws HearthstoneException {
+		if (! jeu.contains(carte))
+			throw new HearthstoneException("Cette carte n'est même pas en jeu --> "+carte);
+		jeu.remove(carte);
+	}
+
+	public void setDeck(ArrayList<ICarte> deck) throws HearthstoneException {
+		if (deck==null)
+			return;
+		
+		if (Plateau.getInstance().estDemarree())
+			throw new HearthstoneException("Pas possible de changer de deck en cours de partie !");
+		
+		this.deck = deck;
+	}
 }

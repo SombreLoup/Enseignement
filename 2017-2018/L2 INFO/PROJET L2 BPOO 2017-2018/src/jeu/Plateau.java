@@ -63,6 +63,7 @@ public class Plateau implements IPlateau {
 		int num = (int)(Math.random()+0.5);
 		joueurCourant = joueurs.get(num);
 		joueurCourant.prendreTour();
+		estEnCours = true;
 	}
 
 	/* (non-Javadoc)
@@ -78,6 +79,53 @@ public class Plateau implements IPlateau {
 		IJoueur	adversaire = getAdversaire(joueur);
 		adversaire.prendreTour();
 	}
-	
 
+	@Override
+	public void terminerPartie(Joueur joueur) {
+		estEnCours = false;
+		String s = "* "+joueur.getPseudo()+" a gagné ! *";
+		String stars = "";
+		for (int i = 0; i < s.length(); i++) 
+			stars += "*";
+		
+		System.out.println(stars);
+		System.out.println(s);
+		System.out.println(stars);
+	}
+
+	@Override
+	public boolean estDemarree() {
+		return estEnCours;
+	}
+	
+	@Override
+	public String toString() {
+		String	s = "";
+		
+		s += "**************************************************\n";
+		if (joueurCourant==joueurs.get(0))
+			s += ">>>> TOUR <<<<\n";
+		
+		s += joueurs.get(0);
+		s += "\n";
+		
+		s += "==================================\n";
+		for (ICarte carte : joueurs.get(0).getJeu()) {
+			s += carte;
+		}
+		s += "==================================\n";
+		s += "----------------------------------\n";
+		s += "==================================\n";
+		for (ICarte carte : joueurs.get(1).getJeu()) {
+			s += carte;
+		}
+		s += "==================================\n";
+		if (joueurCourant==joueurs.get(1))
+			s += ">>>> TOUR <<<<\n";
+		
+		s += joueurs.get(1);
+		s += "**************************************************\n";
+		
+		return s;
+	}
 }

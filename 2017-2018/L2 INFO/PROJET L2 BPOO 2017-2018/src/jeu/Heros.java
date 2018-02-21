@@ -129,4 +129,14 @@ public class Heros implements Cloneable {
 			return false;
 		return true;
 	}
+
+
+	public void diminuerVie(int attaque) {
+		pointsDeVieCourant -= attaque;
+	}
+
+
+	public boolean estMort() {
+		return (pointsDeVieCourant<=0);
+	}
 }

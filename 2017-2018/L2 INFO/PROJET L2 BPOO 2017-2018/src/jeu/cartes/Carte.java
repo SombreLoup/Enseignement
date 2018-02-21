@@ -1,12 +1,15 @@
 package jeu.cartes;
 
 import jeu.ICarte;
+import jeu.IJoueur;
 
 public abstract class Carte implements ICarte {
 	private	String	nom;
 	private	int		cout;
+	private	IJoueur	proprietaire;
 
-	public Carte(String nom, int cout) {
+	public Carte(IJoueur proprietaire, String nom, int cout) {
+		this.proprietaire = proprietaire;
 		this.nom = nom;
 		this.cout = cout;
 	}
@@ -17,6 +20,10 @@ public abstract class Carte implements ICarte {
 	
 	public int getCout() {
 		return cout;
+	}
+	
+	public IJoueur getProprietaire() {
+		return proprietaire;
 	}
 
 	@Override
