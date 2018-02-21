@@ -1,0 +1,43 @@
+package dao.jpa;
+
+import java.util.List;
+
+import core.Concert;
+import dao.DAOConcert;
+
+public class DAOConcertJPA extends DAOJPA implements DAOConcert {
+
+	static private	DAOConcertJPA	instance = null;
+	
+	private  DAOConcertJPA() {
+	}
+	
+	static public DAOConcert getInstance() {
+		if (instance==null)
+			instance = new DAOConcertJPA();
+		return instance;
+	}
+
+	@Override
+	public Concert get(int code) {
+		Concert concert = DAOJPA.getManager().find(Concert.class, code);
+		return concert;		
+	}
+
+	@Override
+	public List<Concert> loadAll() {
+		return DAOJPA.getManager().createQuery("SELECT c FROM Concert c",Concert.class).getResultList();
+	}
+
+	@Override
+	public void save(Concert concert) {
+		DAOJPA.getManager().persist(concert);
+		DAOJPA.commit();
+	}
+
+	@Override
+	public void update(Concert concert) {
+		DAOJPA.commit();
+	}
+
+}

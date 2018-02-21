@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14150061248731" configfile="/JSF_Cours/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="formulaires/FormChanson.xhtml" x="336" y="143" id="pf14150285803180" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf14150285803181" path="/formulaires/FormChanson.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="listes/ListeGenres.xhtml" x="753" y="387" id="pf14150285803192" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf14150285803181" path="/listes/ListeGenres.xhtml"/>
+  <links id="pf14150285803181" target="pf14150285803192" source="pf14150285803180" outcome="ListeGenres"/>
+</pageflow:Pageflow>

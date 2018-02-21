@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>Liste des genres</title>
+</h:head>
+
+<h:body>
+	<div align="center">
+		<h1>Liste des chansons</h1>
+	</div>
+
+	<div align="center">
+		<h:dataTable value="#{daoChanson.toutesLesChansons}" var="chanson" border="1">
+			<h:column>
+				<f:facet name="header">Code</f:facet>
+				<h:outputText value="#{chanson.code}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">titre</f:facet>
+				<h:outputText value="#{chanson.libelle}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">genre</f:facet>
+				<h:outputText value="#{chanson.genre.libelle}" />
+			</h:column>
+		</h:dataTable>
+	</div>
+</h:body>
+</html>

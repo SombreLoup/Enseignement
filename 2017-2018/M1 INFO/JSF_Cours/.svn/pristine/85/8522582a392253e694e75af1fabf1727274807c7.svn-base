@@ -1,0 +1,14 @@
+package actions;
+
+import java.util.List;
+
+import core.Interprete;
+import dao.jpa.DAOInterpreteJPA;
+
+public class ActionInterprete {
+
+	public List<Interprete> getInterpretes() {
+		return DAOInterpreteJPA.getInstance().loadAll();
+	}
+	
+}

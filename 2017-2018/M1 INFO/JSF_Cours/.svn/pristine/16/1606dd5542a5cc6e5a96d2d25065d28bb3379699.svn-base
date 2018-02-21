@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head id="j_idt2">
+	<title>Liste des interpretes</title></head><body>
+	<div align="center">
+		<h1>Liste des Interpretes</h1>
+		<p></p>
+	</div>
+	<div align="center"><table border="1">
+<thead>
+<tr>
+<th scope="col">Code</th>
+<th scope="col">Nom</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Renaud</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Phil Collins</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Nougaro</td>
+</tr>
+<tr>
+<td>4</td>
+<td><script>alert('bonjour')</script></td>
+</tr>
+</tbody>
+</table>
+
+	</div></body>
+</html><!--  
+balises utilis&eacute;es :
+h:dataTable : c'est une tablea HTML dont les lignes seront remplies avec ce qui se trouve dans &quot;value&quot;
+	h:column : une colonne de la table avec, ici, son en-t&ecirc;te et le contenu de chaque cellule
+		h:facet : pour sp&eacute;cifier un sous-&eacute;l&eacute;ment de la colonne
+
+Attention, pour valoriser la dataTable, il faut invoquer une propri&eacute;t&eacute; d'un objet,
+c'est-&agrave;-dire un getter. La fonction laodAll pr&eacute;vue initialement, est mal nomm&eacute;e. 
+Du coup, on a cr&eacute;&eacute; une autre fonction getTousLesInterpretes qui fait la m&ecirc;me chose.
+De m&ecirc;me, le constructeur par d&eacute;faut doit &ecirc;tre public car JSF l'appelle....
+-->
