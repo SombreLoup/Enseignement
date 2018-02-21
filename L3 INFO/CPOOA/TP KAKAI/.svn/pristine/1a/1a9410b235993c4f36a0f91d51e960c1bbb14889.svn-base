@@ -1,0 +1,13 @@
+/*
+ * Main.cpp
+ *
+ *  Created on: 1 oct. 2015
+ *      Author: yann
+ */
+
+
+#include	"Poignee.h"
+
+int main(int argc, char **argv) {
+
+}
