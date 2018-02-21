@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+
+	<title><h:outputText
+			value="Ajout d'un participant à une rencontre" /></title>
+</h:head>
+
+<h:body>
+	<div align="center">
+		<h1>
+			<h:outputText value="Ajout d'un participant à une rencontre" />
+		</h1>
+
+		<h:form id="Form_ajout_rencontre">
+			<h:outputText value="La rencontre " />
+			<h:outputLabel value="#{beanRencontre.rencontre.description}" />
+			<h:outputText value=" aura lieu le " />
+			<h:outputLabel value="#{beanRencontre.rencontre.date}">
+				<f:convertDateTime pattern="dd-MM-yyyy" />
+			</h:outputLabel>
+			<p />
+
+			<h:outputText value="Choisissez un participant dans la liste :" />
+			<h:selectOneMenu value="#{beanRencontre.celibataireSelectionne.code}">
+				<f:selectItems value="#{beanCelibataire.celibataires}"
+					var="celibataire" itemLabel="#{celibataire.nom}"
+					itemValue="#{celibataire.code}" />
+			</h:selectOneMenu>
+			<p />
+			<h:commandButton value="Ajouter" type="submit"
+				action="#{beanRencontre.ajouter}"></h:commandButton>
+		</h:form>
+	</div>
+</h:body>
+
+</html>
