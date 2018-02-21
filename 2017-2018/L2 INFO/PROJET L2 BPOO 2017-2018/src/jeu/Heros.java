@@ -2,15 +2,13 @@ package jeu;
 
 import java.util.ArrayList;
 
-import jeu.cartes.Carte;
-
 public class Heros implements Cloneable {
 	/******
 	 * Gestion de la table contenant tous les héros possibles
 	 */
 	private	static	ArrayList<Heros>		listeDesHeros = new ArrayList<Heros>();
 	
-	public static	Heros	getHeros(String nom) throws ExceptionHearthstone {
+	public static	Heros	getHeros(String nom) throws HearthstoneException {
 		if (listeDesHeros.size()==0)
 			initialiserLesHeros();
 		
@@ -23,7 +21,7 @@ public class Heros implements Cloneable {
 				}
 		}
 		
-		throw new ExceptionHearthstone("Le héros demandé ("+nom+") n'existe pas");
+		throw new HearthstoneException("Le héros demandé ("+nom+") n'existe pas");
 	}
 	
 	
@@ -38,8 +36,6 @@ public class Heros implements Cloneable {
 
 
 	private static void initialiserLesHeros() {
-		Carte c;
-
 		Heros jaina = new Heros("Jaina Portvaillant", 30);
 		listeDesHeros.add(jaina);
 			

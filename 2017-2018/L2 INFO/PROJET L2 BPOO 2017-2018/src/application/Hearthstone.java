@@ -1,12 +1,12 @@
 package application;
 
-import jeu.ExceptionHearthstone;
+import jeu.HearthstoneException;
 import jeu.Heros;
 import jeu.Joueur;
 import tools.Console;
 
 public class Hearthstone {
-	public static void main(String[] args) throws ExceptionHearthstone {
+	public static void main(String[] args) throws HearthstoneException {
 		Console	out = new Console();
 				
 		//initJoueurAvecConsole(out);
@@ -16,7 +16,7 @@ public class Hearthstone {
 	}
 
 	@SuppressWarnings("unused")
-	private static void initJoueurAvecConsole(Console out) throws ExceptionHearthstone {
+	private static void initJoueurAvecConsole(Console out) throws HearthstoneException {
 		out.println("Salut joueur 1, quel est ton pseudo ?");
 		String pseudo = out.readLine();
 		

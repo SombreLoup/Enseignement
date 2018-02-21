@@ -1,8 +1,8 @@
 package jeu;
 
-public class ExceptionHearthstone extends Exception {
+public class HearthstoneException extends Exception {
 
-	public ExceptionHearthstone(String string) {
+	public HearthstoneException(String string) {
 		super(string);
 	}
 
