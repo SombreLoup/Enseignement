@@ -1,0 +1,3 @@
+[Vehicule|marque:String;immat:String;|]
+[Intervention|kilometrage:int|getCout():double; clone():Intervention]
+[Vehicule]1 leVehicule-* lesInterventions[Intervention]
