@@ -1,0 +1,50 @@
+/*
+ * Option.cpp
+ *
+ *  Created on: 1 oct. 2015
+ *      Author: yann
+ */
+
+#include "Option.h"
+
+Option::Option(const Option& objet)
+	: libelle(objet.libelle)
+{
+}
+
+Option::Option(const string& l)
+	: libelle(l)
+{
+}
+
+Option::~Option() {
+}
+
+const Option& Option::operator=(const Option& objet) {
+	if (this != &objet) {
+		libelle = objet.libelle;
+	}
+	return *this;
+}
+
+bool Option::operator==(const Option& objet) const {
+	return libelle==objet.libelle;
+}
+
+const string& Option::getLibelle() const {
+	return libelle;
+}
+
+void Option::setLibelle(const string& libelle) {
+	this->libelle = libelle;
+}
+
+ostream& operator<<(ostream& flux, const Option& objet) {
+	objet.afficher(flux);
+	return flux;
+}
+
+void Option::afficher(ostream& flux) const {
+	flux << "Objet[libelle=" << libelle << "]";
+}
+

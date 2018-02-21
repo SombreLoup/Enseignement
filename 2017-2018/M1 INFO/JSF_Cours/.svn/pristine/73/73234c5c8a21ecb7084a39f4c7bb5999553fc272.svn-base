@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>Sélection d'un interprete</title>
+</h:head>
+
+<h:body>
+	<div align="center">
+		<h1>Sélection d'un interprete</h1>
+		<p />
+		<h:panelGrid columns="2">
+			<h:outputLabel value="#{msg['label.nom_concert']}" />
+			<h:outputLabel value="#{actionConcert.concert.nom}" />
+		</h:panelGrid>
+		<p />
+	</div>
+
+	<div align="center">
+		<h:form id="FormSelectionInterprete">
+			
+				<h:dataTable value="#{actionConcert.concert.interpretes}"
+					var="interprete"
+					rendered="#{not empty actionConcert.concert.interpretes}"
+					border="1">
+					<h:column>
+						<f:facet name="header">Code</f:facet>
+						<h:outputText value="#{interprete.code}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">Nom</f:facet>
+						<h:outputText value="#{interprete.nom}" />
+					</h:column>
+				</h:dataTable>
+				<h:panelGrid columns="2">
+
+					<h:outputLabel value="#{msg['label.sel_interprete']}" />
+
+					<h:selectOneMenu value="#{actionConcert.interpreteSelectionnee}">
+						<f:selectItems value="#{actionInterprete.interpretes}"
+							var="interprete" itemLabel="#{interprete.nom}"
+							itemValue="#{interprete.code}" />
+					</h:selectOneMenu>
+				</h:panelGrid>
+				<h:commandButton value="Enregistrer"
+					action="#{actionConcert.mettreAJour}" />
+		</h:form>
+	</div>
+</h:body>
+</html>

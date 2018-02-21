@@ -1,0 +1,44 @@
+package actions;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import core.Concert;
+
+public class ActionConcert implements Serializable {
+	
+	private	Concert	concert = new Concert();
+
+	public String	getNom() {
+		return concert.getNom();
+	}
+	
+	public void setNom(String nom) {
+		concert.setNom(nom);
+	}
+	
+	public Date	getDate() {
+		return concert.getDate();
+	}
+	
+	public void setDate(Date date) {
+		concert.setDate(new java.sql.Date(date.getTime()));
+	}
+	
+	
+	public Concert getConcert() {
+		return concert;
+	}
+
+	public void setConcert(Concert concert) {
+		this.concert = concert;
+	}
+
+	public String enregistrer() {
+		
+		System.out.println("Enregistrement d'un concert : "+concert);
+		
+		return "ConcertEnregistré";
+	}
+	
+}

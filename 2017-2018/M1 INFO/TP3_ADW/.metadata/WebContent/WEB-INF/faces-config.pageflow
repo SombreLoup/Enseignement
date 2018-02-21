@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14215878309940" configfile="/TP3_ADW/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="forms/FormNouvellePage.html" x="183" y="119" id="pf14215921343351" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf14215921343352" path="/forms/FormNouvellePage.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="listes/ListePages.xhtml" x="657" y="132" id="pf14215921343353" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf14215921343352" path="/listes/ListePages.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="listes/ListeArticlesPage.xhtml" x="351" y="410" id="pf14216751642250" path="/listes/ListeArticlesPage.xhtml"/>
+  <links id="pf14215921343352" target="pf14215921343353" source="pf14215921343351" outcome="PageEnregistrée"/>
+</pageflow:Pageflow>

@@ -1,0 +1,7 @@
+label.code_concert=Code du concert :
+label.nom_concert=Nom du concert :
+label.sel_chanson=Sélection d'une chanson :
+label.sel_interprete=Sélection d'un interprete :
+label.date_concert=Date du concert :
+bouton.enregistrer=Enregistrer
+bouton.annuler=Annuler

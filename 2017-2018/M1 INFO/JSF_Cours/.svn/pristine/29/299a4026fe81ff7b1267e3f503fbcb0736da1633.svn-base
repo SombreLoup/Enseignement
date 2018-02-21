@@ -1,0 +1,34 @@
+package actions;
+
+import java.sql.Date;
+
+import core.Concert;
+
+public class ActionConcert {
+	
+	private	Concert	concert = new Concert();
+
+	public String	getNom() {
+		return concert.getNom();
+	}
+	
+	public void setNom(String nom) {
+		concert.setNom(nom);
+	}
+	
+	public Date	getDate() {
+		return concert.getDate();
+	}
+	
+	public void setDate(Date date) {
+		concert.setDate(date);
+	}
+	
+	public String enregistrer() {
+		
+		System.out.println("Enregistrement d'un concert : "+concert);
+		
+		return "ConcertEnregistré";
+	}
+	
+}

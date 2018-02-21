@@ -1,0 +1,117 @@
+package core;
+
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="concert")
+public class Concert {
+	
+	@ManyToMany
+	@JoinTable(name="participation_concert",
+	joinColumns={
+			@JoinColumn(table="concert",name="code_concert", referencedColumnName="code_concert")
+	},
+	inverseJoinColumns={
+			@JoinColumn(table="interprete", name="code_int", referencedColumnName="code_int")
+	})	
+	private	List<Interprete>	interpretes = new ArrayList<Interprete>();
+	
+	
+	/**
+	 * Mapping sur les champs
+	 */
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="code_concert")
+	private	int				code		= -1;
+	
+	@Column(name="nom_concert")
+	private	String			nom			= null;
+	
+	@Column(name="date_concert")
+	private	Date			date		= null;
+	
+
+	
+	public Concert() {
+		super();
+	}
+	
+	public Concert(String nom, Date date) {
+		super();
+		this.nom = nom;
+		this.date = date;
+	}
+	
+	public int getCode() {
+		return code;
+	}
+	public void setCode(int code) {
+		this.code = code;
+	}
+	public String getNom() {
+		return nom;
+	}
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+	public List<Interprete> getInterpretes() {
+		return interpretes;
+	}
+	public void setInterpretes(List<Interprete> interpretes) {
+		this.interpretes = interpretes;
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + code;
+		result = prime * result + ((nom == null) ? 0 : nom.hashCode());
+		return result;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final Concert other = (Concert) obj;
+		if (code != other.code)
+			return false;
+		if (nom == null) {
+			if (other.nom != null)
+				return false;
+		} else if (!nom.equals(other.nom))
+			return false;
+		return true;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public boolean add(Interprete e) {
+		return interpretes.add(e);
+	}
+
+}

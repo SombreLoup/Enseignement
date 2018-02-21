@@ -1,0 +1,20 @@
+package actions;
+
+import java.io.Serializable;
+import java.util.List;
+
+import core.Interprete;
+import dao.jpa.DAOInterpreteJPA;
+
+public class ActionInterprete implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 410717373831919568L;
+
+	public List<Interprete> getInterpretes() {
+		return DAOInterpreteJPA.getInstance().loadAll();
+	}
+	
+}

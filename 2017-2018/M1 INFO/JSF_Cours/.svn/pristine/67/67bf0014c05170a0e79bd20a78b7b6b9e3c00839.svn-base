@@ -1,0 +1,8 @@
+package actions;
+
+public class ActionEnregistrerChanson {
+	public String	enregistrer() {
+		return "ListeGenres";
+		
+	}
+}

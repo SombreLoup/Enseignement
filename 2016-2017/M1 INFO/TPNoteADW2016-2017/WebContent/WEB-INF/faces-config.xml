@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config
+    xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+    version="2.2">
+	<managed-bean>
+		<managed-bean-name>beanCandidat</managed-bean-name>
+		<managed-bean-class>jsf.bean.BeanCandidat</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<navigation-rule>
+		<display-name>FormResultatPartiel.xhtml</display-name>
+		<from-view-id>/FormResultatPartiel.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>ENREGISTREMENT</from-outcome>
+			<to-view-id>/ResultatsComplets.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+</faces-config>

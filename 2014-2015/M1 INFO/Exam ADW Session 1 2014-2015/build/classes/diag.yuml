@@ -1,0 +1,3 @@
+[Celibataire|code;nom;dateNaissance;codePostal;homme|]
+[Rencontre|code;description;date;note|]
+[Rencontre]rencontres * - * participants[Celibataire]

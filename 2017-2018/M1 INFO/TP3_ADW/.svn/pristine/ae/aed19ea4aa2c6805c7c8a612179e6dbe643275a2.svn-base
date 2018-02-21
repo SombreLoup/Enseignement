@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>Nouvelle page</title>
+</h:head>
+
+<h:body>
+	<div align="center">
+		<h1>Nouvelle page</h1>
+	</div>
+
+	<div align="center">
+
+		<h:form id="form">
+			<table>
+				<tr>
+					<td><h:outputLabel value="Code : " /></td>
+					<td><h:outputText value="#{beanPage.page.code}" /></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel value="Thème : " /></td>
+					<td><h:inputText id="theme" value="#{beanPage.page.theme}"
+							validatorMessage="#{msg['erreur.validation.theme']}">
+							<f:validateRegex pattern="[A-Z]{1}[a-zA-Z ]*"></f:validateRegex>
+						</h:inputText></td>
+					<td><h:message for="theme" style="color:red" /></td>
+				</tr>
+
+				<tr>
+					<td><h:commandButton action="#{beanPage.enregistrer}"
+							value="Enregistrer" /></td>
+					<td><h:commandButton action="#{beanPage.raz}"
+							value="Réinitialiser" /></td>
+				</tr>
+
+
+			</table>
+		</h:form>
+
+	</div>
+</h:body>
+</html>

@@ -1,0 +1,41 @@
+package beans;
+
+import core.Celibataire;
+import core.Rencontre;
+import dao.jpa.DAOCelibataireJPA;
+import dao.jpa.DAORencontreJPA;
+
+public class BeanRencontre {
+	private	Rencontre	rencontre = new Rencontre();
+	
+	private	Celibataire	celibataireSelectionne = new Celibataire();
+	
+	public String enregistrer() {
+		System.out.println(rencontre);
+		DAORencontreJPA.getInstance().saveOrUpdate(rencontre);
+		return "ajout";
+	}
+
+	public Rencontre getRencontre() {
+		return rencontre;
+	}
+
+	public void setRencontre(Rencontre rencontre) {
+		this.rencontre = rencontre;
+	}
+
+	public Celibataire getCelibataireSelectionne() {
+		return celibataireSelectionne;
+	}
+
+	public void setCelibataireSelectionne(Celibataire celibataireSelectionne) {
+		this.celibataireSelectionne = celibataireSelectionne;
+	}
+	
+	public void ajouter() {
+		celibataireSelectionne = DAOCelibataireJPA.getInstance().get(celibataireSelectionne.getCode());
+		rencontre.add(celibataireSelectionne);
+		DAORencontreJPA.getInstance().saveOrUpdate(rencontre);		
+	}
+	
+}

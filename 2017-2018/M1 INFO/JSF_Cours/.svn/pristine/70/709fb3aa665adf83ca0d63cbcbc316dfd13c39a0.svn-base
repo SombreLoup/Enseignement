@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>Menu</title>
+</h:head>
+<h:body>
+	<ul id="menu">
+		<li><h:link value="Nouveau concert" outcome="NouveauConcert"/></li>
+		<li><a href="#">Categories</a>
+			<ul>
+				<li><a href="#">CSS</a></li>
+				<li><a href="#">Graphic design</a></li>
+				<li><a href="#">Development tools</a></li>
+				<li><a href="#">Web design</a></li>
+			</ul></li>
+		<li><a href="#">Work</a></li>
+		<li><a href="#">About</a></li>
+		<li><a href="#">Contact</a></li>
+	</ul>
+</h:body>
+</html>

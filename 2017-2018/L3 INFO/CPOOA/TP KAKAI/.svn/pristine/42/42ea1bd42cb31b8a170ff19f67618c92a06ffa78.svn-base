@@ -1,0 +1,44 @@
+/*
+ * Poignee.h
+ *
+ *  Created on: 1 oct. 2015
+ *      Author: yann
+ */
+
+#ifndef POIGNEE_H_
+#define POIGNEE_H_
+
+#include	<iostream>
+#include	<string>
+using namespace std;
+
+#include "Option.h"
+
+class Poignee : public Option {
+
+private:
+	/* liste des champs */
+	double	prix;
+
+public:
+	Poignee();
+	Poignee(const Poignee& objet);
+	Poignee(const double prix);
+
+	~Poignee();
+
+	double getPrix() const;
+	void setPrix(double prix);
+
+	double	getCout(const Meuble&) const;
+
+	const Poignee& operator=(const Poignee& objet);
+
+	bool operator==(const Poignee& objet) const;
+	// op!= hérité et convient dans tous les cas. Inutile de le refaire
+
+	void afficher(ostream& flux)	const;
+
+};
+
+#endif /* POIGNEE_H_ */

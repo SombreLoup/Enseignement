@@ -1,0 +1,11 @@
+label.code_concert=Code du concert :
+label.nom_concert=Nom du concert :
+label.sel_chanson=Sélection d'une chanson :
+label.sel_interprete=Sélection d'un interprete :
+label.date_concert=Date du concert :
+bouton.enregistrer=Enregistrer
+bouton.retour_menu=Retourner au menu principal
+titre.FormConcert=Saisie d'un nouveau concert
+titre.FormSelInterprete=Sélection d'un interprete
+texte.no_int=Aucun interprete pour ce concert pour l'instant
+bouton.autreInt=Sélectionnez un autre interprète

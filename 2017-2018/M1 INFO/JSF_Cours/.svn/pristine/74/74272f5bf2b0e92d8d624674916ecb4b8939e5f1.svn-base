@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config
+    xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+    version="2.2">
+	<managed-bean>
+		<managed-bean-name>actionChanson</managed-bean-name>
+		<managed-bean-class>actions.ActionChanson</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>actionInterprete</managed-bean-name>
+		<managed-bean-class>actions.ActionInterprete</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>actionGenre</managed-bean-name>
+		<managed-bean-class>actions.ActionGenre</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<navigation-rule>
+		<display-name>formulaires/FormChanson.xhtml</display-name>
+		<from-view-id>/formulaires/FormChanson.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>ListeGenres</from-outcome>
+			<to-view-id>/listes/ListeGenres.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>formulaires/FormChanson.xhtml</display-name>
+		<from-view-id>/formulaires/FormChanson.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>ChansonEnregistrée</from-outcome>
+			<to-view-id>/listes/ListeChansons.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+</faces-config>
