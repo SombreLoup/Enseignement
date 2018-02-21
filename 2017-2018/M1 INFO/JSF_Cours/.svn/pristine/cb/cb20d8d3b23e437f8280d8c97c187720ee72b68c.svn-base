@@ -1,0 +1,2 @@
+javax.faces.component.UIInput.REQUIRED=C''est le cirque si tu n''indique aucune valeur pour {0}
+javax.faces.converter.DateTimeConverter.DATE=Mais c''est n''importe quoi dans {3} ! une date s''écrit toujours "jj/MM/aaaa" !!!

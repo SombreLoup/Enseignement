@@ -1,0 +1,2 @@
+%2F%2F Cool Class Diagram, [Page|-code:int;-thème:string;-dateParution:Date;-couleur:boolean|getTarif():double]<>-listeArticles*>[Article|-code:int;-titre:String;-nombreMots:int;-tarif:double|], 
+[Article]0..*-++0..1[Auteur|-code:int;-nom:String;-dateEmbauche:Date|]

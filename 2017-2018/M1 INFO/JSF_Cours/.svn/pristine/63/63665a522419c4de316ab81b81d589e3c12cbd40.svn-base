@@ -1,0 +1,65 @@
+package actions;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import core.Chanson;
+import core.Concert;
+import dao.jpa.DAOChansonJPA;
+import dao.jpa.DAOConcertJPA;
+
+public class ActionConcert implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 417468708979940382L;
+	
+	
+	private	Concert	concert = new Concert();
+	private	Chanson	chanson = new Chanson();
+	
+	public int getChansonSelectionnee() {
+		return chanson.getCode();
+	}
+
+	public void setChansonSelectionnee(int chansonSelectionnee) {
+		this.chanson = DAOChansonJPA.getInstance().get(chansonSelectionnee);
+	}
+
+	public String	getNom() {
+		return concert.getNom();
+	}
+	
+	public void setNom(String nom) {
+		concert.setNom(nom);
+	}
+	
+	public Date	getDate() {
+		return concert.getDate();
+	}
+	
+	public void setDate(Date date) {
+		concert.setDate(new java.sql.Date(date.getTime()));
+	}
+	
+	
+	public Concert getConcert() {
+		return concert;
+	}
+
+	public void setConcert(Concert concert) {
+		this.concert = concert;
+	}
+
+	public String enregistrer() {
+		DAOConcertJPA.getInstance().save(concert);
+		return "ConcertEnregistré";
+	}
+	
+	public String mettreAJour() {
+		DAOConcertJPA.getInstance().update(concert);
+		return "ConcertMisAJour";
+	}
+	
+}

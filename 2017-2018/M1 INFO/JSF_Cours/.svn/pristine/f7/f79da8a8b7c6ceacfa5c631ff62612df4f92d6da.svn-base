@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14150061248731" configfile="/JSF_Cours/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="formulaires/FormChanson.xhtml" x="122" y="370" id="pf14150285803180" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf14150285803181 pf14151022314810" path="/formulaires/FormChanson.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="listes/ListeGenres.xhtml" x="108" y="264" id="pf14150285803192" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf14150285803181" path="/listes/ListeGenres.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="listes/ListeChansons.xhtml" x="338" y="562" id="pf14151022314811" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf14151022314810" path="/listes/ListeChansons.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/Concert.xhtml" x="312" y="12" id="pf14152174703372" referenceLink="//@navigationRule.3/@fromViewId|" outlinks="pf14152223181365" inlinks="pf14153742323020" path="/pages/Concert.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="formulaires/FormSelectionChanson.xhtml" x="600" y="60" id="pf14152223181366" referenceLink="//@navigationRule.5/@navigationCase.0/@toViewId|" outlinks="pf14153753551634" inlinks="pf14152223181365 pf14153753551634" path="/formulaires/FormSelectionInterprete.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="formulaires/FormConcert.xhtml" x="24" y="24" id="pf14153742323031" referenceLink="//@navigationRule.4/@navigationCase.0/@toViewId|" outlinks="pf14153742323020" inlinks="pf14153747992302" path="/formulaires/FormConcert.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/Menu.xhtml" x="615" y="366" id="pf14153747992303" referenceLink="//@navigationRule.4/@fromViewId|" outlinks="pf14153747992302" path="/pages/Menu.xhtml"/>
+  <links id="pf14150285803181" target="pf14150285803192" source="pf14150285803180" outcome="ListeGenres"/>
+  <links id="pf14151022314810" target="pf14151022314811" source="pf14150285803180" outcome="ChansonEnregistrée"/>
+  <links id="pf14152223181365" target="pf14152223181366" source="pf14152174703372" outcome="FormSelectionInterprete"/>
+  <links id="pf14153742323020" target="pf14152174703372" source="pf14153742323031" outcome="ConcertEnregistré"/>
+  <links id="pf14153747992302" target="pf14153742323031" source="pf14153747992303" outcome="NouveauConcert"/>
+  <links id="pf14153753551634" target="pf14152223181366" source="pf14152223181366" outcome="ConcertMisAJour">
+    <bendPoints d1Width="63" d1Height="38" d2Width="63" d2Height="38"/>
+    <bendPoints d1Width="54" d1Height="96" d2Width="54" d2Height="96"/>
+    <bendPoints d1Width="-15" d1Height="113" d2Width="-15" d2Height="113"/>
+    <bendPoints d1Width="-75" d1Height="56" d2Width="-75" d2Height="56"/>
+    <bendPoints d1Width="-60" d1Height="18" d2Width="-60" d2Height="18"/>
+  </links>
+</pageflow:Pageflow>

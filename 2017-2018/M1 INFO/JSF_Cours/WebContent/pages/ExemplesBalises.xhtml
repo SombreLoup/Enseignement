@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>Balises JSF de base</title>
+</h:head>
+
+<h:body>
+	<div align="center">
+		<h1>Balises JSF de base</h1>
+	</div>
+
+	<div align="center">
+		<h:form>
+			<h:panelGrid columns="2">
+				<h:outputText value="Texte" />
+				<br />
+				<h:outputLabel value="Label :" for="idTruc" />
+				<h:inputText id="idTruc" />
+				<br />
+				<h:outputLink value="http://www.google.fr">
+					<f:param name="gws_rd" value="ssl" />
+					<f:param name="q" value="JSF" />
+					<h:outputText value="Google" />
+				</h:outputLink>
+				<h:outputFormat value="Bonjour {0}. Tu as {1} nouveaux messages.">
+					<f:param value="Machin" />
+					<f:param value="12" />
+				</h:outputFormat>
+			</h:panelGrid>
+		</h:form>
+	</div>
+</h:body>
+</html>

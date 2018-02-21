@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title><h:outputText value="#{msg['titre.listePages']}"/></title>
+</h:head>
+
+<h:body>
+	<div align="center">
+		<h1><h:outputLabel value="#{msg['titre.listePages']}"/></h1>
+		<p />
+		
+		<h:dataTable border="1" value="#{beanPage.pages}" var="p">
+			<h:column>
+				<f:facet name="header"><h:outputLabel value="#{msg['label.code']}"/></f:facet>
+				<h:outputText value="#{p.code}"/>
+			</h:column>
+			<h:column>
+				<f:facet name="header"><h:outputLabel value="#{msg['label.theme']}"/></f:facet>
+				
+				<h:outputLink value="http://localhost:8080/TP3_ADW/faces/listes/ListeArticlesPage.xhtml" >
+					<h:outputText value="#{p.theme}" />
+					<f:param name="codePage" value="#{p.code}" />
+				</h:outputLink>
+
+			</h:column>
+			<h:column>
+				<f:facet name="header"><h:outputLabel value="#{msg['label.dateParution']}"/></f:facet>
+				<h:outputText value="#{p.dateParution}">
+					<f:convertDateTime pattern="dd/MM/yyyy"/>
+				</h:outputText>
+			</h:column>			
+			<h:column>
+				<f:facet name="header"><h:outputLabel value="#{msg['label.couleur']}"/></f:facet>
+				<h:outputText value="#{p.couleur}"/>
+			</h:column>
+		</h:dataTable>
+	</div>
+</h:body>
+</html>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14933607421040" configfile="/TP Noté ADW 2016-2017/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="FormResultatPartiel.xhtml" x="252" y="168" id="pf14939823367830" outlinks="pf14939823367831" path="/FormResultatPartiel.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="ResultatsComplets.xhtml" x="254" y="456" id="pf14939823367832" inlinks="pf14939823367831" path="/ResultatsComplets.xhtml"/>
+  <links id="pf14939823367831" target="pf14939823367832" source="pf14939823367830" outcome="ENREGISTREMENT"/>
+</pageflow:Pageflow>

@@ -1,0 +1,54 @@
+package dao.jpa;
+
+
+import java.util.List;
+
+import core.Genre;
+import dao.DAOGenre;
+
+public class DAOGenreJPA extends DAOJPA implements DAOGenre {
+	static private	DAOGenreJPA	instance = null;
+	
+	public DAOGenreJPA() {
+	}
+	
+	static public	DAOGenre getInstance() {
+		if (instance == null)
+			instance = new DAOGenreJPA();
+		
+		return instance;
+	}
+
+	@Override
+	public Genre get(int code) {
+		Genre genre = DAOJPA.getManager().find(Genre.class, code);
+		return genre;
+	}
+
+	@Override
+	public void save(Genre genre) {
+		DAOJPA.getManager().persist(genre);
+		DAOJPA.commit();
+	}
+
+	@Override
+	public List<Genre> loadAll() {
+		return DAOJPA.getManager().createQuery("SELECT g FROM Genre g",Genre.class).getResultList();
+	}
+
+	public List<Genre> getTousLesGenres() {
+		List<Genre> l = loadAll();
+		System.out.println("-----> "+l);
+		return l;
+	}
+
+	@Override
+	public Genre get(String libelle) {
+		List<Genre> listGenre = DAOJPA.getManager().createQuery("SELECT g FROM Genre g WHERE g.libelle LIKE ?1",Genre.class).setParameter(1, "%"+libelle+"%").getResultList();
+		if (listGenre.size()==0)
+			return null;
+		else
+			return listGenre.get(0);
+	}
+
+}

@@ -1,0 +1,6 @@
+label.code=Code
+label.theme=Thème
+label.dateParution=Date de parution
+label.couleur=Couleur
+titre.listePages=Liste des pages
+erreur.validation.theme=Le thème doit commencer par une majuscule puis ne comporter que des lettresou des espaces
