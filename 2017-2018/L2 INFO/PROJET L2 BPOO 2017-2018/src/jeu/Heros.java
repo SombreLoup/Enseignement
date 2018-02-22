@@ -2,6 +2,9 @@ package jeu;
 
 import java.util.ArrayList;
 
+import jeu.capacites.CapaciteBouleDeFeu;
+import jeu.capacites.CapaciteTirAssure;
+
 public class Heros implements Cloneable {
 	/******
 	 * Gestion de la table contenant tous les héros possibles
@@ -36,10 +39,10 @@ public class Heros implements Cloneable {
 
 
 	private static void initialiserLesHeros() {
-		Heros jaina = new Heros("Jaina Portvaillant", 15);
+		Heros jaina = new Heros("Jaina Portvaillant", 15, new CapaciteBouleDeFeu());
 		listeDesHeros.add(jaina);
 			
-		listeDesHeros.add(new Heros("Rexxar", 15));
+		listeDesHeros.add(new Heros("Rexxar", 15, new CapaciteTirAssure()));
 		listeDesHeros.add(new Heros("Uther le Porteur de Lumière", 15));
 		listeDesHeros.add(new Heros("Garrosh Hurlenfer", 15));
 		listeDesHeros.add(new Heros("Malfurion Hurlorage", 15));
@@ -56,18 +59,27 @@ public class Heros implements Cloneable {
 	private		String				nom;
 	private		int					pointsDeVieCourant;
 	private		int					pointsDeVieMax;
+	private		ICapacite			pouvoir;
 	
 	private Heros(String nom, int pointsDeVieMax) {
 		this.nom = nom;
 		this.pointsDeVieMax = pointsDeVieMax;
 		this.pointsDeVieCourant = pointsDeVieMax;
+		this.pouvoir = null;
 	}
 	
-	@SuppressWarnings("unchecked")
+	private Heros(String nom, int pointsDeVieMax, ICapacite pouvoir) {
+		this.nom = nom;
+		this.pointsDeVieMax = pointsDeVieMax;
+		this.pointsDeVieCourant = pointsDeVieMax;
+		this.pouvoir = pouvoir;
+	}
+
 	private	Heros(Heros heros) {
 		this.nom = heros.nom;
 		this.pointsDeVieMax = heros.pointsDeVieMax;
 		this.pointsDeVieCourant = heros.pointsDeVieCourant;
+		this.pouvoir = heros.pouvoir;
 	}
 	
 	@Override
@@ -91,8 +103,10 @@ public class Heros implements Cloneable {
 		return pointsDeVieMax;
 	}
 	
+	public ICapacite getPouvoir() {
+		return pouvoir;
+	}
 	
-
 	@Override
 	public String toString() {
 		return "Heros [nom=" + nom + ", pointsDeVieCourant=" + pointsDeVieCourant + ", pointsDeVieMax=" + pointsDeVieMax

@@ -96,6 +96,9 @@ public class Joueur implements IJoueur {
 		manaDuTour = mana;
 		piocher();
 		
+		if (heros.getPouvoir() != null)
+			heros.getPouvoir().executerEffetDebutTour();
+		
 		for (ICarte carte : jeu) {
 			carte.executerEffetDebutTour();
 		}
@@ -155,9 +158,11 @@ public class Joueur implements IJoueur {
 	}
 
 	@Override
-	public void utiliserPouvoir(Object cible) {
-		// TODO Auto-generated method stub
+	public void utiliserPouvoir(Object cible) throws HearthstoneException {
+		if (heros.getPouvoir()==null)
+			throw new HearthstoneException("Ce héros n'a aucun pouvoir...");
 		
+		heros.getPouvoir().executerAction(cible);
 	}
 
 	@Override

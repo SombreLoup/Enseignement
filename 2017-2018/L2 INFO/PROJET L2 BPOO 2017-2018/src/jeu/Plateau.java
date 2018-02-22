@@ -2,7 +2,6 @@ package jeu;
 
 import java.util.ArrayList;
 
-import tools.Console;
 
 public class Plateau implements IPlateau {
 	/******
@@ -124,6 +123,12 @@ public class Plateau implements IPlateau {
 		s += "**************************************************\n";
 		s += joueurs.get(0).getPseudo()+"-->"+joueurs.get(0).getHeros()+"\n";
 		s += "Stock de mana : "+joueurs.get(0).getStockMana()+"\n";
+		
+		if (joueurs.get(0).getHeros().getPouvoir()==null)
+			s += "C'est un minable héros qui n'a aucun pouvoir\n";
+		else
+			s += "Pouvoir du héros : "+joueurs.get(0).getHeros().getPouvoir().getNom() + "-->" + joueurs.get(0).getHeros().getPouvoir().getDescription() + "\n";
+		
 		if (joueurCourant==joueurs.get(0)) {
 			s += ">>>> TOUR <<<<\n";
 			s += toStringMainJoueurCourant();
@@ -144,6 +149,11 @@ public class Plateau implements IPlateau {
 		s += "==================================\n";
 		s += joueurs.get(1).getPseudo()+"-->"+joueurs.get(1).getHeros()+"\n";
 		s += "Stock de mana : "+joueurs.get(1).getStockMana()+"\n";
+		
+		if (joueurs.get(1).getHeros().getPouvoir()==null)
+			s += "C'est un minable héros qui n'a aucun pouvoir\n";
+		else
+			s += "Pouvoir du héros : "+joueurs.get(1).getHeros().getPouvoir().getNom() + "-->" + joueurs.get(1).getHeros().getPouvoir().getDescription() + "\n";
 		
 		if (joueurCourant==joueurs.get(1)) {
 			s += ">>>> TOUR <<<<\n";

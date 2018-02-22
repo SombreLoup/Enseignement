@@ -8,7 +8,7 @@ public interface IJoueur {
 	void piocher();
 	void jouerCarte(ICarte carte) throws HearthstoneException;
 	void utiliserCarte(ICarte carte, Object cible) throws HearthstoneException;
-	void utiliserPouvoir(Object cible);
+	void utiliserPouvoir(Object cible) throws HearthstoneException;
 	void perdre(ICarte carte) throws HearthstoneException;
 	ArrayList<ICarte> getMain();
 	ArrayList<ICarte> getJeu();

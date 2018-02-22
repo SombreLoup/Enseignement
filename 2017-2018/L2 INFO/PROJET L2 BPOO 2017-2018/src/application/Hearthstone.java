@@ -23,7 +23,7 @@ public class Hearthstone {
 		joueur1.setDeck(getDeckNeutre(joueur1));
 		// out.println(""+joueur1);
 		
-		Joueur	joueur2 = new Joueur("Ali Baba", Heros.getHeros("Andu"));
+		Joueur	joueur2 = new Joueur("Ali Baba", Heros.getHeros("Rex"));
 		joueur2.setDeck(getDeckNeutre(joueur2));
 		// out.println(""+joueur2);
 		
@@ -39,6 +39,7 @@ public class Hearthstone {
 			out.println("1. Finir le tour");
 			out.println("2. Jouer une carte de ta main");
 			out.println("3. Utiliser une carte en jeu");
+			out.println("4. Utiliser le pouvoir du héros");
 			out.print("\n-->");
 			int choix = out.readInt();
 			ICarte carte;
@@ -93,6 +94,35 @@ public class Hearthstone {
 							}
 						}
 						break;
+						
+					case 4:
+						if (board.getJoueurCourant().getHeros().getNom().equals("Rexxar")) {
+							board.getJoueurCourant().utiliserPouvoir(board.getAdversaire(board.getJoueurCourant()));
+							break;
+						}
+						
+						out.println("Qu'est-ce que tu vises avec ton pouvoir ?");
+						out.println("1. Le héros");
+						out.println("2. Une autre carte");
+						out.print("-->");
+						int choixCible = out.readInt();
+						if (choixCible==1) {
+							board.getJoueurCourant().utiliserPouvoir(board.getAdversaire(board.getJoueurCourant()));
+						}
+						else {
+							out.println("Quelle carte vises-tu ? (donne un bout de son nom)");
+							out.print("-->");
+							String nomCarteCible = out.readLine();
+							ICarte carteCible = board.getAdversaire(board.getJoueurCourant()).getCarteEnJeu(nomCarteCible);
+							if (carteCible==null) {
+								throw new HearthstoneException("Cette carte n'est pas en jeu...");
+							}
+							else {
+								board.getJoueurCourant().utiliserPouvoir(carteCible);
+							}
+						}
+						break;
+						
 				}
 			} catch (HearthstoneException e) {
 				System.err.println(e.getMessage());

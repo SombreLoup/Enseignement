@@ -98,4 +98,8 @@ public class Serviteur extends Carte {
 		return "Serviteur ["+super.toString()+" attaque=" + attaque + "; vie=" + vie + "]"+(tourEnAttente==1?"(En attente)":"")+(tourEnAttente==0 && tourJoue==0?"(jouable)":"");
 	}
 
+	public void diminuerVie(int attaque) {
+		vie -= attaque;
+	}
+
 }
