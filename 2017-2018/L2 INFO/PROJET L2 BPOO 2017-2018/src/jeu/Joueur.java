@@ -95,6 +95,10 @@ public class Joueur implements IJoueur {
 		augmenterMana();
 		manaDuTour = mana;
 		piocher();
+		
+		for (ICarte carte : jeu) {
+			carte.executerEffetDebutTour();
+		}
 	}
 
 	private void augmenterMana() {
@@ -109,6 +113,10 @@ public class Joueur implements IJoueur {
 		
 		doitJouer = false;
 		Plateau.getInstance().finTour(this);
+
+		for (ICarte carte : jeu) {
+			carte.executerEffetFinTour();
+		}
 	}
 
 	@Override
@@ -133,7 +141,7 @@ public class Joueur implements IJoueur {
 		this.manaDuTour -= carte.getCout();
 		main.remove(carte);
 		jeu.add(carte);
-		carte.executerEffetDebutTour();
+		carte.executerEffetDebutMiseEnJeu();
 	}
 
 	@Override
@@ -157,6 +165,7 @@ public class Joueur implements IJoueur {
 		if (! jeu.contains(carte))
 			throw new HearthstoneException("Cette carte n'est même pas en jeu --> "+carte);
 		jeu.remove(carte);
+		carte.executerEffetDisparition();
 	}
 
 	public void setDeck(ArrayList<ICarte> deck) throws HearthstoneException {

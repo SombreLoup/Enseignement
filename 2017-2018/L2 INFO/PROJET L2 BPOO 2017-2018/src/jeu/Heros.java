@@ -36,17 +36,17 @@ public class Heros implements Cloneable {
 
 
 	private static void initialiserLesHeros() {
-		Heros jaina = new Heros("Jaina Portvaillant", 30);
+		Heros jaina = new Heros("Jaina Portvaillant", 15);
 		listeDesHeros.add(jaina);
 			
-		listeDesHeros.add(new Heros("Rexxar", 30));
-		listeDesHeros.add(new Heros("Uther le Porteur de Lumière", 30));
-		listeDesHeros.add(new Heros("Garrosh Hurlenfer", 30));
-		listeDesHeros.add(new Heros("Malfurion Hurlorage", 30));
-		listeDesHeros.add(new Heros("Gul'dan", 30));
-		listeDesHeros.add(new Heros("Thrall", 30));
-		listeDesHeros.add(new Heros("Anduin Wrynn", 30));
-		listeDesHeros.add(new Heros("Valeera Sanguinar", 30));
+		listeDesHeros.add(new Heros("Rexxar", 15));
+		listeDesHeros.add(new Heros("Uther le Porteur de Lumière", 15));
+		listeDesHeros.add(new Heros("Garrosh Hurlenfer", 15));
+		listeDesHeros.add(new Heros("Malfurion Hurlorage", 15));
+		listeDesHeros.add(new Heros("Gul'dan", 15));
+		listeDesHeros.add(new Heros("Thrall", 15));
+		listeDesHeros.add(new Heros("Anduin Wrynn", 15));
+		listeDesHeros.add(new Heros("Valeera Sanguinar", 15));
 	}
 
 

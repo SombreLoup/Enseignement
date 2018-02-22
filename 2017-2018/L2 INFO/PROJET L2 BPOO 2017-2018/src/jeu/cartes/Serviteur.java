@@ -21,7 +21,8 @@ public class Serviteur extends Carte {
 	@Override
 	public void executerEffetDebutTour() {
 		tourJoue = 0;
-		
+		if (tourEnAttente>0)
+			tourEnAttente--;
 	}
 
 	@Override
@@ -94,7 +95,7 @@ public class Serviteur extends Carte {
 	
 	@Override
 	public String toString() {
-		return "Serviteur ["+super.toString()+" attaque=" + attaque + "; vie=" + vie + "]";
+		return "Serviteur ["+super.toString()+" attaque=" + attaque + "; vie=" + vie + "]"+(tourEnAttente==1?"(En attente)":"")+(tourEnAttente==0 && tourJoue==0?"(jouable)":"");
 	}
 
 }
