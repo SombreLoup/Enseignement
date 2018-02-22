@@ -8,6 +8,8 @@ import jeu.Plateau;
 public class Serviteur extends Carte {
 	private	int	attaque;
 	private	int vie;
+	private	int	tourEnAttente;
+	private	int	tourJoue;
 	
 	
 	public Serviteur(IJoueur proprietaire, String nom, int cout, int attaque, int vie) {
@@ -18,8 +20,8 @@ public class Serviteur extends Carte {
 
 	@Override
 	public void executerEffetDebutTour() {
-		// TODO Auto-generated method stub
-
+		tourJoue = 0;
+		
 	}
 
 	@Override
@@ -29,7 +31,28 @@ public class Serviteur extends Carte {
 	}
 
 	@Override
+	public void executerEffetDebutMiseEnJeu() {
+		tourEnAttente = 1;
+	}
+
+	@Override
+	public void executerEffetDisparition() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
 	public void executerAction(Object cible) throws HearthstoneException {
+		if (tourEnAttente != 0) {
+			throw new HearthstoneException("Trop pressé fiston ! Tu la joueras au prochain tour...");
+		}
+		
+		if (tourJoue != 0) {
+			throw new HearthstoneException("Tu l'as déjà joué ce tour ! Tricheur !");
+		}
+
+		tourJoue++;
+		
 		if (cible instanceof Joueur) {
 			Joueur joueur = (Joueur)cible;
 			
@@ -58,6 +81,8 @@ public class Serviteur extends Carte {
 			
 			return;
 		}
+		
+		tourJoue--;
 		
 		throw new HearthstoneException("La cible est inconnue, cloporte bulbeux !");
 	}
