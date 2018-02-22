@@ -2,6 +2,8 @@ package jeu;
 
 import java.util.ArrayList;
 
+import tools.Console;
+
 public class Plateau implements IPlateau {
 	/******
 	 * Singleton
@@ -98,16 +100,36 @@ public class Plateau implements IPlateau {
 		return estEnCours;
 	}
 	
+	private String toStringMainJoueurCourant() {
+		String s = "";
+		s +="### Ta main ###\n";
+		s +="###############\n";
+		if (getJoueurCourant().getMain().size()==0) {
+			s +="Ben, ta main est vide....\n";
+		}
+		else {
+			for (ICarte c : getJoueurCourant().getMain()) {
+				s +="### "+c+"\n";
+			}
+		}
+		s += "###############\n";
+		
+		return s;
+	}
+	
 	@Override
 	public String toString() {
 		String	s = "";
 		
 		s += "**************************************************\n";
-		if (joueurCourant==joueurs.get(0))
+		s += joueurs.get(0).getPseudo()+"-->"+joueurs.get(0).getHeros()+"\n";
+		s += "Stock de mana : "+joueurs.get(0).getStockMana()+"\n";
+		if (joueurCourant==joueurs.get(0)) {
 			s += ">>>> TOUR <<<<\n";
+			s += toStringMainJoueurCourant();
+		}
 		
-		s += joueurs.get(0);
-		s += "\n";
+				s += "\n";
 		
 		s += "==================================\n";
 		for (ICarte carte : joueurs.get(0).getJeu()) {
@@ -120,10 +142,14 @@ public class Plateau implements IPlateau {
 			s += carte+"\n";
 		}
 		s += "==================================\n";
-		if (joueurCourant==joueurs.get(1))
-			s += ">>>> TOUR <<<<\n";
+		s += joueurs.get(1).getPseudo()+"-->"+joueurs.get(1).getHeros()+"\n";
+		s += "Stock de mana : "+joueurs.get(1).getStockMana()+"\n";
 		
-		s += joueurs.get(1);
+		if (joueurCourant==joueurs.get(1)) {
+			s += ">>>> TOUR <<<<\n";
+			s += toStringMainJoueurCourant();
+		}
+		
 		s += "**************************************************\n";
 		
 		return s;

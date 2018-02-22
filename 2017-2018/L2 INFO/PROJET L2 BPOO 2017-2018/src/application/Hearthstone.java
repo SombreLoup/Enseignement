@@ -33,7 +33,6 @@ public class Hearthstone {
 		board.demarrerPartie();
 		
 		while (board.estDemarree()) {
-			afficherMainJoueurCourant(out, board);
 			System.out.println(""+board);
 			out.println("\n");
 			out.println("Que veux-tu faire ?");
@@ -101,20 +100,7 @@ public class Hearthstone {
 		}
 	}
 
-	private static void afficherMainJoueurCourant(Console out, IPlateau board) {
-		out.println("");
-		out.println("### Ta main ###");
-		out.println("###############");
-		if (board.getJoueurCourant().getMain().size()==0) {
-			out.println("Ben, ta main est vide....");
-		}
-		else {
-			for (ICarte c : board.getJoueurCourant().getMain()) {
-				out.println("### "+c);
-			}
-		}
-		out.println("###############");
-	}
+
 	
 	private static ArrayList<ICarte> getDeckNeutre(IJoueur joueur) {
 		ArrayList<ICarte>	deck = new ArrayList<ICarte>();

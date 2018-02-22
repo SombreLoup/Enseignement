@@ -15,4 +15,6 @@ public interface IJoueur {
 	ICarte getCarteEnJeu(String nomCarte);
 	Heros getHeros();
 	ICarte getCarteEnMain(String nomCarteMain);
+	String getPseudo();
+	int getStockMana();
 }

@@ -195,4 +195,9 @@ public class Joueur implements IJoueur {
 		}
 		return null;
 	}
+
+	@Override
+	public int getStockMana() {
+		return manaDuTour;
+	}
 }
