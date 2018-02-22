@@ -10,6 +10,7 @@ public class Joueur implements IJoueur {
 	
 	private	String	pseudo;
 	private	int		mana;
+	private	int		manaDuTour;
 	private	Heros	heros;
 
 	private		ArrayList<ICarte>		deck = new ArrayList<ICarte>();
@@ -71,7 +72,7 @@ public class Joueur implements IJoueur {
 	
 	@Override
 	public String toString() {
-		String s = "Joueur [pseudo=" + pseudo + ", heros=" + heros + ", mana=" + mana + "]\n";
+		String s = "Joueur [pseudo=" + pseudo + ", heros=" + heros + ", mana=" + mana+ ", manaDuTour=" + manaDuTour + "]\n";
 		for (ICarte carte : deck) {
 			s += "\t"+carte+"\n";
 		}
@@ -90,7 +91,9 @@ public class Joueur implements IJoueur {
 			throw new HearthstoneException("Tu as déjà le tour, espèce de gobelin décérébré !");
 		
 		doitJouer = true;
+		Plateau.getInstance().setJoueurCourant(this);
 		augmenterMana();
+		manaDuTour = mana;
 		piocher();
 	}
 
@@ -124,7 +127,10 @@ public class Joueur implements IJoueur {
 	public void jouerCarte(ICarte carte) throws HearthstoneException {
 		if (! main.contains(carte))
 			throw new HearthstoneException("Tricheur ! Tu ne possède pas cette carte "+carte);
+		if ( manaDuTour < carte.getCout())
+			throw new HearthstoneException("T'as pas assez de mana, mendiant globuleux ! "+carte);
 		
+		this.manaDuTour -= carte.getCout();
 		main.remove(carte);
 		jeu.add(carte);
 		carte.executerEffetDebutTour();
@@ -161,5 +167,23 @@ public class Joueur implements IJoueur {
 			throw new HearthstoneException("Pas possible de changer de deck en cours de partie !");
 		
 		this.deck = deck;
+	}
+
+	@Override
+	public ICarte getCarteEnJeu(String nomCarte) {
+		for (ICarte carte : jeu) {
+			if (carte.getNom().contains(nomCarte))
+				return carte;
+		}
+		return null;
+	}
+
+	@Override
+	public ICarte getCarteEnMain(String nomCarte) {
+		for (ICarte carte : main) {
+			if (carte.getNom().contains(nomCarte))
+				return carte;
+		}
+		return null;
 	}
 }

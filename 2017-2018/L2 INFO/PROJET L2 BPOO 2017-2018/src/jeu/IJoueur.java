@@ -12,4 +12,7 @@ public interface IJoueur {
 	void perdre(ICarte carte) throws HearthstoneException;
 	ArrayList<ICarte> getMain();
 	ArrayList<ICarte> getJeu();
+	ICarte getCarteEnJeu(String nomCarte);
+	Heros getHeros();
+	ICarte getCarteEnMain(String nomCarteMain);
 }

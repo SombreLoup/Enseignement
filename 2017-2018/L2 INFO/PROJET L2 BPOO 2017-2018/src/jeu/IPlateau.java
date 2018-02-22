@@ -7,4 +7,6 @@ public interface IPlateau {
 	IJoueur getAdversaire(IJoueur joueur) throws HearthstoneException;
 	void terminerPartie(Joueur joueur);
 	boolean estDemarree();
+	IJoueur getJoueurCourant();
+	void setJoueurCourant(IJoueur joueur) throws HearthstoneException;
 }

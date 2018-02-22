@@ -29,7 +29,7 @@ public class Serviteur extends Carte {
 	}
 
 	@Override
-	public void executerAction(Object cible) {
+	public void executerAction(Object cible) throws HearthstoneException {
 		if (cible instanceof Joueur) {
 			Joueur joueur = (Joueur)cible;
 			
@@ -55,12 +55,21 @@ public class Serviteur extends Carte {
 			} catch (HearthstoneException e) {
 				e.printStackTrace();
 			}
+			
+			return;
 		}
+		
+		throw new HearthstoneException("La cible est inconnue, cloporte bulbeux !");
 	}
 
 	@Override
 	public boolean disparait() {
 		return (vie<=0);
+	}
+	
+	@Override
+	public String toString() {
+		return "Serviteur ["+super.toString()+" attaque=" + attaque + "; vie=" + vie + "]";
 	}
 
 }

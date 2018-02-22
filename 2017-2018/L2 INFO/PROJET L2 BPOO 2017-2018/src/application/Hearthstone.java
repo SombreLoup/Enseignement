@@ -13,6 +13,7 @@ import jeu.cartes.Serviteur;
 import tools.Console;
 
 public class Hearthstone {
+	
 	public static void main(String[] args) throws HearthstoneException {
 		Console	out = new Console();
 				
@@ -20,11 +21,11 @@ public class Hearthstone {
 		
 		Joueur	joueur1 = new Joueur("WorgenGeant", Heros.getHeros("Jaina"));
 		joueur1.setDeck(getDeckNeutre(joueur1));
-		out.println(""+joueur1);
+		// out.println(""+joueur1);
 		
 		Joueur	joueur2 = new Joueur("Ali Baba", Heros.getHeros("Andu"));
 		joueur2.setDeck(getDeckNeutre(joueur2));
-		out.println(""+joueur2);
+		// out.println(""+joueur2);
 		
 		IPlateau board = Plateau.getInstance();
 		board.ajouterJoueur(joueur1);
@@ -32,11 +33,87 @@ public class Hearthstone {
 		board.demarrerPartie();
 		
 		while (board.estDemarree()) {
+			afficherMainJoueurCourant(out, board);
 			System.out.println(""+board);
-			out.readLine();
-			board.finTour(joueur1);
-			board.finTour(joueur2);
+			out.println("\n");
+			out.println("Que veux-tu faire ?");
+			out.println("1. Finir le tour");
+			out.println("2. Jouer une carte de ta main");
+			out.println("3. Utiliser une carte en jeu");
+			out.print("\n-->");
+			int choix = out.readInt();
+			ICarte carte;
+			
+			try {
+				switch(choix) {
+					case 1:
+						board.getJoueurCourant().finirTour();
+						break;
+
+					
+					case 2:
+						out.println("Laquelle ? (donne un bout de son nom);");
+						out.print("-->");
+						String nomCarteMain = out.readLine();
+						carte = board.getJoueurCourant().getCarteEnMain(nomCarteMain);
+						if (carte==null) {
+							throw new HearthstoneException("Cette carte n'est pas dans ta main...");
+						}
+						else {
+							board.getJoueurCourant().jouerCarte(carte);
+							break;
+						}
+					case 3:
+						out.println("Laquelle ? (donne un bout de son nom);");
+						out.print("-->");
+						String nomCarteJeu = out.readLine();
+						carte = board.getJoueurCourant().getCarteEnJeu(nomCarteJeu);
+						if (carte==null) {
+							throw new HearthstoneException("Cette carte n'est pas en jeu...");
+						}
+						else {
+							out.println("Qu'est-ce que tu vise ?");
+							out.println("1. Le héros");
+							out.println("2. Une autre carte");
+							out.print("-->");
+							int choixCible = out.readInt();
+							if (choixCible==1) {
+								board.getJoueurCourant().utiliserCarte(carte, board.getAdversaire(board.getJoueurCourant()));
+							}
+							else {
+								out.println("Quelle carte vises-tu ? (donne un bout de son nom)");
+								out.print("-->");
+								String nomCarteCible = out.readLine();
+								ICarte carteCible = board.getAdversaire(board.getJoueurCourant()).getCarteEnJeu(nomCarteCible);
+								if (carteCible==null) {
+									throw new HearthstoneException("Cette carte n'est pas en jeu...");
+								}
+								else {
+									board.getJoueurCourant().utiliserCarte(carte, carteCible);
+								}
+							}
+						}
+						break;
+				}
+			} catch (HearthstoneException e) {
+				System.err.println(e.getMessage());
+			}		
 		}
+	}
+
+	private static void afficherMainJoueurCourant(Console out, IPlateau board) {
+		out.println("");
+		out.println("### Ta main ###");
+		out.println("###############");
+		if (board.getJoueurCourant().getMain().size()==0) {
+			out.println("Ben, ta main est vide....");
+		}
+		else {
+			for (ICarte c : board.getJoueurCourant().getMain()) {
+				out.println("### "+c);
+			}
+		}
+		out.println("###############");
 	}
 	
 	private static ArrayList<ICarte> getDeckNeutre(IJoueur joueur) {

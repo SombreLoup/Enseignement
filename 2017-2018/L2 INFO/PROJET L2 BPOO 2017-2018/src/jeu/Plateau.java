@@ -111,13 +111,13 @@ public class Plateau implements IPlateau {
 		
 		s += "==================================\n";
 		for (ICarte carte : joueurs.get(0).getJeu()) {
-			s += carte;
+			s += carte+"\n";
 		}
 		s += "==================================\n";
 		s += "----------------------------------\n";
 		s += "==================================\n";
 		for (ICarte carte : joueurs.get(1).getJeu()) {
-			s += carte;
+			s += carte+"\n";
 		}
 		s += "==================================\n";
 		if (joueurCourant==joueurs.get(1))
@@ -127,5 +127,21 @@ public class Plateau implements IPlateau {
 		s += "**************************************************\n";
 		
 		return s;
+	}
+
+	@Override
+	public IJoueur getJoueurCourant() {
+		return joueurCourant;
+	}
+
+	@Override
+	public void setJoueurCourant(IJoueur joueur) throws HearthstoneException {
+		if (! joueurs.contains(joueur))
+			throw new HearthstoneException("Tu ne joues même pas, troll de pacotille !");
+		if (joueur==joueurCourant)
+			return;
+		
+		joueurCourant = joueur;
+			
 	}
 }
