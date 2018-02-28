@@ -5,21 +5,22 @@ import jeu.Joueur;
 import jeu.Plateau;
 
 
-public class CapaciteTirAssure extends Capacite {
+public class CapaciteAttaqueHeros extends Capacite {
 	
 	private int attaque = 2;
 	
-	public CapaciteTirAssure() {
-		super("Tir assuré", "Inflige 2 points de dégat au héros adverse");
+	public CapaciteAttaqueHeros(String nom, String description, int attaque) {
+		super(nom, description);
+		this.attaque = attaque;
 	}
 	
 	@Override
-	public void executerEffetDebutTour() {
+	public void executerEffetDebutTour() throws HearthstoneException {
 		nbUtilisation=0;
 	}
 
 	@Override
-	public void executerEffetFinTour() {
+	public void executerEffetFinTour() throws HearthstoneException {
 		// TODO Auto-generated method stub
 
 	}
@@ -36,7 +37,7 @@ public class CapaciteTirAssure extends Capacite {
 			
 			joueur.getHeros().diminuerVie(attaque);
 			if (joueur.getHeros().estMort())
-				Plateau.getInstance().terminerPartie(joueur);
+				Plateau.getInstance().gagnePartie(joueur);
 			
 			return;
 		}

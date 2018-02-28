@@ -25,6 +25,10 @@ public abstract class Carte implements ICarte {
 	public IJoueur getProprietaire() {
 		return proprietaire;
 	}
+	
+	public void setProprietaire(IJoueur proprietaire) {
+		this.proprietaire = proprietaire;
+	}
 
 	@Override
 	public String toString() {

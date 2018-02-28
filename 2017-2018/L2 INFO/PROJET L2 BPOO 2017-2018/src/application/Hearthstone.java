@@ -9,13 +9,29 @@ import jeu.IJoueur;
 import jeu.IPlateau;
 import jeu.Joueur;
 import jeu.Plateau;
+import jeu.capacites.CapaciteAttaqueHeros;
+import jeu.capacites.CapaciteCharge;
+import jeu.capacites.CapaciteInvocationServiteur;
 import jeu.cartes.Serviteur;
+import jeu.cartes.Sort;
+import jeu.cor.InterfaceCarteEnJeu;
+import jeu.cor.InterfaceCarteEnMain;
+import jeu.cor.InterfaceConsole;
+import jeu.cor.InterfaceJaina;
+import jeu.cor.InterfaceRexxar;
+import jeu.cor.InterfaceServiteur;
+import jeu.cor.InterfaceSortAttaque;
+import jeu.cor.InterfaceSortCharge;
 import tools.Console;
 
 public class Hearthstone {
+
+	public static Console	out = new Console();
 	
+	public static InterfaceConsole ihm = new InterfaceConsole();
+
 	public static void main(String[] args) throws HearthstoneException {
-		Console	out = new Console();
+		initInterface();
 				
 		//initJoueurAvecConsole(out);
 		
@@ -42,6 +58,7 @@ public class Hearthstone {
 			out.println("4. Utiliser le pouvoir du héros");
 			out.print("\n-->");
 			int choix = out.readInt();
+			
 			ICarte carte;
 			
 			try {
@@ -52,75 +69,15 @@ public class Hearthstone {
 
 					
 					case 2:
-						out.println("Laquelle ? (donne un bout de son nom);");
-						out.print("-->");
-						String nomCarteMain = out.readLine();
-						carte = board.getJoueurCourant().getCarteEnMain(nomCarteMain);
-						if (carte==null) {
-							throw new HearthstoneException("Cette carte n'est pas dans ta main...");
-						}
-						else {
-							board.getJoueurCourant().jouerCarte(carte);
-							break;
-						}
+						ihm.interagir("Jouer une carte en main");
+						break;
 					case 3:
-						out.println("Laquelle ? (donne un bout de son nom);");
-						out.print("-->");
-						String nomCarteJeu = out.readLine();
-						carte = board.getJoueurCourant().getCarteEnJeu(nomCarteJeu);
-						if (carte==null) {
-							throw new HearthstoneException("Cette carte n'est pas en jeu...");
-						}
-						else {
-							out.println("Qu'est-ce que tu vise ?");
-							out.println("1. Le héros");
-							out.println("2. Une autre carte");
-							out.print("-->");
-							int choixCible = out.readInt();
-							if (choixCible==1) {
-								board.getJoueurCourant().utiliserCarte(carte, board.getAdversaire(board.getJoueurCourant()));
-							}
-							else {
-								out.println("Quelle carte vises-tu ? (donne un bout de son nom)");
-								out.print("-->");
-								String nomCarteCible = out.readLine();
-								ICarte carteCible = board.getAdversaire(board.getJoueurCourant()).getCarteEnJeu(nomCarteCible);
-								if (carteCible==null) {
-									throw new HearthstoneException("Cette carte n'est pas en jeu...");
-								}
-								else {
-									board.getJoueurCourant().utiliserCarte(carte, carteCible);
-								}
-							}
-						}
+						carte = (ICarte) ihm.interagir("Jouer une carte en jeu");
+						ihm.interagir(carte);
 						break;
 						
 					case 4:
-						if (board.getJoueurCourant().getHeros().getNom().equals("Rexxar")) {
-							board.getJoueurCourant().utiliserPouvoir(board.getAdversaire(board.getJoueurCourant()));
-							break;
-						}
-						
-						out.println("Qu'est-ce que tu vises avec ton pouvoir ?");
-						out.println("1. Le héros");
-						out.println("2. Une autre carte");
-						out.print("-->");
-						int choixCible = out.readInt();
-						if (choixCible==1) {
-							board.getJoueurCourant().utiliserPouvoir(board.getAdversaire(board.getJoueurCourant()));
-						}
-						else {
-							out.println("Quelle carte vises-tu ? (donne un bout de son nom)");
-							out.print("-->");
-							String nomCarteCible = out.readLine();
-							ICarte carteCible = board.getAdversaire(board.getJoueurCourant()).getCarteEnJeu(nomCarteCible);
-							if (carteCible==null) {
-								throw new HearthstoneException("Cette carte n'est pas en jeu...");
-							}
-							else {
-								board.getJoueurCourant().utiliserPouvoir(carteCible);
-							}
-						}
+						ihm.interagir(board.getJoueurCourant().getHeros());
 						break;
 						
 				}
@@ -132,20 +89,44 @@ public class Hearthstone {
 
 
 	
+	private static void initInterface() {
+		ihm = new InterfaceRexxar(ihm);
+		ihm = new InterfaceJaina(ihm);
+		ihm = new InterfaceServiteur(ihm);
+		ihm = new InterfaceCarteEnJeu(ihm);
+		ihm = new InterfaceCarteEnMain(ihm);
+		ihm = new InterfaceSortCharge(ihm);
+		ihm = new InterfaceSortAttaque(ihm);
+		
+	}
+
+
+
 	private static ArrayList<ICarte> getDeckNeutre(IJoueur joueur) {
 		ArrayList<ICarte>	deck = new ArrayList<ICarte>();
 		
 		ICarte c;
-		c = new Serviteur(joueur, "Archere Elfe", 1, 1, 1);	deck.add(c);
-		c = new Serviteur(joueur, "Archimage", 6, 4, 7);	deck.add(c);
-		c = new Serviteur(joueur, "Busard Affamé", 5, 3, 2);	deck.add(c);
-		c = new Serviteur(joueur, "Champion de Hurlevent", 7, 6, 6);	deck.add(c);
-		c = new Serviteur(joueur, "Chasse-marée murloc", 2, 2, 1);	deck.add(c);
-		c = new Serviteur(joueur, "Chasseuse de tranchebauge", 3, 2, 3);	deck.add(c);
-		c = new Serviteur(joueur, "Chef de guerre loup-de-givre", 5, 4, 4);	deck.add(c);
-		c = new Serviteur(joueur, "Chef de raid", 3, 2, 2);	deck.add(c);
-		c = new Serviteur(joueur, "Chevalier de Hurlevent", 4, 2, 5);	deck.add(c);
-		c = new Serviteur(joueur, "Chevaucheur de loup", 3, 3, 1);	deck.add(c);
+		
+/*
+ * 1. 
+2. Champion de Hurlevent (effet permanent +1/+1 aux autres serviteurs)
+3. Chef de raid (effet permanent +1 d'attaque aux autres serviteurs)
+4. Le clerc du soleil brisé (cri de guerre =  +1/+1 à un serviteur allié choisi)
+5. Le garde de Baie-du-buton (provocation)
+6. Missilière téméraire (Charge)
+7. L'orgre magi (provocation)
+8. Archimage (provocation)
+9. Gnome lépreux (râle d'agonie --> 2 pts dégats au héros adverse)
+10. Golem des moissons (râle d'agonie --> invoque un 'golem endomagé' 2/1)
+11. Sort Charge (pour tout le monde)
+12. Sort d'attaque 2 pts dégats		
+ */
+		
+		
+		c = new Serviteur(joueur, "Chasse-marée murloc", 2, 2, 1, new CapaciteInvocationServiteur("Cri de guerre",	 "Invoque un serviteur 1/1", new Serviteur(joueur, "Serviteur de murloc", 0, 1, 1, null)));	deck.add(c);
+		c = new Sort(joueur, "Charge", 1, new CapaciteCharge());	deck.add(c);
+		c = new Sort(joueur, "Attaque mentale", 2, new CapaciteAttaqueHeros("Attaque", "Inflige 5 points d'attaque au héros", 5)); deck.add(c);
+		
 		
 		return deck;
 		

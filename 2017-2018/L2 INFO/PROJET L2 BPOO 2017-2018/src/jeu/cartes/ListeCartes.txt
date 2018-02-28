@@ -1,0 +1,37 @@
+Indépendant (que des serviteurs):
+1. Chasse marée - murloc (cri de guerre = invoque un serviteur 1/1)
+2. Champion de Hurlevent (effet permanent +1/+1 aux autres serviteurs)
+3. Chef de raid (effet permanent +1 d'attaque)
+4. Le clerc du soleil brisé (cri de guerre =  +1/+1 à un serviteur allié choisi)
+5. Le garde de Baie-du-buton (provocation)
+6. Missilière téméraire (Charge)
+7. L'orgre magi (provocation)
+8. Archimage (provocation)
+9. Gnome lépreux (râle d'agonie --> 2 pts dégats au héros adverse)
+10. Golem des moissons (râle d'agonie --> invoque un 'golem endomagé' 2/1)
+11. Sort Charge (pour tout le monde)
+12. Sort d'attaque 2 pts dégats
+
+Carte pas dans le deck de départ
+--------------------------------
+Golem endomagé
+Murloc 1/1
+
+
+
+Jaina
+-----
+Pouvoir : Boule de feu
+1. Sort 'Choc de flamme' : inflige 4 pts de dégats à tous les serviteurs adverses
+2. Sort 'Eclair de givre' : inflige 3 pts de dégats au héros ou à serviteur (+gele)
+3. Sort 'intelligence des arcanes' : pioche 2 cartes
+4. Sort 'image mirroir' : invoke 2 serviteurs 0/2 avec provocation
+5. Sort 'Explosion pyrothechnique' : inflige 10 pts de dégats au héros ou à un serviteur
+
+Rexxar
+------
+1. Serviteur Busard affamé (pioche une carte)
+2. Sort 'Marque du chasseur' (baisse à 1 pt de vie le serviteur ciblé)
+3. Sort 'tir des arcanes' inflige 2pts de dégats à qui tu veux
+4. Sort 'Lachez les chiens' (les chiens 1/1 autant que de serviteur adverse et ils ont charge)
+5. Sort 'ordre de tuer' (inflige 3 pts de dégats)

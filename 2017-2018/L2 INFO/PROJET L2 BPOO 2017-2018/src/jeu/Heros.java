@@ -2,8 +2,10 @@ package jeu;
 
 import java.util.ArrayList;
 
-import jeu.capacites.CapaciteBouleDeFeu;
-import jeu.capacites.CapaciteTirAssure;
+import jeu.capacites.CapaciteAttaqueCible;
+import jeu.capacites.CapaciteAttaqueHeros;
+import jeu.capacites.CapaciteInvocationServiteur;
+import jeu.cartes.Serviteur;
 
 public class Heros implements Cloneable {
 	/******
@@ -39,11 +41,15 @@ public class Heros implements Cloneable {
 
 
 	private static void initialiserLesHeros() {
-		Heros jaina = new Heros("Jaina Portvaillant", 15, new CapaciteBouleDeFeu());
+		Heros jaina = new Heros("Jaina Portvaillant", 15, new CapaciteAttaqueCible("Boule de feu", "Inflige 1 point de dégat à la cible", 1));
 		listeDesHeros.add(jaina);
 			
-		listeDesHeros.add(new Heros("Rexxar", 15, new CapaciteTirAssure()));
-		listeDesHeros.add(new Heros("Uther le Porteur de Lumière", 15));
+		Heros rexxar = new Heros("Rexxar", 15, new CapaciteAttaqueHeros("Tir assuré", "Inflige 2 points de dégat au héros adverse",2));
+		listeDesHeros.add(rexxar);
+		
+		Heros uther = new Heros("Uther le Porteur de Lumière", 15, new CapaciteInvocationServiteur("Pouvoir héroïque", "Invoque une recrue de la Main d'Argent 1/1", new Serviteur(null,"Recrue de la Main d'Argent",0,1,1,null)));
+		listeDesHeros.add(uther);
+		
 		listeDesHeros.add(new Heros("Garrosh Hurlenfer", 15));
 		listeDesHeros.add(new Heros("Malfurion Hurlorage", 15));
 		listeDesHeros.add(new Heros("Gul'dan", 15));

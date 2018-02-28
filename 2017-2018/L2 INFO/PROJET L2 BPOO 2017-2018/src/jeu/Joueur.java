@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import jeu.cartes.Carte;
 
 public class Joueur implements IJoueur {
-	public final static int	MAX_MANA = 10;
-	public final static int TAILLE_DECK = 12;
 	
 	private	String	pseudo;
 	private	int		mana;
@@ -44,6 +42,11 @@ public class Joueur implements IJoueur {
 		return mana;
 	}
 	
+	@Override
+	public int getStockMana() {
+		return manaDuTour;
+	}
+
 	public Heros getHeros() {
 		return heros;
 	}
@@ -100,7 +103,7 @@ public class Joueur implements IJoueur {
 			heros.getPouvoir().executerEffetDebutTour();
 		
 		for (ICarte carte : jeu) {
-			carte.executerEffetDebutTour();
+			carte.executerEffetDebutTour(null);
 		}
 	}
 
@@ -118,12 +121,12 @@ public class Joueur implements IJoueur {
 		Plateau.getInstance().finTour(this);
 
 		for (ICarte carte : jeu) {
-			carte.executerEffetFinTour();
+			carte.executerEffetFinTour(null);
 		}
 	}
 
 	@Override
-	public void piocher() {
+	public void piocher() throws HearthstoneException {
 		int	nb = deck.size();
 		if (nb==0)
 			return;
@@ -144,7 +147,41 @@ public class Joueur implements IJoueur {
 		this.manaDuTour -= carte.getCout();
 		main.remove(carte);
 		jeu.add(carte);
-		carte.executerEffetDebutMiseEnJeu();
+		
+		try {
+			carte.executerEffetDebutMiseEnJeu(null);
+		}
+		catch (HearthstoneCibleNullException e) {
+			this.manaDuTour += carte.getCout();
+			main.add(carte);
+			jeu.remove(carte);
+			throw new HearthstoneCibleNullException("Problème de cible pour cette carte --> "+carte);
+		}
+
+
+	}
+
+	@Override
+	public void jouerCarte(ICarte carte, Object cible) throws HearthstoneException {
+		if (! main.contains(carte))
+			throw new HearthstoneException("Tricheur ! Tu ne possède pas cette carte "+carte);
+		if ( manaDuTour < carte.getCout())
+			throw new HearthstoneException("T'as pas assez de mana, mendiant globuleux ! "+carte);
+		
+		this.manaDuTour -= carte.getCout();
+		main.remove(carte);
+		jeu.add(carte);
+		
+		try {
+			carte.executerEffetDebutMiseEnJeu(cible);
+		}
+		catch (HearthstoneCibleNullException e) {
+			this.manaDuTour += carte.getCout();
+			main.add(carte);
+			jeu.remove(carte);
+			throw new HearthstoneCibleNullException("Problème de cible pour cette carte --> "+carte);
+		}
+		
 	}
 
 	@Override
@@ -153,6 +190,7 @@ public class Joueur implements IJoueur {
 			throw new HearthstoneException("Tricheur ! Cette carte n'est pas encore en jeu --> "+carte);
 		
 		carte.executerAction(cible);
+		
 		if (carte.disparait())
 			jeu.remove(carte);
 	}
@@ -166,11 +204,11 @@ public class Joueur implements IJoueur {
 	}
 
 	@Override
-	public void perdre(ICarte carte) throws HearthstoneException {
+	public void perdreCarte(ICarte carte) throws HearthstoneException {
 		if (! jeu.contains(carte))
 			throw new HearthstoneException("Cette carte n'est même pas en jeu --> "+carte);
 		jeu.remove(carte);
-		carte.executerEffetDisparition();
+		carte.executerEffetDisparition(null);
 	}
 
 	public void setDeck(ArrayList<ICarte> deck) throws HearthstoneException {
@@ -199,10 +237,5 @@ public class Joueur implements IJoueur {
 				return carte;
 		}
 		return null;
-	}
-
-	@Override
-	public int getStockMana() {
-		return manaDuTour;
 	}
 }

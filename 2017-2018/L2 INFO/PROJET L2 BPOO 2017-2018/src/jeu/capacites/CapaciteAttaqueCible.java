@@ -6,12 +6,13 @@ import jeu.Joueur;
 import jeu.Plateau;
 import jeu.cartes.Serviteur;
 
-public class CapaciteBouleDeFeu extends Capacite {
+public class CapaciteAttaqueCible extends Capacite {
 
-	private	int attaque = 1;
+	private	int attaque;
 	
-	public CapaciteBouleDeFeu() {
-		super("Boule de feu", "Inflige 1 point de dégat à la cible");
+	public CapaciteAttaqueCible(String nom, String description, int attaque) {
+		super(nom,description);
+		this.attaque = attaque;
 	}
 	
 	@Override
@@ -26,7 +27,7 @@ public class CapaciteBouleDeFeu extends Capacite {
 			
 			joueur.getHeros().diminuerVie(attaque);
 			if (joueur.getHeros().estMort())
-				Plateau.getInstance().terminerPartie(joueur);
+				Plateau.getInstance().gagnePartie(joueur);
 			
 			return;
 		}
@@ -37,7 +38,7 @@ public class CapaciteBouleDeFeu extends Capacite {
 			try {
 				serviteur.diminuerVie(attaque);
 				if (serviteur.disparait())
-					serviteur.getProprietaire().perdre(serviteur);				
+					serviteur.getProprietaire().perdreCarte(serviteur);				
 			} catch (HearthstoneException e) {
 				e.printStackTrace();
 			}
@@ -51,14 +52,15 @@ public class CapaciteBouleDeFeu extends Capacite {
 	}
 
 	@Override
-	public void executerEffetDebutTour() {
-		nbUtilisation=0;
+	public void executerEffetDebutTour() throws HearthstoneException {
+		nbUtilisation = 0;
 	}
 
 	@Override
-	public void executerEffetFinTour() {
+	public void executerEffetFinTour() throws HearthstoneException {
 		// TODO Auto-generated method stub
 		
 	}
+
 
 }

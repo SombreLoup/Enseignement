@@ -4,40 +4,44 @@ import jeu.HearthstoneException;
 import jeu.IJoueur;
 import jeu.Joueur;
 import jeu.Plateau;
+import jeu.capacites.Capacite;
+import jeu.capacites.CapaciteProvocation;
 
 public class Serviteur extends Carte {
 	private	int	attaque;
 	private	int vie;
 	private	int	tourEnAttente;
 	private	int	tourJoue;
+	private Capacite capacite;
 	
 	
-	public Serviteur(IJoueur proprietaire, String nom, int cout, int attaque, int vie) {
+	public Serviteur(IJoueur proprietaire, String nom, int cout, int attaque, int vie, Capacite capacite) {
 		super(proprietaire, nom, cout);
+		this.capacite = capacite;
 		this.attaque = attaque;
 		this.vie = vie;
 	}
 
 	@Override
-	public void executerEffetDebutTour() {
+	public void executerEffetDebutTour(Object cible) {
 		tourJoue = 0;
 		if (tourEnAttente>0)
 			tourEnAttente--;
 	}
 
 	@Override
-	public void executerEffetFinTour() {
+	public void executerEffetFinTour(Object cible) throws HearthstoneException {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void executerEffetDebutMiseEnJeu() {
+	public void executerEffetDebutMiseEnJeu(Object cible) {
 		tourEnAttente = 1;
 	}
 
 	@Override
-	public void executerEffetDisparition() {
+	public void executerEffetDisparition(Object cible) throws HearthstoneException {
 		// TODO Auto-generated method stub
 		
 	}
@@ -51,6 +55,9 @@ public class Serviteur extends Carte {
 		if (tourJoue != 0) {
 			throw new HearthstoneException("Tu l'as déjà joué ce tour ! Tricheur !");
 		}
+		
+		if (problemeProvocation(cible))
+			throw new HearthstoneException("Impossible d'attaquer cette cible car un serviteur a provocation");
 
 		tourJoue++;
 		
@@ -59,7 +66,7 @@ public class Serviteur extends Carte {
 			
 			joueur.getHeros().diminuerVie(attaque);
 			if (joueur.getHeros().estMort())
-				Plateau.getInstance().terminerPartie(joueur);
+				Plateau.getInstance().gagnePartie(joueur);
 			
 			return;
 		}
@@ -70,11 +77,11 @@ public class Serviteur extends Carte {
 			try {
 				serviteur.vie -= attaque;
 				if (serviteur.disparait())
-					serviteur.getProprietaire().perdre(serviteur);
+					serviteur.getProprietaire().perdreCarte(serviteur);
 				
 				this.vie -= serviteur.attaque;
 				if (this.disparait())
-					this.getProprietaire().perdre(this);
+					this.getProprietaire().perdreCarte(this);
 				
 			} catch (HearthstoneException e) {
 				e.printStackTrace();
@@ -86,6 +93,19 @@ public class Serviteur extends Carte {
 		tourJoue--;
 		
 		throw new HearthstoneException("La cible est inconnue, cloporte bulbeux !");
+	}
+
+	private boolean problemeProvocation(Object cible) {
+		if (cible instanceof Serviteur) {
+			Serviteur serviteur = (Serviteur) cible;
+			if (serviteur.getCapacite() instanceof CapaciteProvocation)
+				return true;
+		}
+		return false;
+	}
+
+	private Capacite getCapacite() {
+		return this.capacite;
 	}
 
 	@Override
@@ -100,6 +120,10 @@ public class Serviteur extends Carte {
 
 	public void diminuerVie(int attaque) {
 		vie -= attaque;
+	}
+
+	public void rendreJouable() {
+		tourEnAttente = 0;
 	}
 
 }
