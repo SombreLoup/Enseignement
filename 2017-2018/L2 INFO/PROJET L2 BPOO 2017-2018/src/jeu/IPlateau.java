@@ -13,5 +13,5 @@ public interface IPlateau {
 	void demarrerPartie() throws HearthstoneException;
 	boolean estDemarree();
 	void finTour(IJoueur joueur) throws HearthstoneException;
-	void gagnePartie(Joueur joueur) throws HearthstoneException;
+	void gagnePartie(IJoueur joueur) throws HearthstoneException;
 }

@@ -1,6 +1,10 @@
 package jeu.capacites;
 
 import jeu.HearthstoneException;
+import jeu.ICarte;
+import jeu.IJoueur;
+import jeu.IPlateau;
+import jeu.Plateau;
 import jeu.cartes.Serviteur;
 
 public class CapaciteInvocationServiteur extends Capacite {
@@ -30,8 +34,29 @@ public class CapaciteInvocationServiteur extends Capacite {
 
 	@Override
 	public void executerAction(Object cible) throws HearthstoneException {
-		// TODO Auto-generated method stub
+		
+	}
 
+	@Override
+	public void executerEffetMiseEnJeu() throws HearthstoneException {
+		IPlateau board = Plateau.getInstance();
+		IJoueur	joueur = board.getJoueurCourant();
+
+		try {
+			Serviteur clone = (Serviteur) serviteurInvoque.clone();
+			clone.setProprietaire(joueur);
+			joueur.getJeu().add(clone);
+			clone.executerEffetDebutMiseEnJeu(null);
+
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void executerEffetDisparition() throws HearthstoneException {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

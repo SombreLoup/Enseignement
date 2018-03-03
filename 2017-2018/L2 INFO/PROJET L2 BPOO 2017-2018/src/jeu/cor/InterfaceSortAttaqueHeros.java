@@ -4,9 +4,9 @@ import jeu.ICarte;
 import jeu.capacites.CapaciteAttaqueHeros;
 import jeu.cartes.Sort;
 
-public class InterfaceSortAttaque extends InterfaceConsole {
+public class InterfaceSortAttaqueHeros extends InterfaceConsole {
 
-	public InterfaceSortAttaque(InterfaceConsole ihm) {
+	public InterfaceSortAttaqueHeros(InterfaceConsole ihm) {
 		super(ihm);
 	}
 

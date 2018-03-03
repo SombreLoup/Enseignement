@@ -1,45 +1,51 @@
 package jeu.capacites;
 
 import jeu.HearthstoneException;
-import jeu.cartes.Serviteur;
+import jeu.IJoueur;
+import jeu.IPlateau;
+import jeu.Plateau;
 
-public class CapaciteCharge extends Capacite {
+public class CapacitePioche extends Capacite {
 
-	public CapaciteCharge() {
-		super("Charge", "vise un serviteur en attente et il peut attaquer tout de suite");
+	private	int	nombreCartesPiochees;
+	
+	public CapacitePioche(int nbCartes) {
+		super("Pioche", "Pioche des cartes");
+		this.nombreCartesPiochees = nbCartes;
 	}
 
 	@Override
 	public void executerEffetDebutTour() throws HearthstoneException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void executerEffetFinTour() throws HearthstoneException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void executerAction(Object cible) throws HearthstoneException {
-		if (! (cible instanceof Serviteur))
-			throw new HearthstoneException("Ver de terre greloteux que tu es, tu dois désigner un serviteur !");
+		IPlateau	 board = Plateau.getInstance();
+		IJoueur joueur = board.getJoueurCourant();
 		
-		Serviteur serviteur = (Serviteur)cible;
-		serviteur.rendreJouable();
+		for (int i = 0; i < nombreCartesPiochees; i++) {
+			joueur.piocher();
+		}
 	}
 
 	@Override
 	public void executerEffetMiseEnJeu() throws HearthstoneException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void executerEffetDisparition() throws HearthstoneException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

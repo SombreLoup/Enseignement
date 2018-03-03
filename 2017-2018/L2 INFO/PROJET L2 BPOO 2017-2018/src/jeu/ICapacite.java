@@ -33,4 +33,7 @@ public interface ICapacite {
 	 * @throws HearthstoneException En cas de problème...
 	 */
 	void executerAction(Object cible) throws HearthstoneException;
+
+	void executerEffetMiseEnJeu() throws HearthstoneException;
+	void executerEffetDisparition() throws HearthstoneException;
 }

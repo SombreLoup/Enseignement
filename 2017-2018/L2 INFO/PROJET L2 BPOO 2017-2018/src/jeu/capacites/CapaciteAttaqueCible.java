@@ -6,13 +6,11 @@ import jeu.Joueur;
 import jeu.Plateau;
 import jeu.cartes.Serviteur;
 
-public class CapaciteAttaqueCible extends Capacite {
+public class CapaciteAttaqueCible extends CapaciteAttaque {
 
-	private	int attaque;
 	
 	public CapaciteAttaqueCible(String nom, String description, int attaque) {
-		super(nom,description);
-		this.attaque = attaque;
+		super(nom,description, attaque);
 	}
 	
 	@Override
@@ -50,17 +48,4 @@ public class CapaciteAttaqueCible extends Capacite {
 
 		throw new HearthstoneException("La cible est inconnue...");
 	}
-
-	@Override
-	public void executerEffetDebutTour() throws HearthstoneException {
-		nbUtilisation = 0;
-	}
-
-	@Override
-	public void executerEffetFinTour() throws HearthstoneException {
-		// TODO Auto-generated method stub
-		
-	}
-
-
 }

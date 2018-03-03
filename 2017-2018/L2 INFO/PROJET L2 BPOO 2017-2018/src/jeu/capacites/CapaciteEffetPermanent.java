@@ -1,6 +1,11 @@
 package jeu.capacites;
 
 import jeu.HearthstoneException;
+import jeu.ICarte;
+import jeu.IJoueur;
+import jeu.IPlateau;
+import jeu.Plateau;
+import jeu.cartes.Serviteur;
 
 public class CapaciteEffetPermanent extends Capacite {
 
@@ -15,20 +20,44 @@ public class CapaciteEffetPermanent extends Capacite {
 
 	@Override
 	public void executerEffetDebutTour() throws HearthstoneException {
-		// TODO Auto-generated method stub
-
+		IPlateau board = Plateau.getInstance();
+		IJoueur	joueur = board.getJoueurCourant();
+		
+		for (ICarte carte : joueur.getJeu()) {
+			if (carte instanceof Serviteur) {
+				Serviteur serviteur = (Serviteur)carte;
+				serviteur.ajouterBonusVie(bonusVie);
+				serviteur.ajouterBonusAttaque(bonusAttaque);
+			}
+		}
 	}
 
 	@Override
 	public void executerEffetFinTour() throws HearthstoneException {
-		// TODO Auto-generated method stub
-
+		IPlateau board = Plateau.getInstance();
+		IJoueur	joueur = board.getJoueurCourant();
+		
+		for (ICarte carte : joueur.getJeu()) {
+			if (carte instanceof Serviteur) {
+				Serviteur serviteur = (Serviteur)carte;
+				serviteur.ajouterBonusVie(-bonusVie);
+				serviteur.ajouterBonusAttaque(-bonusAttaque);
+			}
+		}
 	}
 
 	@Override
 	public void executerAction(Object cible) throws HearthstoneException {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void executerEffetMiseEnJeu() throws HearthstoneException {
+	}
+
+	@Override
+	public void executerEffetDisparition() throws HearthstoneException {
 	}
 
 }

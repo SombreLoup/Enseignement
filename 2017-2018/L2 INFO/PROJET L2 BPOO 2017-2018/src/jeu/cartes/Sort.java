@@ -56,5 +56,10 @@ public class Sort extends Carte {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	@Override
+	public String toString() {
+		return "Sort ["+super.toString()+"]"+this.getCapacite();
+	}
 
 }

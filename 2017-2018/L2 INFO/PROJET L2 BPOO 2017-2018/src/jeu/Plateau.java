@@ -82,7 +82,7 @@ public class Plateau implements IPlateau {
 	}
 
 	@Override
-	public void gagnePartie(Joueur joueur) throws HearthstoneException {
+	public void gagnePartie(IJoueur joueur) throws HearthstoneException {
 		estEnCours = false;
 		String s = "* "+joueur.getPseudo()+" a gagné ! *";
 		String stars = "";

@@ -1,45 +1,53 @@
 package jeu.capacites;
 
 import jeu.HearthstoneException;
+import jeu.IJoueur;
+import jeu.IPlateau;
+import jeu.Plateau;
 import jeu.cartes.Serviteur;
 
-public class CapaciteCharge extends Capacite {
+public class CapaciteImageMirroir extends Capacite {
 
-	public CapaciteCharge() {
-		super("Charge", "vise un serviteur en attente et il peut attaquer tout de suite");
+	public CapaciteImageMirroir() {
+		super("Image mirroir", "Invoque 2 serviteurs 0/2");
 	}
-
 	@Override
 	public void executerEffetDebutTour() throws HearthstoneException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void executerEffetFinTour() throws HearthstoneException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void executerAction(Object cible) throws HearthstoneException {
-		if (! (cible instanceof Serviteur))
-			throw new HearthstoneException("Ver de terre greloteux que tu es, tu dois désigner un serviteur !");
-		
-		Serviteur serviteur = (Serviteur)cible;
-		serviteur.rendreJouable();
+		IPlateau board = Plateau.getInstance();
+		IJoueur	joueur = board.getJoueurCourant();
+
+		try {
+			Serviteur	serviteur1 = new Serviteur(joueur, "Serviteur de Jaina", 0, 0, 2, new CapaciteProvocation());
+			Serviteur serviteur2 = (Serviteur) serviteur1.clone();
+			joueur.getJeu().add(serviteur1);
+			joueur.getJeu().add(serviteur2);
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void executerEffetMiseEnJeu() throws HearthstoneException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void executerEffetDisparition() throws HearthstoneException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

@@ -1,45 +1,41 @@
 package jeu.capacites;
 
+
 import jeu.HearthstoneException;
 
-public class CapaciteProvocation extends Capacite {
+public  abstract class CapaciteAttaque extends Capacite {
 
-	public CapaciteProvocation(String nom, String description) {
-		super(nom, description);
+	protected	int attaque;
+	
+	public CapaciteAttaque(String nom, String description, int attaque) {
+		super(nom,description);
+		this.attaque = attaque;
 	}
+	
 
-	public CapaciteProvocation() {
-		super("Provocation", "Les attaques n'atteindront pas votre héros");
-	}
 
 	@Override
 	public void executerEffetDebutTour() throws HearthstoneException {
-		// TODO Auto-generated method stub
-
+		nbUtilisation = 0;
 	}
 
 	@Override
 	public void executerEffetFinTour() throws HearthstoneException {
 		// TODO Auto-generated method stub
-
+		
 	}
-
-	@Override
-	public void executerAction(Object cible) throws HearthstoneException {
-		// TODO Auto-generated method stub
-
-	}
-
+	
 	@Override
 	public void executerEffetMiseEnJeu() throws HearthstoneException {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 	@Override
 	public void executerEffetDisparition() throws HearthstoneException {
 		// TODO Auto-generated method stub
 		
 	}
+
 
 }

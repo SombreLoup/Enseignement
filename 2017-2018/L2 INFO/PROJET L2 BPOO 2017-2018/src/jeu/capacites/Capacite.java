@@ -25,4 +25,5 @@ public abstract class Capacite implements ICapacite {
 	public String toString() {
 		return "Capacite [nom=" + nom + ", description=" + description + "]";
 	}
+
 }

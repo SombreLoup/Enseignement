@@ -1,7 +1,9 @@
 package jeu.cartes;
 
 import jeu.HearthstoneException;
+import jeu.ICarte;
 import jeu.IJoueur;
+import jeu.IPlateau;
 import jeu.Joueur;
 import jeu.Plateau;
 import jeu.capacites.Capacite;
@@ -21,29 +23,40 @@ public class Serviteur extends Carte {
 		this.attaque = attaque;
 		this.vie = vie;
 	}
+	
+	public Serviteur(Serviteur serviteur) {
+		super(serviteur.getProprietaire(),serviteur.getNom(), serviteur.getCout());
+		this.capacite = serviteur.capacite;
+		this.attaque = serviteur.attaque;
+		this.vie = serviteur.vie;		
+	}
 
 	@Override
-	public void executerEffetDebutTour(Object cible) {
+	public void executerEffetDebutTour(Object cible) throws HearthstoneException {
 		tourJoue = 0;
 		if (tourEnAttente>0)
 			tourEnAttente--;
+		if (capacite != null)
+			capacite.executerEffetDebutTour();
 	}
 
 	@Override
 	public void executerEffetFinTour(Object cible) throws HearthstoneException {
-		// TODO Auto-generated method stub
-
+		if (capacite != null)
+			capacite.executerEffetFinTour();
 	}
 
 	@Override
-	public void executerEffetDebutMiseEnJeu(Object cible) {
+	public void executerEffetDebutMiseEnJeu(Object cible) throws HearthstoneException {
 		tourEnAttente = 1;
+		if (capacite != null)
+			capacite.executerEffetMiseEnJeu();
 	}
 
 	@Override
 	public void executerEffetDisparition(Object cible) throws HearthstoneException {
-		// TODO Auto-generated method stub
-		
+		if (capacite != null)
+			capacite.executerEffetDisparition();
 	}
 
 	@Override
@@ -99,8 +112,26 @@ public class Serviteur extends Carte {
 		if (cible instanceof Serviteur) {
 			Serviteur serviteur = (Serviteur) cible;
 			if (serviteur.getCapacite() instanceof CapaciteProvocation)
-				return true;
+				return false;
 		}
+		
+		boolean probleme = false;
+		IPlateau board = Plateau.getInstance();
+		try {
+			IJoueur jouerAdverse = board.getAdversaire(getProprietaire());
+			
+			for (ICarte carte : jouerAdverse.getJeu()) {
+				Serviteur serviteur = (Serviteur)carte;
+				probleme = serviteur.getCapacite() instanceof CapaciteProvocation;
+				if (probleme)
+					return probleme;
+			}
+		} catch (HearthstoneException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		return false;
 	}
 
@@ -115,7 +146,7 @@ public class Serviteur extends Carte {
 	
 	@Override
 	public String toString() {
-		return "Serviteur ["+super.toString()+" attaque=" + attaque + "; vie=" + vie + "]"+(tourEnAttente==1?"(En attente)":"")+(tourEnAttente==0 && tourJoue==0?"(jouable)":"");
+		return "Serviteur ["+super.toString()+" attaque=" + attaque + "; vie=" + vie + "]"+capacite+(tourEnAttente==1?"(En attente)":"")+(tourEnAttente==0 && tourJoue==0?"(jouable)":"");
 	}
 
 	public void diminuerVie(int attaque) {
@@ -126,4 +157,20 @@ public class Serviteur extends Carte {
 		tourEnAttente = 0;
 	}
 
+	public void ajouterBonusVie(int bonusVie) {
+		vie += bonusVie;
+	}
+
+	public void ajouterBonusAttaque(int bonusAttaque) {
+		attaque += bonusAttaque;
+	}
+
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		return new Serviteur(this);
+	}
+
+	public int getVie() {
+		return vie;
+	}
 }

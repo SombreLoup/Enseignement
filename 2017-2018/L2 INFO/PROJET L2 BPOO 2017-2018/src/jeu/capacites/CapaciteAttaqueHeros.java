@@ -1,29 +1,19 @@
 package jeu.capacites;
 
 import jeu.HearthstoneException;
+import jeu.IJoueur;
+import jeu.IPlateau;
 import jeu.Joueur;
 import jeu.Plateau;
 
 
-public class CapaciteAttaqueHeros extends Capacite {
+public class CapaciteAttaqueHeros extends CapaciteAttaque {
 	
-	private int attaque = 2;
 	
 	public CapaciteAttaqueHeros(String nom, String description, int attaque) {
-		super(nom, description);
-		this.attaque = attaque;
+		super(nom, description, attaque);
 	}
 	
-	@Override
-	public void executerEffetDebutTour() throws HearthstoneException {
-		nbUtilisation=0;
-	}
-
-	@Override
-	public void executerEffetFinTour() throws HearthstoneException {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	public void executerAction(Object cible) throws HearthstoneException {
@@ -32,19 +22,14 @@ public class CapaciteAttaqueHeros extends Capacite {
 		
 		nbUtilisation++;
 		
-		if (cible instanceof Joueur) {
-			Joueur joueur = (Joueur)cible;
+		IPlateau board = Plateau.getInstance();
+		IJoueur joueur = board.getJoueurCourant();
+		IJoueur joueurAdverse = board.getAdversaire(joueur);
 			
-			joueur.getHeros().diminuerVie(attaque);
-			if (joueur.getHeros().estMort())
-				Plateau.getInstance().gagnePartie(joueur);
-			
-			return;
-		}
-				
-		nbUtilisation--;
-
-		throw new HearthstoneException("La cible est inconnue...");
+		joueurAdverse.getHeros().diminuerVie(attaque);
+		if (joueurAdverse.getHeros().estMort())
+			board.gagnePartie(joueur);
 	}
+
 
 }

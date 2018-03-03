@@ -7,8 +7,8 @@ import jeu.cartes.Carte;
 public class Joueur implements IJoueur {
 	
 	private	String	pseudo;
-	private	int		mana;
-	private	int		manaDuTour;
+	public	int		mana;
+	public	int		manaDuTour;
 	private	Heros	heros;
 
 	private		ArrayList<ICarte>		deck = new ArrayList<ICarte>();
