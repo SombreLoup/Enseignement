@@ -38,7 +38,7 @@ public class CapaciteInvocationServiteur extends Capacite {
 	}
 
 	@Override
-	public void executerEffetMiseEnJeu() throws HearthstoneException {
+	public void executerEffetMiseEnJeu(Object cible) throws HearthstoneException {
 		IPlateau board = Plateau.getInstance();
 		IJoueur	joueur = board.getJoueurCourant();
 

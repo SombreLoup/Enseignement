@@ -1,8 +1,7 @@
 package jeu.capacites;
 
+import jeu.HearthstoneCibleNullException;
 import jeu.HearthstoneException;
-import jeu.Joueur;
-import jeu.Plateau;
 import jeu.cartes.Serviteur;
 
 public class CapaciteMarqueChasseur extends CapaciteAttaqueCible {
@@ -14,6 +13,8 @@ public class CapaciteMarqueChasseur extends CapaciteAttaqueCible {
 	
 	@Override
 	public void executerAction(Object cible) throws HearthstoneException {
+		if (cible == null)
+			throw new HearthstoneCibleNullException("La marque du chasseur doit avoir une cible");
 		if (nbUtilisation==1)
 			throw new HearthstoneException("Pas possible, t'as déjà craché ton sort, man !");
 		

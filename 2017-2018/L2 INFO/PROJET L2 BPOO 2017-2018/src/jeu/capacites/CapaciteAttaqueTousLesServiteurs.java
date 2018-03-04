@@ -1,6 +1,8 @@
 package jeu.capacites;
 
 
+import java.util.ArrayList;
+
 import jeu.HearthstoneException;
 import jeu.ICarte;
 import jeu.IJoueur;
@@ -11,7 +13,6 @@ import jeu.cartes.Serviteur;
 
 public class CapaciteAttaqueTousLesServiteurs extends CapaciteAttaque {
 
-	private	int attaque;
 	
 	public CapaciteAttaqueTousLesServiteurs(String nom, String description, int attaque) {
 		super(nom,description, attaque);
@@ -27,17 +28,17 @@ public class CapaciteAttaqueTousLesServiteurs extends CapaciteAttaque {
 		IPlateau	 board = Plateau.getInstance();
 		IJoueur joueurAdverse = board.getAdversaire(board.getJoueurCourant());
 		
+		ArrayList<ICarte> newJeu = new ArrayList<ICarte>();
 		for (ICarte carte : joueurAdverse.getJeu()) {
 			if (carte instanceof Serviteur) {
 				Serviteur serviteur = (Serviteur)carte;
 				serviteur.diminuerVie(attaque);
 				if (serviteur.disparait())
-					serviteur.getProprietaire().perdreCarte(serviteur);
+					newJeu.add(serviteur);
 			}
 		}
-		
-		nbUtilisation--;
-
-		throw new HearthstoneException("La cible est inconnue...");
+		for (ICarte carte : newJeu) {
+			joueurAdverse.perdreCarte(carte);
+		}
 	}
 }

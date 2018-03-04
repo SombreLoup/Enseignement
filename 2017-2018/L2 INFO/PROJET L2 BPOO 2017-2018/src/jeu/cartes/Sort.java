@@ -16,9 +16,6 @@ public class Sort extends Carte {
 
 	@Override
 	public void executerEffetDebutMiseEnJeu(Object cible) throws HearthstoneException {
-		if (cible == null)
-			throw new HearthstoneCibleNullException("Un sort nécessite une cible");
-		
 		capacite.executerAction(cible);
 		this.getProprietaire().perdreCarte(this);
 	}

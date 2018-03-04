@@ -47,21 +47,13 @@ public class Hearthstone {
 		Joueur	joueur1 = new Joueur("WorgenGeant", Heros.getHeros("Jaina"));
 		ArrayList<ICarte> deckJaina = getDeckNeutre(joueur1);
 		deckJaina.addAll(getDeckJaina(joueur1));
-		for (ICarte iCarte : deckJaina) {
-			joueur1.getMain().add(iCarte);
-		}
-		joueur1.mana = 10;
-		joueur1.manaDuTour = 10;
+		joueur1.setDeck(deckJaina);
 		
 		
 		Joueur	joueur2 = new Joueur("Ali Baba", Heros.getHeros("Rex"));
 		ArrayList<ICarte> deckRexxar = getDeckNeutre(joueur2);
 		deckRexxar.addAll(getDeckRexxar(joueur2));
-		for (ICarte iCarte : deckRexxar) {
-			joueur2.getMain().add(iCarte);
-		}
-		joueur2.mana = 10;
-		joueur2.manaDuTour = 10;
+		joueur2.setDeck(deckRexxar);
 		
 		IPlateau board = Plateau.getInstance();
 		board.ajouterJoueur(joueur1);
@@ -137,7 +129,7 @@ public class Hearthstone {
 		deck.add(c);
 		c = new Serviteur(joueur, "Champion de Hurlevent", 7, 6, 6, new CapaciteEffetPermanent("Bonus de Hurlevent", "Vos autres serviteurs ont +1/+1", 1, 1)); 
 		deck.add(c);
-		c = new Serviteur(joueur, "Chef de raid", 3,2,2, new CapaciteEffetPermanent("Bonus du chef de raid", "Vos autres serviteurs ont +1/+1", 1, 0));
+		c = new Serviteur(joueur, "Chef de raid", 3,2,2, new CapaciteEffetPermanent("Bonus du chef de raid", "Vos autres serviteurs ont +1 d'attaque", 1, 0));
 		deck.add(c);
 		c = new Serviteur(joueur, "Garde de Baie-du-butin", 5,5,4, new CapaciteProvocation());
 		deck.add(c);

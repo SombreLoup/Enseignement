@@ -18,6 +18,10 @@ public abstract class Carte implements ICarte {
 		return nom;
 	}
 	
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+	
 	public int getCout() {
 		return cout;
 	}

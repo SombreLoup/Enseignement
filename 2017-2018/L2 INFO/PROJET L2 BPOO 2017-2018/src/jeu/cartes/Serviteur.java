@@ -50,7 +50,7 @@ public class Serviteur extends Carte {
 	public void executerEffetDebutMiseEnJeu(Object cible) throws HearthstoneException {
 		tourEnAttente = 1;
 		if (capacite != null)
-			capacite.executerEffetMiseEnJeu();
+			capacite.executerEffetMiseEnJeu(cible);
 	}
 
 	@Override
@@ -173,4 +173,16 @@ public class Serviteur extends Carte {
 	public int getVie() {
 		return vie;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + attaque;
+		result = prime * result + ((capacite == null) ? 0 : capacite.hashCode());
+		result = prime * result + tourEnAttente;
+		result = prime * result + tourJoue;
+		result = prime * result + vie;
+		return result;
+	}	
 }

@@ -3,7 +3,6 @@ package jeu.capacites;
 import jeu.HearthstoneException;
 import jeu.IJoueur;
 import jeu.IPlateau;
-import jeu.Joueur;
 import jeu.Plateau;
 
 
@@ -14,6 +13,10 @@ public class CapaciteAttaqueHeros extends CapaciteAttaque {
 		super(nom, description, attaque);
 	}
 	
+	@Override
+	public void executerEffetMiseEnJeu(Object cible) throws HearthstoneException {
+		executerAction(cible);
+	}
 
 	@Override
 	public void executerAction(Object cible) throws HearthstoneException {

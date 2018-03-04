@@ -1,6 +1,7 @@
 package jeu.capacites;
 
 
+import jeu.HearthstoneCibleNullException;
 import jeu.HearthstoneException;
 import jeu.Joueur;
 import jeu.Plateau;
@@ -15,6 +16,9 @@ public class CapaciteAttaqueCible extends CapaciteAttaque {
 	
 	@Override
 	public void executerAction(Object cible) throws HearthstoneException {
+		if (cible == null)
+			throw new HearthstoneCibleNullException("Cette attaque nécessite une cible");
+
 		if (nbUtilisation==1)
 			throw new HearthstoneException("Pas possible, t'as déjà craché ton sort, man !");
 		

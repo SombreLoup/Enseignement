@@ -29,6 +29,7 @@ public class CapaciteInvocationChiens extends CapaciteInvocationServiteur {
 			for (int i = 0; i < nbServiteursAdverses; i++) {
 				Serviteur clone = (Serviteur) getServiteurInvoque().clone();
 				clone.setProprietaire(joueur);
+				clone.setNom(clone.getNom()+" "+(i+1));
 				joueur.getJeu().add(clone);
 			}
 			
@@ -36,4 +37,6 @@ public class CapaciteInvocationChiens extends CapaciteInvocationServiteur {
 			e.printStackTrace();
 		}
 	}
+	
+	
 }

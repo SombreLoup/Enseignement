@@ -1,5 +1,6 @@
 package jeu.capacites;
 
+import jeu.HearthstoneCibleNullException;
 import jeu.HearthstoneException;
 import jeu.cartes.Serviteur;
 
@@ -23,6 +24,9 @@ public class CapaciteCharge extends Capacite {
 
 	@Override
 	public void executerAction(Object cible) throws HearthstoneException {
+		if (cible == null)
+			throw new HearthstoneCibleNullException("La capacité 'Charge' nécessite une cible");
+			
 		if (! (cible instanceof Serviteur))
 			throw new HearthstoneException("Ver de terre greloteux que tu es, tu dois désigner un serviteur !");
 		
@@ -31,7 +35,7 @@ public class CapaciteCharge extends Capacite {
 	}
 
 	@Override
-	public void executerEffetMiseEnJeu() throws HearthstoneException {
+	public void executerEffetMiseEnJeu(Object cible) throws HearthstoneException {
 		// TODO Auto-generated method stub
 		
 	}

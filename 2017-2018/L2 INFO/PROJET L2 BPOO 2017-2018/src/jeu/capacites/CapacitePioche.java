@@ -37,7 +37,7 @@ public class CapacitePioche extends Capacite {
 	}
 
 	@Override
-	public void executerEffetMiseEnJeu() throws HearthstoneException {
+	public void executerEffetMiseEnJeu(Object cible) throws HearthstoneException {
 		// TODO Auto-generated method stub
 
 	}

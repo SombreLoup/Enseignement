@@ -117,12 +117,13 @@ public class Joueur implements IJoueur {
 		if (doitJouer==false)
 			throw new HearthstoneException("Tu n'as le tour, espèce de limace baveuse !");		
 		
-		doitJouer = false;
-		Plateau.getInstance().finTour(this);
-
 		for (ICarte carte : jeu) {
 			carte.executerEffetFinTour(null);
 		}
+		
+		doitJouer = false;
+		Plateau.getInstance().finTour(this);
+
 	}
 
 	@Override
@@ -191,7 +192,7 @@ public class Joueur implements IJoueur {
 		
 		carte.executerAction(cible);
 		
-		if (carte.disparait())
+		if (carte.disparait() && jeu.contains(carte))
 			jeu.remove(carte);
 	}
 
