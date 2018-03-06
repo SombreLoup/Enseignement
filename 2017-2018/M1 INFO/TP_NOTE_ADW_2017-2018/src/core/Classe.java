@@ -4,11 +4,37 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name="classe")
 public class Classe implements Serializable, Cloneable {
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id_cl")
 	private	int		identifiant;
+	
+	@Column(name="nom_cl")
 	private	String	nom;
+	
+	@ManyToMany
+	@JoinTable(name="est_composee",
+	joinColumns={@JoinColumn(table="Classe", name="id_cl", referencedColumnName="id_cl")},
+	inverseJoinColumns={@JoinColumn(table="Matiere", name="num_mat", referencedColumnName="num_mat")}
+	)
 	private	List<Matiere>	listeMatieres = new ArrayList<Matiere>();
+	
+	@Transient
 	private	List<Devoir>		listeDevoirs = new ArrayList<Devoir>();
 
 	public Classe() {

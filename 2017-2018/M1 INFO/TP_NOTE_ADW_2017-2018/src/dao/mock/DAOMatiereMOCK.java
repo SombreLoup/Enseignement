@@ -38,7 +38,7 @@ public class DAOMatiereMOCK implements DAOMatiere, Serializable {
 	}
 
 	
-	@Override
+	
 	/**
 	 * Renvoie toutes les matières se trouvant dans la table de la base de données (ici, elle est simulée
 	 * par la liste des matières.
@@ -47,7 +47,7 @@ public class DAOMatiereMOCK implements DAOMatiere, Serializable {
 		return listeMatiere;
 	}
 
-	@Override
+	
 	/**
 	 * La fonction get renvoie l'objet Matière si le numéro donné en paramètre
 	 * correspond bien à un enregistrement. Sinon, la fonction renvoie null
