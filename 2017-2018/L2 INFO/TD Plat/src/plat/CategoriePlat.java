@@ -30,9 +30,13 @@ public class CategoriePlat {
 	}
 
 	public void add(Plat e) {
-		if (e.getCategorie()==null)
+		if (e.getCategorie()==null) 
+			// Si c'est null, c'est que l'appel correspond à la création du plat.
+			// Du coup, il n'y a pas grand chose à faire
 			listePlat.add(e);
 		else {
+			// Si c'est pas null, alors il faut gérer proprement la relation
+			// bidirectionnelle. Tout se passe en fait dans setCategorie
 			e.setCategorie(this);
 		}
 	}

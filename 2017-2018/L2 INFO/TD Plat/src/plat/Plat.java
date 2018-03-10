@@ -71,6 +71,7 @@ public class Plat {
 	}
 
 	public void setCategorie(CategoriePlat categorie) {
+		// C'est ici que la relation bidirectionnelle est gérée en détail
 		if (categorie==null) {
 			System.out.println("Argument ill�gal");
 			System.exit(-1);
@@ -81,6 +82,9 @@ public class Plat {
 			this.categorie = categorie;
 		} 
 		else {
+			// ici, c'est un changement de catégorie. Le principe consiste à annuler
+			// la catégprie du plat, puis de faire comme si c'était une construction
+			// avec la nouvelle catégorie.
 			this.categorie.remove(this);
 			this.categorie = null;
 			categorie.add(this);
