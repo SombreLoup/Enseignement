@@ -19,14 +19,12 @@ public class DAOMatiereJPA implements DAOMatiere {
 	}
 
 	@SuppressWarnings("unchecked")
-	@Override
 	public List<Matiere> getToutesLesMatieres() {
 		Query query = DAOJPA.getManager().createQuery("select m from Matiere m");
 
 		return query.getResultList();
 	}
 
-	@Override
 	public Matiere get(int num) {
 		return DAOJPA.getManager().find(Matiere.class, num);
 	}

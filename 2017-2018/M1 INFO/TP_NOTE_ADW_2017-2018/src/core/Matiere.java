@@ -2,12 +2,26 @@ package core;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="matiere")
 public class Matiere implements Serializable {
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="num_mat")
 	private	int	numero = -1;
 	
+	@Column(name="nom_mat")
 	private	String	nom;
 	
+	@Column(name="epreuve_bac")
 	private	boolean	epreuveBac;
 
 	public Matiere() {

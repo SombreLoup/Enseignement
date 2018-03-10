@@ -8,11 +8,12 @@ import org.junit.Test;
 
 import core.Matiere;
 import dao.DAOMatiere;
+import dao.jpa.DAOMatiereJPA;
 import dao.mock.DAOMatiereMOCK;
 
 public class Test3_DAOMatiere_getToutesLesMatieres {
 
-	private	DAOMatiere	daoMatiere = DAOMatiereMOCK.getInstance(); // Remplacez DAO....Mock par DAO....JPA
+	private	DAOMatiere	daoMatiere = DAOMatiereJPA.getInstance(); // Remplacez DAO....Mock par DAO....JPA
 	
 	@Test
 	public void test() {
