@@ -34,6 +34,15 @@ public interface ICapacite {
 	 */
 	void executerAction(Object cible) throws HearthstoneException;
 
+	/**
+	 * Certaines capacité agissent en début de mise en jeu. C'est souvent le cas des sorts.
+	 * @throws HearthstoneException En cas de problème...
+	 */
 	void executerEffetMiseEnJeu(Object cible) throws HearthstoneException;
-	void executerEffetDisparition() throws HearthstoneException;
+	
+	/**
+	 * Certaines capacité agissent lorsque la carte disparaît du jeu (comme le râle d'agonie...). 
+	 * @throws HearthstoneException En cas de problème...
+	 */
+	void executerEffetDisparition(Object cible) throws HearthstoneException;
 }

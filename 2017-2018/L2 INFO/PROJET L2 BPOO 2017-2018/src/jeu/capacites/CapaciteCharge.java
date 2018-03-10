@@ -41,7 +41,7 @@ public class CapaciteCharge extends Capacite {
 	}
 
 	@Override
-	public void executerEffetDisparition() throws HearthstoneException {
+	public void executerEffetDisparition(Object cible) throws HearthstoneException {
 		// TODO Auto-generated method stub
 		
 	}

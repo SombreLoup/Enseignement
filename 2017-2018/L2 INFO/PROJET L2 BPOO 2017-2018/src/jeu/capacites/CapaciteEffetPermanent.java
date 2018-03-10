@@ -57,7 +57,7 @@ public class CapaciteEffetPermanent extends Capacite {
 	}
 
 	@Override
-	public void executerEffetDisparition() throws HearthstoneException {
+	public void executerEffetDisparition(Object cible) throws HearthstoneException {
 	}
 
 }

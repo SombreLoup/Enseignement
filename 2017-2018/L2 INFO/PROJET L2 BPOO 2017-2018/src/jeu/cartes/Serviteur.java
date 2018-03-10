@@ -56,7 +56,7 @@ public class Serviteur extends Carte {
 	@Override
 	public void executerEffetDisparition(Object cible) throws HearthstoneException {
 		if (capacite != null)
-			capacite.executerEffetDisparition();
+			capacite.executerEffetDisparition(null);
 	}
 
 	@Override
