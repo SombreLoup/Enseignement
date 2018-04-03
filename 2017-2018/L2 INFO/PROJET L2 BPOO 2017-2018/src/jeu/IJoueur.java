@@ -7,7 +7,14 @@ import java.util.ArrayList;
  *
  */
 public interface IJoueur {
+	/**
+	 * Nombre max de mana que le joueur peut avoir (10 en principe)
+	 */
 	public final static int	MAX_MANA = 10;		// Nombre max de mana
+	
+	/**
+	 * Le nombre max de cartes qui peuvent composer un deck. 
+	 */
 	public final static int TAILLE_DECK = 15;	// Nombre max de cartes dans le deck
 
 	/**
