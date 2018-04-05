@@ -2,6 +2,7 @@
     <wb-module deploy-name="CT ADW 2017-2018">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/divers"/>
         <property name="context-root" value="CT_ADW_2017-2018"/>
         <property name="java-output-path" value="/CT ADW 2017-2018/build/classes"/>
     </wb-module>
