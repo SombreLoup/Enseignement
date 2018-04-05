@@ -31,7 +31,6 @@ public class DAOClasseMOCK implements DAOClasse, Serializable {
 		listeClasses.add(new Classe(2,"1ère S 12", null,null));
 	}
 	
-	@Override
 	public Classe get(int i) {
 		for (Classe c : listeClasses) {
 			if (c.getIdentifiant()==i) {
@@ -40,12 +39,10 @@ public class DAOClasseMOCK implements DAOClasse, Serializable {
 		}	
 		return null;	}
 
-	@Override
 	public List<Classe> getToutesLesClasses() {
 		return listeClasses;
 	}
 	
-	@Override
 	public void update(Classe classe) {
 		for (Classe c : listeClasses) {
 			if (c.getIdentifiant()==classe.getIdentifiant()) {

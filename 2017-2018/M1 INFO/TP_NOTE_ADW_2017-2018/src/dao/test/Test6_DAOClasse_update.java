@@ -6,12 +6,13 @@ import org.junit.Test;
 
 import core.Classe;
 import dao.DAOClasse;
+import dao.jpa.DAOClasseJPA;
 import dao.mock.DAOClasseMOCK;
 import dao.mock.DAOMatiereMOCK;
 
 public class Test6_DAOClasse_update {
 
-	private	DAOClasse	daoClasse = DAOClasseMOCK.getInstance(); // Remplacez DAO....Mock par DAO....JPA
+	private	DAOClasse	daoClasse = DAOClasseJPA.getInstance(); // Remplacez DAO....Mock par DAO....JPA
 	
 	@Test
 	public void test() {

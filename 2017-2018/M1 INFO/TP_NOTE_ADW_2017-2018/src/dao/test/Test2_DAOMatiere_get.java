@@ -5,11 +5,12 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import dao.DAOMatiere;
+import dao.jpa.DAOMatiereJPA;
 import dao.mock.DAOMatiereMOCK;
 
 public class Test2_DAOMatiere_get {
 
-	private	DAOMatiere	daoMatiere = DAOMatiereMOCK.getInstance(); // Remplacez DAO....Mock par DAO....JPA
+	private	DAOMatiere	daoMatiere = DAOMatiereJPA.getInstance(); // Remplacez DAO....Mock par DAO....JPA
 	
 	@Test
 	public void test() {

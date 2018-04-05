@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="fr">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>package jeu;<a name="line.1"></a>
+<span class="sourceLineNo">002</span><a name="line.2"></a>
+<span class="sourceLineNo">003</span>/**<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * Le plateau gère toute la partie, notamment le début et la fin de partie. Il sait qui est le joueur<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * courant, qui est l'adversaire d'un joueur, etc. Il n'y a qu'un seul plateau en tout et pour tout. <a name="line.5"></a>
+<span class="sourceLineNo">006</span> * Je vous conseille de faire quelques recherche sur le design pattern 'Singleton'... <a name="line.6"></a>
+<span class="sourceLineNo">007</span> */<a name="line.7"></a>
+<span class="sourceLineNo">008</span>public interface IPlateau {<a name="line.8"></a>
+<span class="sourceLineNo">009</span>        /**<a name="line.9"></a>
+<span class="sourceLineNo">010</span>         * Ajoute un joueur à la partie. <a name="line.10"></a>
+<span class="sourceLineNo">011</span>         * @param joueur Le joueur à ajouter<a name="line.11"></a>
+<span class="sourceLineNo">012</span>         * @throws HearthstoneException si l'on essaie d'ajouter un 3e joueur par exemple, si le joueur est null, etc...<a name="line.12"></a>
+<span class="sourceLineNo">013</span>         */<a name="line.13"></a>
+<span class="sourceLineNo">014</span>        void ajouterJoueur(IJoueur joueur) throws HearthstoneException;<a name="line.14"></a>
+<span class="sourceLineNo">015</span>        <a name="line.15"></a>
+<span class="sourceLineNo">016</span>        /**<a name="line.16"></a>
+<span class="sourceLineNo">017</span>         * Renvoie le joueur courant, c'est-à-dire celui qui a le tour et qui doit jouer<a name="line.17"></a>
+<span class="sourceLineNo">018</span>         * @return le joueur courant, ou null si la partie n'est pas démarée<a name="line.18"></a>
+<span class="sourceLineNo">019</span>         */<a name="line.19"></a>
+<span class="sourceLineNo">020</span>        IJoueur getJoueurCourant();<a name="line.20"></a>
+<span class="sourceLineNo">021</span>        <a name="line.21"></a>
+<span class="sourceLineNo">022</span>        /**<a name="line.22"></a>
+<span class="sourceLineNo">023</span>         * Le setter qui va avec le getter<a name="line.23"></a>
+<span class="sourceLineNo">024</span>         * @param joueur Le nouveau joueur courant<a name="line.24"></a>
+<span class="sourceLineNo">025</span>         * @throws HearthstoneException si le nouveau joueur est null, etc. (faut tout tester naturellement...)<a name="line.25"></a>
+<span class="sourceLineNo">026</span>         */<a name="line.26"></a>
+<span class="sourceLineNo">027</span>        void setJoueurCourant(IJoueur joueur) throws HearthstoneException;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>        <a name="line.28"></a>
+<span class="sourceLineNo">029</span>        /**<a name="line.29"></a>
+<span class="sourceLineNo">030</span>         * Renvoie....l'adversaire<a name="line.30"></a>
+<span class="sourceLineNo">031</span>         * @param joueur dont on veut l'adversaire<a name="line.31"></a>
+<span class="sourceLineNo">032</span>         * @return le joueur adverse<a name="line.32"></a>
+<span class="sourceLineNo">033</span>         * @throws HearthstoneException si le param est null ou si le param ne correspond à aucun des 2 joueurs de la partie, etc.<a name="line.33"></a>
+<span class="sourceLineNo">034</span>         */<a name="line.34"></a>
+<span class="sourceLineNo">035</span>        IJoueur getAdversaire(IJoueur joueur) throws HearthstoneException;<a name="line.35"></a>
+<span class="sourceLineNo">036</span><a name="line.36"></a>
+<span class="sourceLineNo">037</span>        /**<a name="line.37"></a>
+<span class="sourceLineNo">038</span>         * Ca démarre la partie. Il faut déterminer aléatoirement le joueur qui commence, etc.<a name="line.38"></a>
+<span class="sourceLineNo">039</span>         * @throws HearthstoneException si 2 joueurs ne sont pas ajoutés, etc....<a name="line.39"></a>
+<span class="sourceLineNo">040</span>         */<a name="line.40"></a>
+<span class="sourceLineNo">041</span>        void demarrerPartie() throws HearthstoneException;<a name="line.41"></a>
+<span class="sourceLineNo">042</span>        <a name="line.42"></a>
+<span class="sourceLineNo">043</span>        /**<a name="line.43"></a>
+<span class="sourceLineNo">044</span>         * à votre avis ?<a name="line.44"></a>
+<span class="sourceLineNo">045</span>         * @return vrai si la partie a démarée, faux sinon<a name="line.45"></a>
+<span class="sourceLineNo">046</span>         */<a name="line.46"></a>
+<span class="sourceLineNo">047</span>        boolean estDemarree();<a name="line.47"></a>
+<span class="sourceLineNo">048</span>        <a name="line.48"></a>
+<span class="sourceLineNo">049</span>        /**<a name="line.49"></a>
+<span class="sourceLineNo">050</span>         * Le joueur passé en paramètre vient de décider de finir son tour. Du coup, le plateau<a name="line.50"></a>
+<span class="sourceLineNo">051</span>         * doit gérer le changement de joueur courant (entre autres)<a name="line.51"></a>
+<span class="sourceLineNo">052</span>         * @param joueur le joueur qui a fini son tour et qui passe la main<a name="line.52"></a>
+<span class="sourceLineNo">053</span>         * @throws HearthstoneException si le joueur qui passe son tour, n'avait pas le tour, alors<a name="line.53"></a>
+<span class="sourceLineNo">054</span>         * c'est qu'il fait n'importe quoi !<a name="line.54"></a>
+<span class="sourceLineNo">055</span>         */<a name="line.55"></a>
+<span class="sourceLineNo">056</span>        void finTour(IJoueur joueur) throws HearthstoneException;<a name="line.56"></a>
+<span class="sourceLineNo">057</span>        <a name="line.57"></a>
+<span class="sourceLineNo">058</span>        /**<a name="line.58"></a>
+<span class="sourceLineNo">059</span>         * Le héros du joueur adverse du joueur passé en paramètre est mort. Donc le joueur à gagné !<a name="line.59"></a>
+<span class="sourceLineNo">060</span>         * @param joueur celui qui a gagné<a name="line.60"></a>
+<span class="sourceLineNo">061</span>         * @throws HearthstoneException au cas on souhaite...tricher !<a name="line.61"></a>
+<span class="sourceLineNo">062</span>         */<a name="line.62"></a>
+<span class="sourceLineNo">063</span>        void gagnePartie(IJoueur joueur) throws HearthstoneException;<a name="line.63"></a>
+<span class="sourceLineNo">064</span>}<a name="line.64"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>
