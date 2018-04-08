@@ -5,6 +5,7 @@ public class Randonnee implements Activite {
 	public final static int	FACILE = 0;
 	public final static int	MOYENNE = 1;
 	public final static int	DIFFICILE = 2;
+	public final static String[] tabDifficulte = {"Facile", "Moyenne", "Difficile"};
 	
 	private	double	distance;
 	private	int difficulte;
@@ -25,11 +26,11 @@ public class Randonnee implements Activite {
 	public double getDuree() {
 		switch (difficulte) {
 		case FACILE:
-			return distance/5;
+			return distance/4;
 		case MOYENNE:
-			return 0.2+(distance-1)/6;
+			return 0.2+(distance-1)/3;
 		case DIFFICILE:
-			return 0.5+distance/8;
+			return 0.5+distance/2;
 		}
 		return 0;
 	}
@@ -46,6 +47,6 @@ public class Randonnee implements Activite {
 
 	@Override
 	public String toString() {
-		return "Randonnee [distance=" + distance + ", difficulte=" + difficulte+ ", duree=" + getDuree() + "]";
+		return "Rando ["+tabDifficulte[difficulte]+ ", " + distance + " kms]";
 	}
 }

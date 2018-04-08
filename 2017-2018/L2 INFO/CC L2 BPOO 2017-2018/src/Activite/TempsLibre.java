@@ -9,10 +9,8 @@ public class TempsLibre implements Activite {
 	}
 	
 	public void setDuree(double duree) throws ActiviteException {
-		if (duree>2)
-			throw new ActiviteException("Temps libre trop long");
-		if (duree<0)
-			duree = 0;
+		if (duree>2 || duree<0.5)
+			throw new ActiviteException("Durée du temps libre incorrecte");
 		
 		this.duree = duree;
 	}
@@ -20,7 +18,7 @@ public class TempsLibre implements Activite {
 
 	@Override
 	public String toString() {
-		return "TempsLibre [duree=" + duree + "h]";
+		return "TempsLibre ["+duree + "h]";
 	}
 
 	@Override

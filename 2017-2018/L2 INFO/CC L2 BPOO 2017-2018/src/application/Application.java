@@ -20,6 +20,7 @@ public class Application {
 		System.out.println(lundi);
 		System.out.println("Validite : "+lundi.estValide());
 		System.out.println("Reste à planifier : "+lundi.dureeInactivite());
+		System.out.println("Coût de la journée : "+lundi.cout());
 	}
 
 }

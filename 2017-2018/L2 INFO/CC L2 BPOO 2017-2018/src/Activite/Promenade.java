@@ -16,6 +16,6 @@ public class Promenade extends Randonnee {
 
 	@Override
 	public String toString() {
-		return "Promenade [description="+description+" --> "+super.toString()+"]";
+		return "Promenade ["+description+" --> "+super.toString()+"]";
 	}
 }
