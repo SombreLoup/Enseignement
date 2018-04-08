@@ -12,7 +12,7 @@ public class DAOJPA {
 	
 	public static EntityManager	getManager() {
 		if (em == null) {
-			emf = Persistence.createEntityManagerFactory("TP_ADW");
+			emf = Persistence.createEntityManagerFactory("CT ADW 2017-2018");
 			em = emf.createEntityManager();
 			tx = em.getTransaction();
 		}

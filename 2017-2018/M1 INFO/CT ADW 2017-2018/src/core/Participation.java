@@ -4,12 +4,40 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="participation")
 public class Participation {
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="num_p")
+	private	int		num;
+	
+	@ManyToOne
+	@JoinColumn(name="code_ch")
 	private	Cheval	cheval;
+	
+	@ManyToOne
+	@JoinColumn(name="num_c")
 	private	Course	course;
+	
+	@Column(name="date_p")
 	private	Date		dateCourse;
+	
+	@Column(name="place")
 	private	int		place;
 	
+	public Participation() {
+	}
 	
 	public Participation(Cheval c1, Course course2, String string, int place) {
 		this.cheval = c1;

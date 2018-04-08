@@ -2,12 +2,35 @@ package core;
 
 import java.util.ArrayList;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="cheval")
 public class Cheval {
+	
+	@OneToMany(mappedBy="cheval")
 	private	ArrayList<Participation>	participations = new ArrayList<Participation>();
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="code_ch")
 	private	int	code;
+	
+	@Column(name="nom_ch")
 	private	String	nom;
 	
 		
+	
+	public Cheval() {
+	}
+	
 	public Cheval(int i, String string) {
 		this.code = i;
 		this.nom = string;
@@ -47,4 +70,11 @@ public class Cheval {
 		
 		return cumul;
 	}
+
+	@Override
+	public String toString() {
+		return "Cheval [participations=" + participations + ", code=" + code + ", nom=" + nom + "]";
+	}
+	
+	
 }
