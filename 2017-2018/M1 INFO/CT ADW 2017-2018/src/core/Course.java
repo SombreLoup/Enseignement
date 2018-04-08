@@ -9,6 +9,15 @@ public class Course {
 	private	int recompense;
 	
 	
+	public Course(int i, String string, int j) {
+		this.nom = string;
+		this.numero = i;
+		this.recompense = j;
+	}
+	
+	public Course() {
+	}
+
 	public ArrayList<Participation> getParticipants() {
 		return participants;
 	}

@@ -8,6 +8,11 @@ public class Cheval {
 	private	String	nom;
 	
 		
+	public Cheval(int i, String string) {
+		this.code = i;
+		this.nom = string;
+	}
+
 	public ArrayList<Participation> getParticipations() {
 		return participations;
 	}

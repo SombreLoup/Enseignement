@@ -1,5 +1,7 @@
 package core;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Participation {
@@ -9,6 +11,18 @@ public class Participation {
 	private	int		place;
 	
 	
+	public Participation(Cheval c1, Course course2, String string, int place) {
+		this.cheval = c1;
+		this.course = course2;
+		
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+		try {
+			this.dateCourse = format.parse(string);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		this.place = place;
+	}
 	public Cheval getCheval() {
 		return cheval;
 	}
