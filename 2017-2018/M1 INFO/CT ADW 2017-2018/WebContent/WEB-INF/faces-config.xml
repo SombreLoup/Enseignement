@@ -5,9 +5,18 @@
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
     version="2.2">
 	<managed-bean>
-		<managed-bean-name>beanCourse</managed-bean-name>
-		<managed-bean-class>jsf.bean.BeanCourse</managed-bean-class>
+		<managed-bean-name>beanParticipation</managed-bean-name>
+		<managed-bean-class>jsf.bean.BeanParticipation</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
+	
+	<navigation-rule>
+		<display-name>AjoutParticipationCourse.xhtml</display-name>
+		<from-view-id>/AjoutParticipationCourse.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>METTREAJOUR</from-outcome>
+			<to-view-id>/ResultatCourse.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 
 </faces-config>

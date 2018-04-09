@@ -2,12 +2,12 @@ package core;
 
 import java.util.ArrayList;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Table(name="cheval")
 public class Cheval {
 	
-	@OneToMany(mappedBy="cheval")
+	@OneToMany(mappedBy="cheval", cascade=CascadeType.ALL)
 	private	ArrayList<Participation>	participations = new ArrayList<Participation>();
 	
 	@Id

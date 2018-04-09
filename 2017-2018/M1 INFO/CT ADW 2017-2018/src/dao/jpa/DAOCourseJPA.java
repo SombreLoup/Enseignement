@@ -22,4 +22,14 @@ public class DAOCourseJPA extends DAOJPA {
 		Query query = getManager().createQuery("SELECT course FROM Course course");
 		return query.getResultList();
 	}
+
+	public Course get(int i) {
+		return getManager().find(Course.class, i);
+	}
+
+	public void update(Course course) {
+		Course c = getManager().merge(course);
+		getManager().persist(c);
+		commit();
+	}
 }

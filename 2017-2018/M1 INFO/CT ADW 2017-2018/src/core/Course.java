@@ -3,6 +3,7 @@ package core;
 import java.util.ArrayList;
 
 import javax.annotation.Generated;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +17,7 @@ import javax.persistence.Table;
 @Table(name="course")
 public class Course {
 	
-	@OneToMany(mappedBy="course")
+	@OneToMany(mappedBy="course", cascade=CascadeType.ALL)
 	private	ArrayList<Participation>	participants = new ArrayList<Participation>();
 
 	@Column(name="nom_c")

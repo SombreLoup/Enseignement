@@ -23,5 +23,9 @@ private	static DAOChevalJPA		instance = null;
 		Query query = getManager().createQuery("SELECT cheval FROM Cheval cheval");
 		return query.getResultList();
 	}
+
+	public Cheval get(int num) {
+		return getManager().find(Cheval.class, num);
+	}
 	
 }

@@ -75,6 +75,12 @@ public class Participation {
 	public void setPlace(int place) {
 		this.place = place;
 	}
-	
 
+	@Override
+	public String toString() {
+		return "Participation [num=" + num + ", cheval=" + cheval.getNom() + ", course=" + course.getNom() + ", dateCourse=" + dateCourse
+				+ ", place=" + place + "]";
+	}
+	
+	
 }

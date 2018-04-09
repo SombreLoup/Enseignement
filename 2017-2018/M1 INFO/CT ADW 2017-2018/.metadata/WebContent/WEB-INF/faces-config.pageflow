@@ -1,2 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pageflow:Pageflow xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf15232145895510" configfile="/CT ADW 2017-2018/WebContent/WEB-INF/faces-config.xml"/>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf15232145895510" configfile="/CT ADW 2017-2018/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="ResultatCourse.xhtml" x="452" y="192" id="pf15232709618601" inlinks="pf15232709618602" path="/ResultatCourse.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="AjoutParticipationCourse.xhtml" x="192" y="195" id="pf15232709618603" outlinks="pf15232709618602" path="/AjoutParticipationCourse.xhtml"/>
+  <links id="pf15232709618602" target="pf15232709618601" source="pf15232709618603" outcome="METTREAJOUR"/>
+</pageflow:Pageflow>
