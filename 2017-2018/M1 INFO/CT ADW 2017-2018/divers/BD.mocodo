@@ -1,0 +1,5 @@
+CHEVAL: code_ch, nom_ch
+participe, 0N CHEVAL, 11 PARTICIPATION 
+PARTICIPATION : num_r, date, place
+correspond, 11 PARTICIPATION, 0N COURSE
+COURSE: num_c, nom_c, recompense

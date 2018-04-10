@@ -29,7 +29,7 @@ public class CapaciteAttaqueCible extends CapaciteAttaque {
 			
 			joueur.getHeros().diminuerVie(attaque);
 			if (joueur.getHeros().estMort())
-				Plateau.getInstance().gagnePartie(joueur);
+				Plateau.getInstance().gagnePartie(Plateau.getInstance().getAdversaire(joueur));
 			
 			return;
 		}

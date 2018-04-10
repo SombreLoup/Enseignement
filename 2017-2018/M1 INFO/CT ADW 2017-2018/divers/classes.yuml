@@ -1,0 +1,2 @@
+[Cheval|-code:int;-nom:String|]<>cheval 1-courses *[Participation|-numero:int;-place:int;-date:Date|], 
+[Participation]chevaux *-course 1<>[Course|-numero:int;-nom:String|]

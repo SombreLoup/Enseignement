@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:body>
+	<div align="center">
+		<h1>Ajout du résutat d'un cheval</h1>
+		<p />
+		<h:form>
+			<table>
+				<tr style="height: 30px;">
+					<td valign="middle" align="right"><label>Course
+							hippique :</label></td>
+					<td valign="middle" align="left"><h:selectOneMenu
+							value="#{beanParticipation.numeroCourse}">
+							<f:selectItem itemLabel="--- Sélectionnez une course ---" />
+							<f:selectItems value="#{beanParticipation.courses}" var="course"
+								itemValue="#{course.numero}" itemLabel="#{course.nom}" />
+						</h:selectOneMenu></td>
+				</tr>
+				<tr style="height: 30px;">
+					<td align="right"><label>Cheval :</label></td>
+					<td valign="middle" align="left"><h:selectOneMenu
+							value="#{beanParticipation.codeCheval}">
+							<f:selectItem itemLabel="--- Sélectionnez un cheval ---" />
+							<f:selectItems value="#{beanParticipation.chevaux}" var="cheval"
+								itemValue="#{cheval.code}" itemLabel="#{cheval.nom}" />
+						</h:selectOneMenu></td>
+				</tr>
+				<tr align="right" style="height: 30px;">
+					<td><label>Date de la course :</label></td>
+					<td valign="middle" align="left">
+						<h:inputText id="champ_date"
+							value="#{beanParticipation.participation.dateCourse}" >
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:inputText>
+						</td>
+				</tr>
+				<tr style="height: 30px;">
+					<td align="right"><label>Classement du cheval :</label></td>
+					<td valign="middle" align="left">
+						<form>
+							<h:inputText id="champ_place"
+								value="#{beanParticipation.participation.place}" />
+						</form>
+					</td>
+				</tr>
+
+			</table>
+
+			<h:commandButton value="Mettre à jour" action="#{beanParticipation.update}" />
+		</h:form>
+	</div>
+</h:body>
+</html>
