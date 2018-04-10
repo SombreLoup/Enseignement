@@ -1,0 +1,29 @@
+package idee2.rdv;
+
+
+
+public abstract class Participant {
+	private	String	nom;
+
+	public Participant(String nom) throws ReunionException {
+		setNom(nom);
+	}
+	
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) throws ReunionException {
+		if (estVide(nom))
+			throw new ReunionException("Le nom du particpant est vide");
+		this.nom = nom;	
+	}
+
+	protected boolean estVide(String nom) {
+		return (nom==null) || (nom.trim().equals(""));
+	}
+	
+	public abstract boolean estDisponible(Creneau creneau);
+	
+	
+}

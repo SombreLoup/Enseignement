@@ -1,0 +1,46 @@
+package idee2.rdv;
+
+import java.util.Date;
+
+public class Reunion {
+	private	String	titre;
+	
+	private	Date	debut, fin;
+
+	public Reunion(String titre, Date debut, Date fin) {
+		this.titre = titre;
+		this.debut = debut;
+		this.fin = fin;
+	}
+
+	public String getTitre() {
+		return titre;
+	}
+
+	public void setTitre(String titre) {
+		this.titre = titre;
+	}
+
+	public Date getDebut() {
+		return debut;
+	}
+
+	public void setDebut(Date debut) {
+		this.debut = debut;
+	}
+
+	public Date getFin() {
+		return fin;
+	}
+
+	public void setFin(Date fin) {
+		this.fin = fin;
+	}
+
+	@Override
+	public String toString() {
+		return "Reunion [titre=" + titre + ", debut=" + debut + ", fin=" + fin
+				+ "]";
+	}
+	
+}

@@ -1,0 +1,30 @@
+package idee2.test;
+
+import static org.junit.Assert.*;
+
+import java.text.ParseException;
+
+import idee2.rdv.Creneau;
+import idee2.rdv.Personne;
+import idee2.rdv.RendezVous;
+import idee2.rdv.ReunionException;
+
+import org.junit.Test;
+
+public class TestPersonne {
+
+	@Test
+	public void test() throws ReunionException, ParseException {
+		Personne personne = new Personne("Yann", "Informatique", 3);
+
+		RendezVous	r1 = new RendezVous("Commission", new Creneau("22/01/2015", "09:00", "12:00"));
+		RendezVous	r2 = new RendezVous("Jury", new Creneau("22/01/2015", "14:00", "16:00"));
+		
+		personne.add(r1);
+		personne.add(r2);
+		
+		RendezVous	r3 = new RendezVous("Conseil", new Creneau("22/01/2015","10:00","12:00"));
+		assertFalse(personne.estDisponible(r3.getCreneau()));
+	}
+
+}
