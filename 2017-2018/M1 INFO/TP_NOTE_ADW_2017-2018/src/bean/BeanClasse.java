@@ -7,6 +7,8 @@ import core.Classe;
 import core.Matiere;
 import dao.DAOClasse;
 import dao.DAOMatiere;
+import dao.jpa.DAOClasseJPA;
+import dao.jpa.DAOMatiereJPA;
 import dao.mock.DAOClasseMOCK;
 import dao.mock.DAOMatiereMOCK;
 
@@ -25,8 +27,8 @@ public class BeanClasse implements Serializable {
 
 	private	Matiere	matiereAAjouter = null;
 	
-	private	DAOClasse daoClasse = DAOClasseMOCK.getInstance();
-	private	DAOMatiere daoMatiere = DAOMatiereMOCK.getInstance();
+	private	DAOClasse daoClasse = DAOClasseJPA.getInstance();
+	private	DAOMatiere daoMatiere = DAOMatiereJPA.getInstance();
 	
 	public BeanClasse() {
 		classe = daoClasse.get(1);

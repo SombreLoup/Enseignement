@@ -1,0 +1,10 @@
+package idee2.rdv;
+
+public class ParticipationException extends Exception {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+}

@@ -1,0 +1,74 @@
+package idee2.rdv;
+
+import java.util.ArrayList;
+import java.util.Date;
+
+
+public class Personne extends Participant {
+
+	private	String	service;
+	private	int		niveauHierarchique;
+	private	ArrayList<RendezVous>	agenda = new ArrayList<RendezVous>();
+	
+	public Personne(String nom, String service, int niveauHierarchique) throws ReunionException {
+		super(nom);
+		this.service = service;
+		this.niveauHierarchique = niveauHierarchique;
+	}
+
+	public ArrayList<RendezVous> getAgenda() {
+		return agenda;
+	}
+
+	public boolean add(RendezVous e) {
+		return agenda.add(e);
+	}
+
+	public boolean remove(Object o) {
+		return agenda.remove(o);
+	}
+
+	public String getService() {
+		return service;
+	}
+
+	public void setService(String service) throws ReunionException {
+		if (super.estVide(service))
+			throw new ReunionException("Le service est vide");
+		
+		this.service = service;
+	}
+
+	public int getNiveauHierarchique() {
+		return niveauHierarchique;
+	}
+
+	public void setNiveauHierarchique(int niveauHierarchique) throws ReunionException {
+		if ((niveauHierarchique<0) || (niveauHierarchique>5))
+			throw new ReunionException("Le niveau hiérarchique doit étre compris entre 0 et 5");
+		
+		this.niveauHierarchique = niveauHierarchique;
+	}
+	
+	ArrayList<RendezVous>	getPlanningDuJour(Date jour) {
+		ArrayList<RendezVous>	planning = new ArrayList<RendezVous>();
+		
+		for (RendezVous rendezVous : agenda) {
+			if (rendezVous.getCreneau().getDate().equals(jour))
+				planning.add(rendezVous);
+		}
+		
+		return planning;
+	}
+
+	@Override
+	public boolean estDisponible(Creneau creneau) {
+		for (RendezVous rendezVous : getPlanningDuJour(creneau.getDate())) {
+			if (rendezVous.getCreneau().chevauche(creneau))
+				return false;
+		}
+		
+		return true;
+	}
+
+}

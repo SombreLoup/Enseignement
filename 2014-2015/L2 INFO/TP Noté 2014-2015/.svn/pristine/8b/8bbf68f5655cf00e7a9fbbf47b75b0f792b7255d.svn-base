@@ -1,0 +1,14 @@
+package idee2.rdv;
+
+public class ReunionException extends Exception {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6755588142453985457L;
+
+	public ReunionException(String string) {
+		// TODO Auto-generated constructor stub
+	}
+
+}

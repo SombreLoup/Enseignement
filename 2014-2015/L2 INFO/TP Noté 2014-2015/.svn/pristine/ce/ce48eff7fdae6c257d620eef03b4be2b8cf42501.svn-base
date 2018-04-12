@@ -1,0 +1,85 @@
+package idee2.rdv;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class Creneau {
+	private	Date	date;
+	private	Date	heureDebut, heureFin;
+	
+	private static SimpleDateFormat heureFormat = new SimpleDateFormat("HH:mm");
+	private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+	public Creneau(String strDate, String strHeureDebut, String strHeureFin) throws ParseException {
+		date = convertirDate(strDate);
+		
+		heureDebut = convertirHeure(strHeureDebut);
+		heureFin = convertirHeure(strHeureFin);
+	}
+
+	public Creneau(String strDate) throws ParseException {
+		date = convertirDate(strDate);
+		
+		heureDebut = convertirHeure("08:00");
+		heureFin = convertirHeure("18:00");
+	}
+
+	private Date convertirHeure(String strHeure) throws ParseException {
+		return heureFormat.parse(strHeure);
+	}
+
+	private Date convertirDate(String strDate) throws ParseException {
+		return  dateFormat.parse(strDate);
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(String strDate) throws ParseException {
+		date =  convertirDate(strDate);	}
+
+	public Date getHeureDebut() {
+		return heureDebut;
+	}
+
+	public void setHeureDebut(String strHeure) throws ParseException {
+		this.heureDebut = convertirHeure(strHeure);
+	}
+
+	public Date getHeureFin() {
+		return heureFin;
+	}
+
+	public void setHeureFin(String strHeure) throws ParseException {
+		this.heureFin = convertirHeure(strHeure);
+	}
+	
+	public boolean chevauche(Creneau creneau) {
+		if (!this.getDate().equals(creneau.getDate()))
+				return false;
+		
+		if (creneau.getHeureDebut().after(this.getHeureDebut()) && creneau.getHeureDebut().before(this.getHeureFin()))
+			return true;
+		if (creneau.getHeureFin().after(this.getHeureDebut()) && creneau.getHeureFin().before(this.getHeureFin()))
+			return true;
+		
+		if (this.getHeureDebut().after(creneau.getHeureDebut()) && this.getHeureDebut().before(creneau.getHeureFin()))
+			return true;
+		if (this.getHeureFin().after(creneau.getHeureDebut()) && this.getHeureFin().before(creneau.getHeureFin()))
+			return true;
+		
+		
+		return false;
+	}
+
+	@Override
+	public String toString() {
+		return "Creneau [date=" + dateFormat.format(date) + ", heureDebut=" + heureFormat.format(heureDebut)
+				+ ", heureFin=" + heureFormat.format(heureFin) + "]";
+	}
+	
+	
+	
+}

@@ -1,0 +1,41 @@
+package idee2.rdv;
+
+import java.util.ArrayList;
+
+public class GroupeTravail extends Participant {
+	
+	private	ArrayList<Participant>	membres = new ArrayList<Participant>();
+
+	public GroupeTravail(String nom) throws ReunionException {
+		super(nom);
+	}
+
+	public boolean add(Participant e) {
+		return membres.add(e);
+	}
+
+	public Participant get(int index) {
+		return membres.get(index);
+	}
+
+	public boolean remove(Object o) {
+		return membres.remove(o);
+	}
+
+	public int size() {
+		return membres.size();
+	}
+
+
+	@Override
+	public boolean estDisponible(Creneau creneau) throws ReunionException {
+		boolean	b = true;
+		
+		for (Participant p : membres) {
+			b = b && p.estDisponible(creneau);
+		}
+		
+		return b;
+	}
+
+}
