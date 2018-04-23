@@ -45,7 +45,9 @@
 					<td valign="middle" align="left">
 						<form>
 							<h:inputText id="champ_place"
-								value="#{beanParticipation.participation.place}" />
+								value="#{beanParticipation.participation.place}" >
+								<f:validateLongRange minimum="20" maximum="1000" />
+								</h:inputText>
 						</form>
 					</td>
 				</tr>
