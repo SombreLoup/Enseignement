@@ -1,0 +1,5 @@
+[DVD|code:int;titre:String;dateAchat:Date|] listeDVD*-listeCatégories*  [Catégorie|code:int;libelle:String;dateAchat:Date|]
+
+categorie: num_cat, lib_cat
+cat_dvd, 1N categorie, 1N dvd
+dvd: num_dvd, titre_dvd, date_achat_dvd

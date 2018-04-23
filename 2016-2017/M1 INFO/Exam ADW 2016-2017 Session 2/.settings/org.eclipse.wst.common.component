@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="Exam ADW 2016-2017 Session 2">
+        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <property name="context-root" value="Exam_ADW_2016-2017_Session_2"/>
+        <property name="java-output-path" value="/Exam ADW 2016-2017 Session 2/build/classes"/>
+    </wb-module>
+</project-modules>

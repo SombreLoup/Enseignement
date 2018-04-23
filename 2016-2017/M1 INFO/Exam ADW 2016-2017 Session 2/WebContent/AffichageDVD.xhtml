@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<head>
+<title><ui:insert name="title">Détails DVD</ui:insert></title>
+</head>
+
+<body>
+	<ui:debug hotkey="x"
+		rendered="#{initParam['javax.faces.FACELETS_DEVELOPMENT']}" />
+
+	<div id="header" align="center">
+		<h1>DVD</h1>
+	</div>
+
+
+	<table>
+		<tr>
+			<td><h:outputLabel value="Code : " /></td>
+			<td><h:outputText value="#{beanCategorie.dvd.code}"></h:outputText></td>
+			<td><h:message for="titre" style="color:red" /></td>
+		</tr>
+
+		<tr>
+			<td><h:outputLabel value="Titre : " /></td>
+			<td><h:outputText value="#{beanCategorie.dvd.titre}"></h:outputText></td>
+				<td><h:message for="titre" style="color:red" /></td>
+		</tr>
+
+		<tr>
+			<td><h:outputLabel value="Date d'achat : " /></td>
+			<td><h:outputText value="#{beanCategorie.dvd.dateAchat}"></h:outputText></td>
+		</tr>
+
+		<tr>
+			<td><h:outputLabel value="Catégories : " /></td>
+			<td><h:outputText value="#{beanCategorie.dvd.listeCategories}"></h:outputText>		</td>	
+		</tr>
+	</table>
+
+	<div id="footer"></div>
+
+</body>
+
+</html>

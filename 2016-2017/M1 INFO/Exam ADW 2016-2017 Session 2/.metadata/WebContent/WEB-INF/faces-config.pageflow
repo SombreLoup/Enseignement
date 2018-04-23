@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14961369640390" configfile="/Exam ADW 2016-2017 Session 2/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="AjoutDVD.xhtml" x="366" y="267" id="pf14968289153290" outlinks="pf14968289153291" path="/AjoutDVD.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="AffichageDVD.xhtml" x="706" y="286" id="pf14968289153292" inlinks="pf14968289153291" path="/AffichageDVD.xhtml"/>
+  <links id="pf14968289153291" target="pf14968289153292" source="pf14968289153290" outcome="AJOUT_EFFECTUE"/>
+</pageflow:Pageflow>
