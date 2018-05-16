@@ -8,6 +8,10 @@ public abstract class Boisson {
 	private	ETemperature temperature;
 	
 	
+	public abstract	double	getPrix();
+	public abstract 	boolean	estAlcoolisee();
+	
+	
 	public Boisson(String nom, ETemperature temperature) throws BoissonException {
 		setNom(nom);
 		setTemperature(temperature);

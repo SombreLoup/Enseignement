@@ -2,7 +2,6 @@ package boisson;
 
 public class BoissonBase extends Boisson {
 
-	private	boolean	petillante = false;
 	private	boolean	alcoolisee = false;
 	private	double	prixCl;
 	
@@ -11,12 +10,6 @@ public class BoissonBase extends Boisson {
 		this.prixCl = prixCl;
 	}
 	
-	public boolean estPetillante() {
-		return petillante;
-	}
-	public void setPetillante(boolean estPetillante) {
-		this.petillante = estPetillante;
-	}
 	public boolean estAlcoolisee() {
 		return alcoolisee;
 	}
@@ -32,7 +25,7 @@ public class BoissonBase extends Boisson {
 
 	@Override
 	public String toString() {
-		return "BoissonBase [petillante=" + petillante + ", alcoolisee=" + alcoolisee + ", prixCl=" + prixCl + ", " + super.toString()+"]";
+		return "BoissonBase [alcoolisee=" + alcoolisee + ", prixCl=" + prixCl + ", " + super.toString()+"]";
 	}
 	
 	
