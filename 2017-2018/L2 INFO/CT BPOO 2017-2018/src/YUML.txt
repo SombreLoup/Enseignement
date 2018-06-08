@@ -1,0 +1,1 @@
+[Boisson|nom : String; temperature : int|getPrix() : double {abstraite};estAlcoolisee() : boolean {abstraite}]
