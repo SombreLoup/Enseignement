@@ -1,0 +1,12 @@
+[Competition|nom : String; individuel : boolean|]
+[Participation|place : int; annee : int|]
+[Participant|nom : String|clone():Participant; getPalmaresString() : String]
+[Sportif|dateNaissance : date|]
+[Equipe||]
+[Equipe]-^[Participant]
+[Sportif]-^[Participant]
+[Equipe]<>->* membres[Sportif]
+[Participant]* membres - 1 participant [Participation]
+[Participation]1 -> 1 competition [Competition]
+
+
