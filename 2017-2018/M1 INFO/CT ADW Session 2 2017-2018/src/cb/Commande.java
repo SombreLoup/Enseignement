@@ -1,14 +1,40 @@
 package cb;
 
-import java.sql.Date;
+import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+@Entity
+@Table(name="commande")
 public class Commande {
 	
+	@Id
+	@Column(name="num_cde")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private	int		numero = -1;
+	
+	@Column(name="date_cde")
+	@Temporal(TemporalType.DATE)
 	private	Date		date;
+	
+	@Column(name="montant_cde")
 	private	double	montant;
 	
+	@ManyToOne
+	@JoinColumn(name="num_cl")
 	private	Client	client;
+	
+	@ManyToOne
+	@JoinColumn(name="id_cb")	
 	private	CarteBancaire	carteBancaire;
 	
 
@@ -77,7 +103,7 @@ public class Commande {
 
 	@Override
 	public String toString() {
-		return "Commande [numero=" + numero + ", date=" + date + ", montant=" + montant + ", client=" + client
+		return "Commande [numero=" + numero + ", date=" + date + ", montant=" + montant + ", client=" + (client==null? null : client.getNom())
 				+ ", carteBancaire=" + carteBancaire + "]";
 	}
 

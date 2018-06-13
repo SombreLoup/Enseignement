@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<f:metadata>
+    <f:viewParam name="codeCommande" value="#{beanCommande.codeCommande}" required="true" />
+</f:metadata>
+
+<h:body>
+	<div align="left">
+		<h1>Règlement par carte bancaire</h1>
+		<h2>
+			Commande :
+			<h:outputText value="#{beanCommande.commandeCourante.numero}" />
+		</h2>
+		<h2>
+			Client :
+			<h:outputText value="#{beanCommande.commandeCourante.client.nom}" />
+		</h2>
+		Choisissez une carte bancaire de cette liste
+		<p />
+		<h:dataTable border="1"
+			value="#{beanCommande.commandeCourante.client.cartesBancaires}"
+			var="cb">
+
+			<h:column>
+				<h:outputText value="#{cb.nomCarte}" />
+			</h:column>
+
+		</h:dataTable>
+		<p />
+		ou bien ajoutez une
+		<h:outputLink
+			value="http://localhost:8080/CT_ADW_Session_2_2017-2018/faces/NouvelleCarte.xhtml">
+			<h:outputText value="nouvelle carte bancaire" />
+			<f:param name="codeClient"
+				value="#{beanCommande.commandeCourante.client.numero}" />
+		</h:outputLink>
+	</div>
+</h:body>
+</html>

@@ -1,25 +1,72 @@
 package cb;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="cartebancaire")
 public class CarteBancaire {
 
+	@Id
+	@Column(name="id_cb")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private	int		id = -1;
+	
+	@Column(name="nom_cb")
+	private	String	nomCarte;
+	
+	@Column(name="num_cb")
 	private	String	numero;
+	
+	@Column(name="code_cb")
 	private	String 	codeSecurite;
-	private	Client	client;
+	
+	@Column(name="titulaire_cb")
+	private	String	titulaire;
+
+	@Column(name="mois_cb")
 	private	int moisValidite;
+
+	@Column(name="annee_cb")
 	private	int	anneeValidite;
+
+	@ManyToOne
+	@JoinColumn(name="num_cl")
+	private	Client	client;
 	
 	public CarteBancaire() {
-		super();
 	}
 
-	public CarteBancaire(String numero, String codeSecurite, Client client, int moisValidite, int anneeValidite) {
+	public CarteBancaire(String nomCarte, String numero, String codeSecurite, Client client, int moisValidite, int anneeValidite) {
 		super();
+		this.nomCarte = nomCarte;
 		this.numero = numero;
 		this.codeSecurite = codeSecurite;
 		this.client = client;
 		this.moisValidite = moisValidite;
 		this.anneeValidite = anneeValidite;
+	}
+
+	public String getNomCarte() {
+		return nomCarte;
+	}
+
+	public void setNomCarte(String nomCarte) {
+		this.nomCarte = nomCarte;
+	}
+
+	public String getTitulaire() {
+		return titulaire;
+	}
+
+	public void setTitulaire(String titulaire) {
+		this.titulaire = titulaire;
 	}
 
 	public int getId() {
@@ -72,8 +119,8 @@ public class CarteBancaire {
 
 	@Override
 	public String toString() {
-		return "CarteBancaire [id=" + id + ", numero=" + numero + ", codeSecurite=" + codeSecurite + ", client="
-				+ client.getNom() + ", moisValidite=" + moisValidite + ", anneeValidite=" + anneeValidite + "]";
+		return "CarteBancaire [id=" + id + ", nom carte=" + nomCarte + ", numero=" + numero + ", codeSecurite=" + codeSecurite + ", client="
+				+ (client==null? null : client.getNom()) + ", moisValidite=" + moisValidite + ", anneeValidite=" + anneeValidite + "]";
 	}
 
 	@Override

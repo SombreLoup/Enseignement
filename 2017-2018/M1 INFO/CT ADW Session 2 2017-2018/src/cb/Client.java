@@ -3,13 +3,33 @@ package cb;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="client")
 public class Client {
 	
+	@Id
+	@Column(name="num_cl")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private	int		numero = -1;
+	
+	@Column(name="nom_cl")
 	private	String	nom;
+
+	@Column(name="prenom_cl")
 	private	String	prenom;
 	
+	@OneToMany(mappedBy="client")
 	private	List<Commande>	commandes = new ArrayList<Commande>();
+
+	@OneToMany(mappedBy="client")
 	private	List<CarteBancaire>	cartesBancaires = new ArrayList<CarteBancaire>();
 
 	public Client(String nom, String prenom) {
@@ -52,6 +72,14 @@ public class Client {
 
 	public void setCommandes(List<Commande> commandes) {
 		this.commandes = commandes;
+	}
+
+	public List<CarteBancaire> getCartesBancaires() {
+		return cartesBancaires;
+	}
+
+	public void setCartesBancaires(List<CarteBancaire> cartesBancaires) {
+		this.cartesBancaires = cartesBancaires;
 	}
 
 	public boolean add(Commande e) {
