@@ -1,0 +1,6 @@
+[CarteBancaire|-id:int;-nomCarte:String;-numero:String;-codeSecurite:int;-titulaire:String;-moisValidite:int;-anneeValidite:int|], 
+[Client|-numero:int;-nom:String;-prenom:String|], 
+[Commande|-numero:int;-date:Date;-montant:double|],
+[Client]1<>-* listeCartes[CarteBancaire],
+[Client]1<>-* listeCommandes[Commande]
+[Commande]->1[CarteBancaire]
