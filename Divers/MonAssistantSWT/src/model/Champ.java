@@ -4,6 +4,12 @@ public class Champ {
 	private	String	visibilite = "private";
 	private	String	nom = "monChamp";
 	private	String	type = "String";
+	private boolean	getter = true;
+	private	boolean	setter = true;
+	private	boolean construction = true;
+	private	boolean egalite = true;
+	private	boolean affichage = true;
+	private	String	valeurParDefaut = "";
 	
 	public Champ() {
 		super();
@@ -80,5 +86,53 @@ public class Champ {
 	@Override
 	public String toString() {
 		return "Champ [visibilite=" + visibilite + ", nom=" + nom + ", type=" + type + "]";
+	}
+
+	public boolean isGetter() {
+		return getter;
+	}
+
+	public void setGetter(boolean getter) {
+		this.getter = getter;
+	}
+
+	public boolean isSetter() {
+		return setter;
+	}
+
+	public void setSetter(boolean setter) {
+		this.setter = setter;
+	}
+
+	public boolean isConstruction() {
+		return construction;
+	}
+
+	public void setConstruction(boolean construction) {
+		this.construction = construction;
+	}
+
+	public boolean isEgalite() {
+		return egalite;
+	}
+
+	public void setEgalite(boolean egalite) {
+		this.egalite = egalite;
+	}
+
+	public String getValeurParDefaut() {
+		return valeurParDefaut;
+	}
+
+	public void setValeurParDefaut(String valeurParDefaut) {
+		this.valeurParDefaut = valeurParDefaut;
+	}
+
+	public boolean isAffichage() {
+		return affichage;
+	}
+
+	public void setAffichage(boolean affichage) {
+		this.affichage = affichage;
 	}
 }
