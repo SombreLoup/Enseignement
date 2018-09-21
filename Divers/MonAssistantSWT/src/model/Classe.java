@@ -30,8 +30,31 @@ public class Classe {
 		return listeChamps.size();
 	}
 
+	public ArrayList<Champ> getListeChamps() {
+		return listeChamps;
+	}
+
+	public boolean contains(Champ c) {
+		return rechercherChamp(c.getNom()) != null;
+	}
+
 	public boolean add(Champ e) {
 		return listeChamps.add(e);
+	}
+
+	public boolean remove(String nom) {
+		Champ c = rechercherChamp(nom);
+		if (c==null)
+			return false;
+		return listeChamps.remove(c);
+	}
+
+	private Champ rechercherChamp(String nom2) {
+		for (Champ champ : listeChamps) {
+			if (champ.getNom().equals(nom2))
+				return champ;
+		}
+		return null;
 	}
 
 	public Object[] toArray() {
