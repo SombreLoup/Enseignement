@@ -20,6 +20,7 @@ import org.eclipse.swt.layout.RowLayout;
 import model.Champ;
 import model.Classe;
 import ui.MonAppliSWT.BoutonsListener;
+import ui.MonAppliSWT.GenererListener;
 
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Button;
@@ -33,7 +34,7 @@ public class MonAppliSWT {
 	final public static Font fontGras = new Font(device, "Menlo", 12, SWT.BOLD);
 
 	private static final String[] LISTE_VISIBILITE = new String[] { "private", "public", "protected" };
-	private static final String[] LISTE_TYPE = new String[] { "int", "double", "boolean", "String" };
+	private static final String[] LISTE_TYPE = new String[] { "int", "double", "boolean", "String", "ArrayList" };
 	protected Shell shell;
 
 	private Classe classe = new Classe("MaClasse");
@@ -70,6 +71,10 @@ public class MonAppliSWT {
 		shell.setLayout(gridLayout);
 
 		createControl(shell);
+		
+		Button btnGenerer = new Button(shell, SWT.NONE);
+		btnGenerer.setText("Generer");
+		btnGenerer.addSelectionListener(new GenererListener());
 
 		shell.pack();
 		shell.open();
@@ -152,7 +157,47 @@ public class MonAppliSWT {
 		btnMoins.setText("-");
 		btnMoins.setData(champ.getNom());
 		btnMoins.addSelectionListener(listenerBoutons);
+		
+		if (! champ.getType().equals("ArrayList")) {
+			Button btnCons = new Button(compositeDroit, SWT.TOGGLE);
+			btnCons.setText("C");
+			btnCons.setSelection(champ.isConstruction());
+			btnCons.setData(champ.getNom());
+			btnCons.addSelectionListener(listenerBoutons);			
+		}
+
+		
+
+		Button btnGetter = new Button(compositeDroit, SWT.TOGGLE);
+		btnGetter.setText("G");
+		btnGetter.setSelection(champ.isGetter());
+		btnGetter.setData(champ.getNom());
+		btnGetter.addSelectionListener(listenerBoutons);
+
+		if (! champ.getType().equals("ArrayList")) {
+			Button btnSetter = new Button(compositeDroit, SWT.TOGGLE);
+			btnSetter.setText("S");
+			btnSetter.setSelection(champ.isSetter());
+			btnSetter.setData(champ.getNom());
+			btnSetter.addSelectionListener(listenerBoutons);		
+		}
+
+		Button btnEquals = new Button(compositeDroit, SWT.TOGGLE);
+		btnEquals.setText("E");
+		btnEquals.setSelection(champ.isEgalite());
+
+		btnEquals.setData(champ.getNom());
+		btnEquals.addSelectionListener(listenerBoutons);
+
+		Button btnToString = new Button(compositeDroit, SWT.TOGGLE);
+		btnToString.setText("T");
+		btnToString.setSelection(champ.isAffichage());
+
+		btnToString.setData(champ.getNom());
+		btnToString.addSelectionListener(listenerBoutons);
 	}
+
+
 
 	private void initCadreClasse(Composite parent) {
 		Composite principal = new Composite(parent, SWT.NONE);
@@ -202,8 +247,31 @@ public class MonAppliSWT {
 				return;
 			}
 			
+			String nomChamp = (String)e.widget.getData();
+			Champ champ = classe.getChamp(nomChamp);
+			boolean etat = ((Button)e.widget).getSelection();
 			if (((Button)e.widget).getText().equals("-")) {
-				traiterSuppressionChamp((String)e.widget.getData());
+				traiterSuppressionChamp(nomChamp);
+			}
+			
+			if (((Button)e.widget).getText().equals("E")) {
+				champ.setEgalite(etat);
+			}
+			
+			if (((Button)e.widget).getText().equals("T")) {
+				champ.setAffichage(etat);
+			}			
+			
+			if (((Button)e.widget).getText().equals("G")) {
+				champ.setGetter(etat);
+			}			
+			
+			if (((Button)e.widget).getText().equals("S")) {
+				champ.setSetter(etat);
+			}	
+			
+			if (((Button)e.widget).getText().equals("C")) {
+				champ.setConstruction(etat);
 			}
 		}
 
@@ -258,6 +326,21 @@ public class MonAppliSWT {
 
 	public Classe getClasse() {
 		return classe;
+	}
+
+	public class GenererListener implements SelectionListener {
+	
+		@Override
+		public void widgetSelected(SelectionEvent e) {
+			classe.genererFichier(System.out);
+		}
+	
+		@Override
+		public void widgetDefaultSelected(SelectionEvent e) {
+			// TODO Auto-generated method stub
+	
+		}
+	
 	}
 
 

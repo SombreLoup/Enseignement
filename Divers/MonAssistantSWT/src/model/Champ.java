@@ -20,6 +20,8 @@ public class Champ {
 		this.visibilite = visibilite;
 		this.nom = nom;
 		this.type = type;
+		if (type.equals("ArrayList"))
+			construction = false;
 	}
 	
 	public String getVisibilite() {
@@ -44,6 +46,8 @@ public class Champ {
 	
 	public void setType(String type) {
 		this.type = type;
+		if (type.equals("ArrayList"))
+			construction = false;
 	}
 	
 	@Override

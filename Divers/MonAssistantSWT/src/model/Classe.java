@@ -35,8 +35,9 @@ public class Classe {
 		return listeChamps;
 	}
 
+
 	public boolean contains(Champ c) {
-		return rechercherChamp(c.getNom()) != null;
+		return getChamp(c.getNom()) != null;
 	}
 
 	public boolean add(Champ e) {
@@ -44,13 +45,13 @@ public class Classe {
 	}
 
 	public boolean remove(String nom) {
-		Champ c = rechercherChamp(nom);
+		Champ c = getChamp(nom);
 		if (c==null)
 			return false;
 		return listeChamps.remove(c);
 	}
 
-	private Champ rechercherChamp(String nom2) {
+	public Champ getChamp(String nom2) {
 		for (Champ champ : listeChamps) {
 			if (champ.getNom().equals(nom2))
 				return champ;
@@ -100,6 +101,8 @@ public class Classe {
 				}
 			}
 		}
+		else
+			eq += "\"";
 		eq += "+\"]\"";
 		
 		out.println(ident2+"return "+eq+";");
@@ -185,7 +188,7 @@ public class Classe {
 	}
 
 	private void genererConstructeurParValeurs(PrintStream out, String ident1) {
-		if (listeChamps.isEmpty())
+		if (listeChamps.isEmpty() || (getNombreChampAConstruire()==0))
 			return;
 		
 		out.print(ident1 + "public \t"+ nom + "(");
@@ -207,6 +210,17 @@ public class Classe {
 		}
 
 		out.println(ident1 + "}\n");
+	}
+
+	private int getNombreChampAConstruire() {
+		int nb = 0;
+		
+		for (Champ champ : listeChamps) {
+			if (champ.isConstruction())
+				nb++;
+		}
+		
+		return nb;
 	}
 
 	private void genererChamps(PrintStream out, String ident1) {
