@@ -72,7 +72,7 @@ public class Classe {
 
 		out.println("package "+paquet+";\n");
 		out.println("public class " + nom + " {");
-
+		
 		genererChamps(out, ident1);
 		genererConstructeurParDefaut(out, ident1);
 		genererConstructeurParCopie(out, ident1);
