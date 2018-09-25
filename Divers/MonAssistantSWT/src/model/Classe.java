@@ -8,6 +8,9 @@ public class Classe {
 	private String nom;
 	private	String paquet;
 	private ArrayList<Champ> listeChamps = new ArrayList<Champ>();
+	public static final String TYPE_COLLECTION = "ArrayList";
+	public static final String[] LISTE_TYPE = new String[] { "int", "double", "boolean", "String", TYPE_COLLECTION };
+	public static final String[] LISTE_VISIBILITE = new String[] { "private", "public", "protected" };
 
 	public Classe() {
 		super();
@@ -16,7 +19,7 @@ public class Classe {
 
 	public Classe(String nom) {
 		super();
-		this.nom = nom;
+		this.nom = nom.trim();
 	}
 
 	public String getNom() {
@@ -24,7 +27,7 @@ public class Classe {
 	}
 
 	public void setNom(String nom) {
-		this.nom = nom;
+		this.nom = nom.trim();
 	}
 
 	public int size() {
@@ -80,10 +83,34 @@ public class Classe {
 		genererConstructeurParValeurs(out, ident1);
 		genererGetter(out, ident1);
 		genererSetter(out, ident1);
+		genererDelegationsCollection(out,ident1);
 		genererEquals(out, ident1);
 		genererToString(out, ident1);
 
 		out.println("}");
+	}
+
+	private void genererDelegationsCollection(PrintStream out, String ident1) {
+		for (Champ champ : listeChamps) {
+			if (champ.isCollection()) {
+				genererAdd(out,ident1,champ);
+				genererSize(out,ident1,champ);
+			}
+		}	
+	}
+
+
+	private void genererSize(PrintStream out, String ident1, Champ champ) {
+		out.println(ident1+"public int size() {");
+		out.println(ident1+"\treturn "+champ.getNom()+".size();");
+		out.println(ident1+"}\n");
+	}
+
+	private void genererAdd(PrintStream out, String ident1, Champ champ) {
+		out.println(ident1+"public void add("+champ.getTemplateCollection()+" obj) {");
+		out.println(ident1+"\t"+champ.getNom()+".add(obj);");
+		out.println(ident1+"}\n");
+		
 	}
 
 	private void genererToString(PrintStream out, String ident1) {
@@ -150,7 +177,7 @@ public class Classe {
 
 				nomGetter += Character.toUpperCase(champ.getNom().charAt(0));
 				nomGetter += champ.getNom().substring(1, champ.getNom().length());
-				out.println(ident1 + "public " + champ.getType() + " " + nomGetter + "() {");
+				out.println(ident1 + "public " + champ.genererType() + " " + nomGetter + "() {");
 				out.println(ident1 + "\t" + "return " + champ.getNom() + ";");
 				out.println(ident1 + "}\n");
 			}
@@ -159,7 +186,7 @@ public class Classe {
 
 	private void genererSetter(PrintStream out, String ident1) {
 		for (Champ champ : listeChamps) {
-			if (champ.isSetter()) {
+			if (champ.isSetter() && !champ.isCollection()) {
 				String nomSetter = "set";
 
 				nomSetter += Character.toUpperCase(champ.getNom().charAt(0));
@@ -225,12 +252,30 @@ public class Classe {
 
 	private void genererChamps(PrintStream out, String ident1) {
 		for (Champ champ : listeChamps) {
-			out.print(ident1 + champ.getVisibilite() + " \t" + champ.getType() + " \t" + champ.getNom());
-			if (champ.getValeurParDefaut().isEmpty())
-				out.println(";\n");
+			if (champ.isCollection())
+				genererChampCollection(out, ident1, champ);
 			else
-				out.println(" = " + champ.getValeurParDefaut() + ";\n");
+				genererChampValeur(out, ident1, champ);
 		}
+		out.println();
+	}
+
+	private void genererChampCollection(PrintStream out, String ident1, Champ champ) {
+		out.print(ident1 + 
+				champ.getVisibilite() + 
+				" \t" + TYPE_COLLECTION +"<"+champ.getTemplateCollection()+">" + " \t" + 
+				champ.getNom() + 
+				" = new "+
+				TYPE_COLLECTION +"<"+champ.getTemplateCollection()+">();\n"
+				);
+	}
+
+	private void genererChampValeur(PrintStream out, String ident1, Champ champ) {
+		out.print(ident1 + champ.getVisibilite() + " \t" + champ.getType() + " \t" + champ.getNom());
+		if (champ.getValeurParDefaut().isEmpty())
+			out.println(";");
+		else
+			out.println(" = " + champ.getValeurParDefaut() + ";");
 	}
 
 	public static void main(String[] args) {

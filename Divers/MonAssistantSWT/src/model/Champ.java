@@ -10,6 +10,7 @@ public class Champ {
 	private	boolean egalite = true;
 	private	boolean affichage = true;
 	private	String	valeurParDefaut = "";
+	private	String	templateCollection = "";
 	
 	public Champ() {
 		super();
@@ -18,8 +19,8 @@ public class Champ {
 	public Champ(String visibilite, String nom, String type) {
 		super();
 		this.visibilite = visibilite;
-		this.nom = nom;
-		this.type = type;
+		this.nom = nom.trim();
+		this.type = type.trim();
 		if (type.equals("ArrayList"))
 			construction = false;
 	}
@@ -37,7 +38,7 @@ public class Champ {
 	}
 	
 	public void setNom(String nom) {
-		this.nom = nom;
+		this.nom = nom.trim();
 	}
 	
 	public String getType() {
@@ -45,7 +46,7 @@ public class Champ {
 	}
 	
 	public void setType(String type) {
-		this.type = type;
+		this.type = type.trim();
 		if (type.equals("ArrayList"))
 			construction = false;
 	}
@@ -138,5 +139,24 @@ public class Champ {
 
 	public void setAffichage(boolean affichage) {
 		this.affichage = affichage;
+	}
+
+	public String getTemplateCollection() {
+		return templateCollection;
+	}
+
+	public void setTemplateCollection(String templateCollection) {
+		this.templateCollection = templateCollection;
+	}
+
+	String genererType() {
+		if (isCollection())
+			return Classe.TYPE_COLLECTION +"<"+getTemplateCollection()+">";
+		else 
+			return getType();
+	}
+
+	public boolean isCollection() {
+		return type.equals(Classe.TYPE_COLLECTION);
 	}
 }
