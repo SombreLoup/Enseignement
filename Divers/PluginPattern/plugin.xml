@@ -11,7 +11,7 @@
       <wizard
             id="pluginpattern.wizards.PatternClasseWizard"
             name="Nouvelle classe"
-            icon="icons/sample.png"
+            icon="icones/classpattern_wiz.png"
             class="pluginpattern.wizards.PatternClasseWizard"
             category="PluginPattern">
       </wizard>
