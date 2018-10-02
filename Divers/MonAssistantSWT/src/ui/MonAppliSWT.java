@@ -16,6 +16,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 
@@ -154,6 +155,7 @@ public class MonAppliSWT {
 
 	private void ajouterChampDansComposite(Champ champ) {
 		Composite compositeGauche = new Composite(compositeChamps, SWT.NONE);
+		
 		GridLayout grid = new GridLayout(5, false);
 		compositeGauche.setLayout(grid);
 	
