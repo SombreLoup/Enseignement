@@ -88,9 +88,6 @@ public class PatternClasseWizard extends Wizard implements INewWizard {
 
 	private void doFinish(IProgressMonitor monitor) throws CoreException {
 		
-		IWorkspace myWorkspace = ResourcesPlugin.getWorkspace();
-		
-		
 		String nomFichier = ResourcesPlugin.getWorkspace().getRoot().getLocation()+"/"+page.getChemin()+"/"+page.getClasse().getNom() + ".java";
 		
 		System.out.println("Nom du fichier : "+nomFichier);

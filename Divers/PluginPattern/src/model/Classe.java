@@ -75,6 +75,10 @@ public class Classe {
 		String ident1 = "\t";
 
 		out.println("package "+paquet+";\n");
+		out.println();
+		if (aChampCollection())
+			out.println("import java.util."+TYPE_COLLECTION+";\n\n");
+		
 		out.println("public class " + nom + " {");
 
 		genererChamps(out, ident1);
@@ -88,6 +92,14 @@ public class Classe {
 		genererToString(out, ident1);
 
 		out.println("}");
+	}
+
+	private boolean aChampCollection() {
+		for (Champ champ : listeChamps) {
+			if (champ.isCollection())
+				return true;
+		}
+		return false;
 	}
 
 	private void genererDelegationsCollection(PrintStream out, String ident1) {
