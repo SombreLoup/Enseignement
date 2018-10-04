@@ -14,15 +14,17 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
+import modele.Plateau;
 
 public class CandyCrush extends Application {
 
+	private static final int NOMBRE_DE_CANDIES = 5;
 	private Button[][] grille;
 	private GridPane grillePane;
+	private Image[] candies;
+	private Plateau plateau;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -30,9 +32,8 @@ public class CandyCrush extends Application {
 			primaryStage.setTitle("Candy Crush");
 	
 			initGrille(); // construction de grillePane
-			BorderPane root = new BorderPane();
-			
-			root.getChildren().add(grillePane);
+			VBox root = new VBox();
+			root.getChildren().add(grillePane);		
 			
 			Scene scene = new Scene(root);
 			primaryStage.setScene(scene);
@@ -46,26 +47,19 @@ public class CandyCrush extends Application {
 
 	private void initGrille() {
 		
-		Image[] Candy = new Image[4];
-		try {
-			Candy[0] = new Image(getClass().getResourceAsStream("/Candy_1.png"));
-			Candy[1] = new Image(getClass().getResourceAsStream("/Candy_2.png"));
-			Candy[2] = new Image(getClass().getResourceAsStream("/Candy_3.png"));
-			Candy[3] = new Image(getClass().getResourceAsStream("/Candy_4.png"));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
+		initCandies();	
 		grillePane = new GridPane();
 
 		grille = new Button[10][10];
+		
+		plateau = new Plateau(10, 10);
+		plateau.initPlateauAleatoire();
+		
 	
 		for (int l = 0; l < 10; l++) {
 			for (int c = 0; c < 10; c++) {
-				int indiceImage = (int)(Math.random()*4);
-				Button bouton = new Button("",new ImageView(Candy[indiceImage]));
+				int indiceImage = plateau.getBonbon(l,c).getSorte().ordinal();
+				Button bouton = new Button("",new ImageView(candies[indiceImage]));
 				
 				bouton.setStyle("-fx-background-color: #FFFFFF");
 				grille[l][c] = bouton;
@@ -78,6 +72,37 @@ public class CandyCrush extends Application {
 				bouton.setOnDragDropped(new DragDroppedEvent(bouton));
 	
 			}
+		}
+	}
+
+	private void recreerGridPane() {
+		grillePane.getChildren().clear();
+		
+		for (int l = 0; l < 10; l++) {
+			for (int c = 0; c < 10; c++) {
+				grillePane.add(grille[l][c], c, l);
+			}
+		}
+		
+		for (int l = 0; l < 10; l++) {
+			for (int c = 0; c < 10; c++) {
+				grille[l][c].setGraphic(new ImageView(candies[plateau.getBonbon(l, c).getSorte().ordinal()]));
+			}
+		}
+	
+		
+		grillePane.requestLayout();
+	}
+
+	private void initCandies() {
+		candies = new Image[NOMBRE_DE_CANDIES];
+
+		try {
+			for (int i = 0; i < candies.length; i++) {
+				candies[i] = new Image(getClass().getResourceAsStream("/Candy_"+i+".png"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -145,24 +170,16 @@ public class CandyCrush extends Application {
 				}
 			}
 			
+			plateau.echanger(ls,cs,lt,ct);
+			
 			grille[ls][cs] = (Button)target;
 			grille[lt][ct] = (Button)source;
+			
+			plateau.eliminerCombos();
 			
 			
 			recreerGridPane();
 		}
-	}
-
-	private void recreerGridPane() {
-		grillePane.getChildren().clear();
-		
-		for (int l = 0; l < 10; l++) {
-			for (int c = 0; c < 10; c++) {
-				grillePane.add(grille[l][c], c, l);
-			}
-		}
-		
-		grillePane.requestLayout();
 	}
 
 	public static void main(String[] args) {
