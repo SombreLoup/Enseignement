@@ -15,12 +15,71 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class CandyCrush extends Application {
 
 	private Button[][] grille;
 	private GridPane grillePane;
+
+	@Override
+	public void start(Stage primaryStage) {
+		try {
+			primaryStage.setTitle("Candy Crush");
+	
+			initGrille(); // construction de grillePane
+			BorderPane root = new BorderPane();
+			
+			root.getChildren().add(grillePane);
+			
+			Scene scene = new Scene(root);
+			primaryStage.setScene(scene);
+			primaryStage.show();
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void initGrille() {
+		
+		Image[] Candy = new Image[4];
+		try {
+			Candy[0] = new Image(getClass().getResourceAsStream("/Candy_1.png"));
+			Candy[1] = new Image(getClass().getResourceAsStream("/Candy_2.png"));
+			Candy[2] = new Image(getClass().getResourceAsStream("/Candy_3.png"));
+			Candy[3] = new Image(getClass().getResourceAsStream("/Candy_4.png"));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		grillePane = new GridPane();
+
+		grille = new Button[10][10];
+	
+		for (int l = 0; l < 10; l++) {
+			for (int c = 0; c < 10; c++) {
+				int indiceImage = (int)(Math.random()*4);
+				Button bouton = new Button("",new ImageView(Candy[indiceImage]));
+				
+				bouton.setStyle("-fx-background-color: #FFFFFF");
+				grille[l][c] = bouton;
+	
+				GridPane.setConstraints(bouton, c, l);
+				grillePane.getChildren().add(bouton);
+	
+				bouton.setOnDragDetected(new DragDetectedEvent(bouton));
+				bouton.setOnDragOver(new DragOverEvent(bouton));
+				bouton.setOnDragDropped(new DragDroppedEvent(bouton));
+	
+			}
+		}
+	}
 
 	private final class DragDetectedEvent implements EventHandler<MouseEvent> {
 		private final Button bouton;
@@ -92,67 +151,6 @@ public class CandyCrush extends Application {
 			
 			recreerGridPane();
 		}
-	}
-
-	@Override
-	public void start(Stage primaryStage) {
-		try {
-			primaryStage.setTitle("Candy Crush");
-
-			BorderPane root = new BorderPane();
-
-			initGrille(root);
-
-			Scene scene = new Scene(root, 280, 280);
-			
-
-			primaryStage.setScene(scene);
-	
-			primaryStage.show();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void initGrille(Pane panneau) {
-		
-		Image imageOk = null;
-		try {
-			imageOk = new Image(getClass().getResourceAsStream("Candy_4.png"));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		grillePane = new GridPane();
-		
-		grille = new Button[10][10];
-
-		for (int l = 0; l < 10; l++) {
-			for (int c = 0; c < 10; c++) {
-				Button bouton = new Button("B",new ImageView(imageOk));
-				
-				
-				
-				
-				if ((l + c) % 2 == 0)
-					bouton.setStyle("-fx-background-color: #D2691E");
-				else
-					bouton.setStyle("-fx-background-color: #FFD700");
-				grille[l][c] = bouton;
-
-				GridPane.setConstraints(bouton, c, l);
-				grillePane.getChildren().add(bouton);
-
-				bouton.setOnDragDetected(new DragDetectedEvent(bouton));
-				bouton.setOnDragOver(new DragOverEvent(bouton));
-				bouton.setOnDragDropped(new DragDroppedEvent(bouton));
-
-			}
-		}
-
-		panneau.getChildren().add(grillePane);
 	}
 
 	private void recreerGridPane() {
