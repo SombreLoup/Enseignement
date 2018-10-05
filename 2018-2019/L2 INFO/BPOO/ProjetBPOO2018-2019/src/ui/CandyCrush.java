@@ -12,7 +12,6 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -36,8 +35,10 @@ public class CandyCrush extends Application {
 			root.getChildren().add(grillePane);		
 			
 			Scene scene = new Scene(root);
+		
 			primaryStage.setScene(scene);
 			primaryStage.show();
+			
 			
 			
 		} catch (Exception e) {
@@ -176,17 +177,8 @@ public class CandyCrush extends Application {
 			grille[lt][ct] = (Button)source;
 			
 			plateau.eliminerCombos();
+			plateau.eliminerCasesVides();
 			recreerGridPane();
-//
-//			try {
-//				Thread.sleep(1000);
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			
-//			plateau.eliminerCasesVides();
-//			recreerGridPane();
 		}
 	}
 

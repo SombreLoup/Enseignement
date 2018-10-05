@@ -51,6 +51,7 @@ public class Plateau {
 					for (int i=l; i>0; i--)
 						grille[i][c] = grille[i-1][c];
 					grille[0][c] = new Bonbon(getSorteAleatoire());
+					System.out.println("Coucou");
 				}
 			}
 		}
