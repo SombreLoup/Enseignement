@@ -176,9 +176,17 @@ public class CandyCrush extends Application {
 			grille[lt][ct] = (Button)source;
 			
 			plateau.eliminerCombos();
-			
-			
 			recreerGridPane();
+//
+//			try {
+//				Thread.sleep(1000);
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			
+//			plateau.eliminerCasesVides();
+//			recreerGridPane();
 		}
 	}
 

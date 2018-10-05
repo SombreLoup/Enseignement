@@ -14,10 +14,13 @@ public class Plateau {
 	public void initPlateauAleatoire() {
 		for (int l = 0; l < grille.length; l++) {
 			for (int c = 0; c < grille[l].length; c++) {
-				int sorte = (int)(Math.random()*(Sortes.values().length-1))+1;
-				grille[l][c] = new Bonbon(Sortes.values()[sorte]);
+				grille[l][c] = new Bonbon(getSorteAleatoire());
 			}
 		}
+	}
+
+	private Sortes getSorteAleatoire() {
+		return Sortes.values()[(int)(Math.random()*(Sortes.values().length-1))+1];
 	}
 
 	public Bonbon getBonbon(int l, int c) {
@@ -37,6 +40,18 @@ public class Plateau {
 					viderCasesVerticales(l, c, -longueurSuite);	
 					return;
 				}					
+			}
+		}
+	}	
+	
+	public void eliminerCasesVides() {
+		for (int c = 0; c < grille[0].length; c++) {
+			for (int l = grille.length-1; l>1; l--) {
+				while (grille[l][c].getSorte().equals(Sortes.VIDE)) {
+					for (int i=l; i>0; i--)
+						grille[i][c] = grille[i-1][c];
+					grille[0][c] = new Bonbon(getSorteAleatoire());
+				}
 			}
 		}
 	}
