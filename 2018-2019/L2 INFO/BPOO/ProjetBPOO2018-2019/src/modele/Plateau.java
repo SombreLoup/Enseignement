@@ -46,15 +46,24 @@ public class Plateau {
 	
 	public void eliminerCasesVides() {
 		for (int c = 0; c < grille[0].length; c++) {
-			for (int l = grille.length-1; l>1; l--) {
+			for (int l = grille.length-1; l>=0; l--) {
 				while (grille[l][c].getSorte().equals(Sortes.VIDE)) {
 					for (int i=l; i>0; i--)
 						grille[i][c] = grille[i-1][c];
 					grille[0][c] = new Bonbon(getSorteAleatoire());
-					System.out.println("Coucou");
 				}
 			}
 		}
+	}
+	
+	public void debugConsole() {
+		for (int l = 0; l < grille.length; l++) {
+			for (int c = 0; c < grille[l].length; c++) {
+				System.out.print(grille[l][c].getSorte().ordinal()+" ");
+			}
+			System.out.println();
+		}
+		System.out.println();
 	}
 
 	private void viderCasesVerticales(int l, int c, int n) {
