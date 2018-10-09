@@ -1,184 +1,113 @@
 package ui;
 
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import javafx.util.Duration;
+import modele.Bonbon;
+import modele.CandyException;
 import modele.Plateau;
-import ui.CandyCrush.ShowEvent;
-import ui.CandyCrush.SourisRelache;
+import modele.combinaisons.Combinaison;
+import modele.combinaisons.Combinaison3VerticalRaye;
+import modele.combinaisons.detecteurs.DetecteurCombinaison;
 
 public class CandyCrush extends Application {
 
-	public class ShowEvent implements EventHandler<WindowEvent> {
-
-		@Override
-		public void handle(WindowEvent event) {
-
-			while (true) {
-				plateau.eliminerCombos();
-				recreerGridPane();
-				System.out.println("Combo éliminée");
-				
-				
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-				System.out.println("On va éliminer les cases vides");
-				
-				plateau.eliminerCasesVides();
-				recreerGridPane();
-				System.out.println("Ca y est");
-				
-				
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
-
-	}
-
-
-	private static final int NOMBRE_DE_CANDIES = 5;
-	private Button[][] grille;
-	private GridPane grillePane;
+	private static final double TEMPS_REMPLISSAGE = 0.1;
+	private static final double TEMPS_AFFICHAGE_CASES_VIDES = 0.1;
+	private static final int NOMBRE_DE_CANDIES = 9;
+	private Canvas grillePane;
 	private Image[] candies;
 	private Plateau plateau;
-	private int	etatAnimation = 0;
 	private Timeline timeline;
-	private	Stage stage;
 	private VBox root;
 	private Scene scene;
+	private int xd, yd, xf, yf;
+	private	GraphicsContext gc;
 	
-	
-	public final class EventVidage implements EventHandler<ActionEvent> {
+	private	Combinaison	comboSpeciale = null;
+	private	int			lBonbonSpecial;
+	private	int			cBonbonSpecial;
 
-		@Override
-		public void handle(ActionEvent event) {
-			System.out.println("Vidage");
-			plateau.eliminerCombos();
-			recreerGridPane();
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}	
 	
-	public final class EventRemplissage implements EventHandler<ActionEvent> {
-
-		@Override
-		public void handle(ActionEvent event) {
-			System.out.println("Remplissage");	
-			plateau.debugConsole();
-			plateau.eliminerCasesVides();
-			plateau.debugConsole();
-			recreerGridPane();
-		}
-		
+	private void rangerComboSpeciale(Combinaison combo, int l, int c) {
+		comboSpeciale = combo;
+		lBonbonSpecial = l;
+		cBonbonSpecial = c;
 	}
-	
 
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			this.stage = primaryStage;
 			primaryStage.setTitle("Candy Crush");
-	
+
 			initGrille(); // construction de grillePane
 			root = new VBox();
 			root.getChildren().add(grillePane);
 
 			scene = new Scene(root);
-
+			
+	        initTimeline();
+	        
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			
-
-
+			timeline.play();
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
+	private void initTimeline() {
+		final KeyFrame eliminerCombo = new KeyFrame(Duration.seconds(0), new EventEliminerCombo());
+		final KeyFrame remplirCasesVides = new KeyFrame(Duration.seconds(TEMPS_AFFICHAGE_CASES_VIDES+TEMPS_REMPLISSAGE), new EventRemplirCasesVides());
+		timeline = new Timeline(eliminerCombo, remplirCasesVides);
+		timeline.setCycleCount(Animation.INDEFINITE);
+	}
+
 	private void initGrille() {
 
 		initCandies();
-		grillePane = new GridPane();
+		grillePane = new Canvas(640, 640);
+		gc = grillePane.getGraphicsContext2D();
 
-		grille = new Button[10][10];
+
+		grillePane.setOnDragDetected(new DragDetectedEvent());
+		grillePane.setOnDragOver(new DragOverEvent());
+		grillePane.setOnDragDropped(new DragDroppedEvent());
 
 		plateau = new Plateau(10, 10);
 		plateau.initPlateauAleatoire();
 
+		dessinerGrille();
+	}
+
+	private void dessinerGrille() {
+		 
+
 		for (int l = 0; l < 10; l++) {
 			for (int c = 0; c < 10; c++) {
 				int indiceImage = plateau.getBonbon(l, c).getSorte().ordinal();
-				Button bouton = new Button("", new ImageView(candies[indiceImage]));
 
-				bouton.setStyle("-fx-background-color: #FFFFFF");
-				grille[l][c] = bouton;
-
-				GridPane.setConstraints(bouton, c, l);
-				grillePane.getChildren().add(bouton);
-
-				bouton.setOnDragDetected(new DragDetectedEvent(bouton));
-				bouton.setOnDragOver(new DragOverEvent(bouton));
-				bouton.setOnDragDropped(new DragDroppedEvent(bouton));
-				bouton.setOnMouseReleased(new SourisRelache());
-
+				gc.drawImage(candies[indiceImage], c * 64, l * 64);
 			}
 		}
 	}
-
-	private void recreerGridPane() {
-		grillePane.getChildren().clear();
-		
-
-		for (int l = 0; l < 10; l++) {
-			for (int c = 0; c < 10; c++) {
-				grillePane.add(grille[l][c], c, l);
-			}
-		}
-
-		for (int l = 0; l < 10; l++) {
-			for (int c = 0; c < 10; c++) {
-				grille[l][c].setGraphic(new ImageView(candies[plateau.getBonbon(l, c).getSorte().ordinal()]));
-			}
-		}
-		
-		
-		grillePane.requestLayout();
-	}
-
 
 	private void initCandies() {
 		candies = new Image[NOMBRE_DE_CANDIES];
@@ -192,17 +121,47 @@ public class CandyCrush extends Application {
 		}
 	}
 
-	private final class DragDetectedEvent implements EventHandler<MouseEvent> {
-		private final Button bouton;
+	private final class EventRemplirCasesVides implements EventHandler<ActionEvent> {
+		public void handle(ActionEvent event) {
+			
+			gc.clearRect(0, 0, 640, 640);
+			plateau.eliminerCasesVides();
+			dessinerGrille();
+		}
+	}
 
-		private DragDetectedEvent(Button bouton) {
-			this.bouton = bouton;
+	private final class EventEliminerCombo implements EventHandler<ActionEvent> {
+		public void handle(ActionEvent event) {
+			Combinaison combo = DetecteurCombinaison.detecterCombinaison(plateau);
+			if (combo != null) {
+				combo.viderCombinaison(plateau);
+				dessinerGrille();		
+				
+				if (comboSpeciale != null ) {
+					plateau.placerBonbon(comboSpeciale.getBonbonSpecial(), lBonbonSpecial, cBonbonSpecial);
+					comboSpeciale = null;
+				}
+			}
+			else
+				timeline.pause();
+		}
+	}
+
+	private final class DragDetectedEvent implements EventHandler<MouseEvent> {
+
+		private DragDetectedEvent() {
 		}
 
 		public void handle(MouseEvent event) {
-			Dragboard db = bouton.startDragAndDrop(TransferMode.ANY);
+			Dragboard db = grillePane.startDragAndDrop(TransferMode.ANY);
 
-			db.setDragView(bouton.snapshot(null, null));
+			xd = (int) event.getX();
+			yd = (int) event.getY();
+
+			int l = yd / 64;
+			int c = xd / 64;
+
+			db.setDragView(candies[plateau.getBonbon(l, c).getSorte().ordinal()]);
 
 			ClipboardContent content = new ClipboardContent();
 			content.putString("");
@@ -213,105 +172,61 @@ public class CandyCrush extends Application {
 	}
 
 	private final class DragOverEvent implements EventHandler<DragEvent> {
-		private final Button bouton;
 
-		private DragOverEvent(Button bouton) {
-			this.bouton = bouton;
+		private DragOverEvent() {
 		}
 
 		public void handle(DragEvent event) {
-			if (event.getGestureSource() != bouton) {
-				event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
-			}
+
+			event.acceptTransferModes(TransferMode.ANY);
 
 			event.consume();
 		}
 	}
 
 	private final class DragDroppedEvent implements EventHandler<DragEvent> {
-		private final Button bouton;
-
-		private DragDroppedEvent(Button bouton) {
-			this.bouton = bouton;
+		private DragDroppedEvent() {
 		}
 
 		public void handle(DragEvent event) {
-			Platform.runLater(() -> {
-				echangerSourceTarget(event.getGestureSource(), event.getGestureTarget());
-			});
+
+			xf = (int) event.getX();
+			yf = (int) event.getY();
+
+			echangerSourceTarget();
+
 			event.consume();
-			System.out.println("Drag fini");
 		}
 
-		private void echangerSourceTarget(Object source, Object target) {
+		private void echangerSourceTarget() {
 			int ls = 0, cs = 0, lt = 0, ct = 0;
 
-			for (int l = 0; l < 10; l++) {
-				for (int c = 0; c < 10; c++) {
-					if (grille[l][c] == source) {
-						ls = l;
-						cs = c;
-					} else if (grille[l][c] == target) {
-						lt = l;
-						ct = c;
-					}
+			ls = yd / 64;
+			cs = xd / 64;
+			lt = yf / 64;
+			ct = xf / 64;
 
+			try {
+				plateau.echanger(ls, cs, lt, ct);
+				Combinaison combo = DetecteurCombinaison.detecterCombinaison(plateau);
+				if (combo==null) {
+					plateau.echanger(ls, cs, lt, ct);
+					throw new CandyException("Mouvement interdit car pas de nouvelle combinaison");
 				}
+				else {
+					System.out.println("Bonbon rayé détecté");
+					if (combo.contient(plateau,ls,cs))
+						rangerComboSpeciale(combo, ls, cs);
+					else
+						rangerComboSpeciale(combo, lt, ct);
+				}
+					
+				timeline.play();
+			} catch (CandyException e) {
+				e.printStackTrace();
 			}
-
-			plateau.echanger(ls, cs, lt, ct);
-
-			grille[ls][cs] = (Button) target;
-			grille[lt][ct] = (Button) source;
-
-			System.out.println("Echange fait");
-
 		}
 	}
-	
-	
-	
-
-	public class SourisRelache implements EventHandler<MouseEvent> {
-
-		@Override
-		public void handle(MouseEvent event) {
-			
-			System.out.println("Souris relachée");
-			
-			Platform.runLater(() -> {
-				plateau.eliminerCombos();
-				recreerGridPane();
-				System.out.println("Combo éliminée");
-				
-				
-				try {
-					Thread.sleep(2000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-		    });
-			
-			Platform.runLater(() -> {
-				System.out.println("On va éliminer les cases vides");
-		
-				plateau.eliminerCasesVides();
-				recreerGridPane();
-				System.out.println("Ca y est");
-				
-				
-				try {
-					Thread.sleep(2000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-		    });
-		}
-	
-	}
-
 
 	public static void main(String[] args) {
 		launch(args);
