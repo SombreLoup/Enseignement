@@ -1,14 +1,20 @@
 package ui;
 
+
+
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.ClipboardContent;
@@ -18,6 +24,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -48,6 +55,9 @@ public class CandyCrush extends Application {
 	private	int			cBonbonSpecial;
 	private Label lMessage;
 	private FlowPane paneMessage;
+	private Label lDeplacement;
+	private Label lScore;
+	private Label lTemps;
 
 	
 	private void rangerComboSpeciale(Combinaison combo, int l, int c) {
@@ -65,6 +75,7 @@ public class CandyCrush extends Application {
 			
 			
 			initPaneAvecGrille();
+			initBarreScore();
 			
 			scene = new Scene(root);
 			
@@ -81,6 +92,46 @@ public class CandyCrush extends Application {
 			else
 				e.printStackTrace();
 		}
+	}
+
+	private void initBarreScore() {
+		GridPane p = new GridPane();
+		
+		Label l1 = new Label("Déplacements :");
+		p.add(l1, 0, 0);
+		GridPane.setHalignment(l1, HPos.RIGHT);
+		
+		lDeplacement = new Label("0");
+		p.add(lDeplacement, 1, 0);
+
+		
+		Label l2 = new Label("Score :");
+		p.add(l2, 0, 1);
+		GridPane.setHalignment(l2, HPos.RIGHT);
+		
+		lScore = new Label("0");
+		p.add(lScore, 1, 1);
+		
+		Label l3 = new Label("Temps :");
+		p.add(l3, 0, 2);
+		GridPane.setHalignment(l3, HPos.RIGHT);
+		
+		
+		lTemps = new Label("0:0:0");
+		p.add(lTemps, 1, 2);
+		
+		p.add(new Label(""), 0, 3);
+		
+		Button bArreter = new Button("Arrêter");
+		p.add(bArreter, 0, 4);
+		GridPane.setHalignment(bArreter, HPos.RIGHT);
+
+		Button bContinuer = new Button("Continuer");
+		p.add(bContinuer, 1, 4);
+		
+		
+		((BorderPane)root).setLeft(p);
+		
 	}
 
 	private void initFooterPourMessages() {
