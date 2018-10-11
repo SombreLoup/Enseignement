@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
@@ -16,6 +17,7 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -31,7 +33,7 @@ public class CandyCrush extends Application {
 
 	private static final double TEMPS_REMPLISSAGE = 0.1;
 	private static final double TEMPS_AFFICHAGE_CASES_VIDES = 0.1;
-	private static final int NOMBRE_DE_CANDIES = 9;
+	private static final int NOMBRE_DE_CANDIES = 10;
 	private Canvas grillePane;
 	private Image[] candies;
 	private Plateau plateau;
@@ -44,6 +46,8 @@ public class CandyCrush extends Application {
 	private	Combinaison	comboSpeciale = null;
 	private	int			lBonbonSpecial;
 	private	int			cBonbonSpecial;
+	private Label lMessage;
+	private FlowPane paneMessage;
 
 	
 	private void rangerComboSpeciale(Combinaison combo, int l, int c) {
@@ -61,7 +65,7 @@ public class CandyCrush extends Application {
 			
 			
 			initPaneAvecGrille();
-
+			
 			scene = new Scene(root);
 			
 	        initTimeline();
@@ -72,12 +76,24 @@ public class CandyCrush extends Application {
 			timeline.play();
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			if (lMessage != null)
+				lMessage.setText(e.getMessage());
+			else
+				e.printStackTrace();
 		}
+	}
+
+	private void initFooterPourMessages() {
+		paneMessage = new FlowPane();
+		lMessage = new Label("");
+		paneMessage.getChildren().add(lMessage);
 	}
 
 	private void initPaneAvecGrille() {
 		root = new BorderPane(grillePane);
+		initFooterPourMessages();
+		((BorderPane)root).setBottom(paneMessage);
+		
 		//root.getChildren().add(grillePane); // Pour un autre type de Pane
 	}
 
@@ -125,7 +141,10 @@ public class CandyCrush extends Application {
 				candies[i] = new Image(getClass().getResourceAsStream("/Candy_" + i + ".png"));
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			if (lMessage != null)
+				lMessage.setText(e.getMessage());
+			else
+				e.printStackTrace();
 		}
 	}
 
@@ -140,18 +159,24 @@ public class CandyCrush extends Application {
 
 	private final class EventEliminerCombo implements EventHandler<ActionEvent> {
 		public void handle(ActionEvent event) {
-			Combinaison combo = DetecteurCombinaison.detecterCombinaison(plateau);
-			if (combo != null) {
-				combo.viderCombinaison(plateau);
+			
+			if (comboSpeciale != null) {
+				comboSpeciale.viderCombinaison(plateau);
+				plateau.placerBonbon(comboSpeciale.getBonbonSpecial(), lBonbonSpecial, cBonbonSpecial);
 				dessinerGrille();		
-				
-				if (comboSpeciale != null ) {
-					plateau.placerBonbon(comboSpeciale.getBonbonSpecial(), lBonbonSpecial, cBonbonSpecial);
-					comboSpeciale = null;
-				}
+				comboSpeciale = null;
 			}
-			else
-				timeline.pause();
+			else {
+				Combinaison combo = DetecteurCombinaison.detecterCombinaison(plateau);
+				if (combo != null) {
+					combo.viderCombinaison(plateau);
+					dessinerGrille();
+				}
+				else
+					timeline.pause();
+			}
+
+
 		}
 	}
 
@@ -216,22 +241,24 @@ public class CandyCrush extends Application {
 
 			try {
 				plateau.echanger(ls, cs, lt, ct);
-				Combinaison combo = DetecteurCombinaison.detecterCombinaison(plateau);
+				Combinaison combo = DetecteurCombinaison.detecterCombinaison(plateau, lt,ct);
 				if (combo==null) {
+					combo = DetecteurCombinaison.detecterCombinaison(plateau, ls, cs);
+					if (combo != null)
+						rangerComboSpeciale(combo, ls, cs);
+				}
+				else
+					rangerComboSpeciale(combo, lt, ct);
+				
+				if (combo==null ) {
 					plateau.echanger(ls, cs, lt, ct);
 					throw new CandyException("Mouvement interdit car pas de nouvelle combinaison");
 				}
-				else {
-					System.out.println("Bonbon rayé détecté");
-					if (combo.contient(plateau,ls,cs))
-						rangerComboSpeciale(combo, ls, cs);
-					else
-						rangerComboSpeciale(combo, lt, ct);
-				}
+		
 					
 				timeline.play();
 			} catch (CandyException e) {
-				e.printStackTrace();
+				lMessage.setText(e.getMessage());
 			}
 		}
 	}

@@ -18,6 +18,8 @@ public class Combinaison4Vertical extends Combinaison {
 
 	@Override
 	public void viderCombinaison(Plateau p) {
+		comptabiliserNombrePoints(p);
+
 		p.setBonbon(new Bonbon(Sortes.VIDE), getLdepart(), getCdepart());
 		p.setBonbon(new Bonbon(Sortes.VIDE), getLdepart()+1, getCdepart());
 		p.setBonbon(new Bonbon(Sortes.VIDE), getLdepart()+2, getCdepart());

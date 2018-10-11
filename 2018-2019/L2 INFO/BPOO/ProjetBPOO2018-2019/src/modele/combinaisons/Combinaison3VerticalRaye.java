@@ -8,7 +8,7 @@ public class Combinaison3VerticalRaye extends Combinaison {
 
 	public Combinaison3VerticalRaye(Bonbon b, int l, int c) {
 		super(b, l, c);
-		// TODO Auto-generated constructor stub
+		setNombrePoints(60);
 	}
 
 	@Override
@@ -18,6 +18,8 @@ public class Combinaison3VerticalRaye extends Combinaison {
 
 	@Override
 	public void viderCombinaison(Plateau p) {
+		comptabiliserNombrePoints(p);
+
 		for (int l=0; l<10; l++)
 			p.setBonbon(new Bonbon(Sortes.VIDE), l, getCdepart());
 	}

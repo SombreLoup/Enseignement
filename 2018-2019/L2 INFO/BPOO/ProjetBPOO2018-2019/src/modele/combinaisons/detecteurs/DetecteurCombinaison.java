@@ -35,6 +35,7 @@ public class DetecteurCombinaison {
 			chaineDetecteur = new DetecteurAlignement3Horizontal(chaineDetecteur);
 			chaineDetecteur = new DetecteurAlignement3Vertical(chaineDetecteur);
 			chaineDetecteur = new DetecteurAlignement3VerticalRaye(chaineDetecteur);
+			chaineDetecteur = new DetecteurAlignement3HorizontalRaye(chaineDetecteur);
 			chaineDetecteur = new DetecteurAlignement4Horizontal(chaineDetecteur);
 			chaineDetecteur = new DetecteurAlignement4Vertical(chaineDetecteur);
 		}
@@ -53,6 +54,13 @@ public class DetecteurCombinaison {
 					return combo;
 			}
 		}
+		return null;
+	}
+	
+	public static Combinaison detecterCombinaison(Plateau plateau, int l, int c) {
+		Combinaison combo = detecter(plateau.getBonbon(l, c), l, c, plateau);
+		if (combo != null)
+			return combo;
 		return null;
 	}
 	

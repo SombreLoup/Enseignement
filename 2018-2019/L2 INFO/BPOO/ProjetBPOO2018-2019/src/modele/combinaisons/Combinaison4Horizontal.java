@@ -18,6 +18,8 @@ public class Combinaison4Horizontal extends Combinaison {
 
 	@Override
 	public void viderCombinaison(Plateau p) {
+		comptabiliserNombrePoints(p);
+
 		p.setBonbon(new Bonbon(Sortes.VIDE), getLdepart(), getCdepart());
 		p.setBonbon(new Bonbon(Sortes.VIDE), getLdepart(), getCdepart()+1);
 		p.setBonbon(new Bonbon(Sortes.VIDE), getLdepart(), getCdepart()+2);

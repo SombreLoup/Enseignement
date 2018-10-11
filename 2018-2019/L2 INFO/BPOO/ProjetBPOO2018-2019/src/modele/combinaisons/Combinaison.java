@@ -7,6 +7,7 @@ public abstract class Combinaison {
 	private	int	ldepart;
 	private	int cdepart;
 	private Bonbon bonbon;
+	private	int	nombrePoints = 0;
 	
 	public Combinaison(Bonbon b, int l, int c) {
 		this.bonbon = b;
@@ -28,6 +29,18 @@ public abstract class Combinaison {
 
 	public Bonbon getBonbon() {
 		return bonbon;
+	}
+
+	public int getNombrePoints() {
+		return nombrePoints;
+	}
+
+	public void setNombrePoints(int nombrePoints) {
+		this.nombrePoints = nombrePoints;
+	}
+	
+	public void comptabiliserNombrePoints(Plateau p) {
+		p.comptabiliser(getNombrePoints());
 	}
 
 }

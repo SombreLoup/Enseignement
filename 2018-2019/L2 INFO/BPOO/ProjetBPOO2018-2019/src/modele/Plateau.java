@@ -1,8 +1,13 @@
 package modele;
 
+import modele.combinaisons.Combinaison;
+import modele.combinaisons.detecteurs.DetecteurCombinaison;
+
 public class Plateau {
 
 	private	Bonbon [][]	grille = null;
+	private	int			nombreDeplacement = 0;
+	private int 		nombrePoints = 0;
 	
 	
 	public Plateau(int largeur, int hauteur) {
@@ -10,15 +15,22 @@ public class Plateau {
 	}
 	
 	public void initPlateauAleatoire() {
+		
 		for (int l = 0; l < grille.length; l++) {
 			for (int c = 0; c < grille[l].length; c++) {
 				grille[l][c] = new Bonbon(getSorteAleatoire());
 			}
 		}
+		
+		eliminerToutesLesCombinaisons();
 	}
 
-	private Sortes getSorteAleatoire() {
-		return Sortes.values()[(int)(Math.random()*4)+1];
+	public int getNombreDeplacement() {
+		return nombreDeplacement;
+	}
+
+	public int getNombrePoints() {
+		return nombrePoints;
 	}
 
 	public Bonbon getBonbon(int l, int c) {
@@ -30,28 +42,11 @@ public class Plateau {
 	}
 	
 	public void placerBonbon(Bonbon bonbon, int l, int c) {
-		if (grille[l][c].getSorte() != Sortes.VIDE)
+		if (grille[l][c].getSorte() != Sortes.VIDE) 
 			return;
 		grille[l][c] = bonbon;
 	}
 	
-	public boolean eliminerCombos() {
-		for (int l = 0; l < grille.length; l++) {
-			for (int c = 0; c < grille[l].length; c++) {
-				int longueurSuite = calculerLongueurSuite(l,c);
-				
-				if (longueurSuite>=3 && longueurSuite<=5) {
-					viderCasesHorizontales(l, c, longueurSuite);
-					return true;
-				}
-				else if (longueurSuite<=-3 && longueurSuite>=-5) {
-					viderCasesVerticales(l, c, -longueurSuite);	
-					return true;
-				}					
-			}
-		}
-		return false;
-	}	
 	
 	public void eliminerCasesVides() {
 		for (int c = 0; c < grille[0].length; c++) {
@@ -75,63 +70,43 @@ public class Plateau {
 		System.out.println();
 	}
 
-	public void viderCasesVerticales(int l, int c, int n) {
-		grille[l][c] = new Bonbon(Sortes.VIDE);
-		grille[l+1][c] = new Bonbon(Sortes.VIDE);
-		grille[l+2][c] = new Bonbon(Sortes.VIDE);
-		if (n>=4)
-			grille[l+3][c] = new Bonbon(Sortes.VIDE);
-		if (n==5)
-			grille[l+4][c] = new Bonbon(Sortes.VIDE);
-	}
-
-	public void viderCasesHorizontales(int l, int c, int n) {
-		grille[l][c] = new Bonbon(Sortes.VIDE);
-		grille[l][c+1] = new Bonbon(Sortes.VIDE);
-		grille[l][c+2] = new Bonbon(Sortes.VIDE);
-		if (n>=4)
-			grille[l][c+3] = new Bonbon(Sortes.VIDE);
-		if (n==5)
-			grille[l][c+4] = new Bonbon(Sortes.VIDE);
-	}
-
-	private int calculerLongueurSuite(int ligne, int colonne) {
-		int longueur = 1;
-		int l = ligne;
-		int c = colonne;
-		
-		Sortes sorteCourante = grille[l][c].getSorte();
-		c++;
-		while (c<grille[l].length)
-			if (grille[l][c].getSorte().equals(sorteCourante)) {
-				longueur++;
-				c++;
-			}
-			else
-				break;
-		
-		if (longueur>=3)
-			return longueur;
-		
-		longueur = 1;
-		c = colonne;
-		l++;
-		while (l<grille.length)
-			if (grille[l][c].getSorte().equals(sorteCourante)) {
-				longueur++;
-				l++;
-			}
-			else
-				break;
-		
-		return -longueur;
-	}
 
 	public void echanger(int ls, int cs, int lt, int ct) throws CandyException {
-		if ((lt<ls-1) || (lt>ls+1) || (ct<cs-1) || (ct>cs+1))
-			throw new CandyException("Impossible d'échanger avec un bonbon qui n'est pas situé dans le voisinnage direct");
+		verifierLegaliteEchange(ls, cs, lt, ct);
+		
 		Bonbon temp = grille[ls][cs];
 		grille[ls][cs] = grille[lt][ct];
 		grille[lt][ct] = temp;
+	}
+
+	private void eliminerToutesLesCombinaisons() {
+		Combinaison combo = DetecteurCombinaison.detecterCombinaison(this);
+		while (combo != null) {
+			combo.viderCombinaison(this);
+			eliminerCasesVides();
+			combo = DetecteurCombinaison.detecterCombinaison(this);
+		}
+	}
+	
+	public void incrementerDeplacements() {
+		nombreDeplacement++;
+	}
+	
+	public void comptabiliser(int nb) {
+		nombrePoints += nb;
+	}
+
+	private Sortes getSorteAleatoire() {
+		return Sortes.values()[(int)(Math.random()*4)+1];
+	}
+
+	private void verifierLegaliteEchange(int ls, int cs, int lt, int ct) throws CandyException {
+		if ((lt==ls) && ((ct>=cs-1) || (ct<=cs+1))) // pas plus d'une case sur la même ligne
+			return;
+		if ((ct==cs) && ((lt>=ls-1) || (lt<=ls+1))) // Pas plus d'une case sur la même colonne
+			return;
+		
+		// Dans tous les autres cas, c'est une exception
+		throw new CandyException("Impossible d'échanger avec un bonbon qui n'est pas situé dans le voisinnage direct");
 	}
 }

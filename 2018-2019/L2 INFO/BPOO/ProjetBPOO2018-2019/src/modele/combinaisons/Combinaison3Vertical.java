@@ -8,7 +8,7 @@ public class Combinaison3Vertical extends Combinaison {
 
 	public Combinaison3Vertical(Bonbon b, int l, int c) {
 		super(b, l, c);
-		// TODO Auto-generated constructor stub
+		setNombrePoints(30);
 	}
 
 	@Override
@@ -18,6 +18,8 @@ public class Combinaison3Vertical extends Combinaison {
 
 	@Override
 	public void viderCombinaison(Plateau p) {
+		comptabiliserNombrePoints(p);
+
 		p.setBonbon(new Bonbon(Sortes.VIDE), getLdepart(), getCdepart());
 		p.setBonbon(new Bonbon(Sortes.VIDE), getLdepart()+1, getCdepart());
 		p.setBonbon(new Bonbon(Sortes.VIDE), getLdepart()+2, getCdepart());
