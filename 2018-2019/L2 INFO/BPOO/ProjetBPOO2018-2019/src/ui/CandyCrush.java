@@ -58,6 +58,8 @@ public class CandyCrush extends Application {
 	private Label lDeplacement;
 	private Label lScore;
 	private Label lTemps;
+	
+	private	int h,m,s;
 
 	
 	private void rangerComboSpeciale(Combinaison combo, int l, int c) {
@@ -79,7 +81,8 @@ public class CandyCrush extends Application {
 			
 			scene = new Scene(root);
 			
-	        initTimeline();
+	        initTimelineJeu();
+	        initTimelineChrono();
 	        
 			primaryStage.setScene(scene);
 			primaryStage.show();
@@ -94,8 +97,35 @@ public class CandyCrush extends Application {
 		}
 	}
 
+	private void initTimelineChrono() {
+		KeyFrame k = new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>(){
+
+			   @Override
+			   public void handle(ActionEvent event) {
+				   s++;
+				   if (s==60) {
+					   m++;
+					   s = 0;
+					   if (m==60) {
+						   h++;
+						   m = 0;
+					   }
+				   }
+			    
+				   lTemps.setText(""+h+":"+m+":"+s);
+			   }
+			   
+		});
+		
+		
+		Timeline timeline = new Timeline(k);
+		timeline.setCycleCount(Animation.INDEFINITE);
+		timeline.play();
+	}
+
 	private void initBarreScore() {
 		GridPane p = new GridPane();
+		p.setHgap(5);
 		
 		Label l1 = new Label("Déplacements :");
 		p.add(l1, 0, 0);
@@ -148,7 +178,7 @@ public class CandyCrush extends Application {
 		//root.getChildren().add(grillePane); // Pour un autre type de Pane
 	}
 
-	private void initTimeline() {
+	private void initTimelineJeu() {
 		final KeyFrame eliminerCombo = new KeyFrame(Duration.seconds(0), new EventEliminerCombo());
 		final KeyFrame remplirCasesVides = new KeyFrame(Duration.seconds(TEMPS_AFFICHAGE_CASES_VIDES+TEMPS_REMPLISSAGE), new EventRemplirCasesVides());
 		timeline = new Timeline(eliminerCombo, remplirCasesVides);
@@ -214,20 +244,34 @@ public class CandyCrush extends Application {
 			if (comboSpeciale != null) {
 				comboSpeciale.viderCombinaison(plateau);
 				plateau.placerBonbon(comboSpeciale.getBonbonSpecial(), lBonbonSpecial, cBonbonSpecial);
-				dessinerGrille();		
+				dessinerGrille();
+
+				mettreAJourPanneauScore();
+
 				comboSpeciale = null;
+
 			}
 			else {
 				Combinaison combo = DetecteurCombinaison.detecterCombinaison(plateau);
 				if (combo != null) {
 					combo.viderCombinaison(plateau);
+					plateau.comptabiliser(combo.getNombrePoints());
 					dessinerGrille();
+					
+					mettreAJourPanneauScore();
 				}
 				else
 					timeline.pause();
 			}
 
 
+		}
+
+		private void mettreAJourPanneauScore() {
+			plateau.comptabiliser(comboSpeciale.getNombrePoints());
+			plateau.incrementerDeplacements();
+			lScore.setText(""+plateau.getNombrePoints());
+			lDeplacement.setText(""+plateau.getNombreDeplacement());
 		}
 	}
 
