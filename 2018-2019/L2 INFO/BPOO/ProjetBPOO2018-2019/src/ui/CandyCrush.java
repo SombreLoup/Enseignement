@@ -15,6 +15,8 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -34,7 +36,7 @@ public class CandyCrush extends Application {
 	private Image[] candies;
 	private Plateau plateau;
 	private Timeline timeline;
-	private VBox root;
+	private Pane root;
 	private Scene scene;
 	private int xd, yd, xf, yf;
 	private	GraphicsContext gc;
@@ -56,8 +58,9 @@ public class CandyCrush extends Application {
 			primaryStage.setTitle("Candy Crush");
 
 			initGrille(); // construction de grillePane
-			root = new VBox();
-			root.getChildren().add(grillePane);
+			
+			
+			initPaneAvecGrille();
 
 			scene = new Scene(root);
 			
@@ -71,6 +74,11 @@ public class CandyCrush extends Application {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private void initPaneAvecGrille() {
+		root = new BorderPane(grillePane);
+		//root.getChildren().add(grillePane); // Pour un autre type de Pane
 	}
 
 	private void initTimeline() {
