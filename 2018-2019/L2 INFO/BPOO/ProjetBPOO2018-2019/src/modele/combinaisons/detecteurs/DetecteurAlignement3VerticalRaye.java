@@ -1,9 +1,9 @@
 package modele.combinaisons.detecteurs;
 
 import modele.Bonbon;
-import modele.Plateau;
 import modele.combinaisons.Combinaison;
 import modele.combinaisons.Combinaison3VerticalRaye;
+import modele.plateau.Plateau;
 
 public class DetecteurAlignement3VerticalRaye extends DetecteurCombinaison {
 	

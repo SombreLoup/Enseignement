@@ -1,18 +1,24 @@
-package modele;
+package modele.plateau;
 
+
+import modele.Bonbon;
+import modele.CandyException;
+import modele.Sortes;
 import modele.combinaisons.Combinaison;
 import modele.combinaisons.detecteurs.DetecteurCombinaison;
 
 public class Plateau {
 
-	private	Bonbon [][]	grille = null;
+	protected	Bonbon [][]	grille = null;
 	private	int			nombreDeplacement = 0;
 	private int 		nombrePoints = 0;
+	private	int			secondesJouees = 0;
 	
 	
 	public Plateau(int largeur, int hauteur) {
 		grille = new Bonbon[hauteur][largeur];
 	}
+	
 	
 	public void initPlateauAleatoire() {
 		
@@ -44,6 +50,10 @@ public class Plateau {
 	public void placerBonbon(Bonbon bonbon, int l, int c) {
 		if (grille[l][c].getSorte() != Sortes.VIDE) 
 			return;
+		grille[l][c] = bonbon;
+	}	
+	
+	public void initialiserBonbon(Bonbon bonbon, int l, int c) {
 		grille[l][c] = bonbon;
 	}
 	
@@ -105,8 +115,35 @@ public class Plateau {
 			return;
 		if ((ct==cs) && ((lt>=ls-1) || (lt<=ls+1))) // Pas plus d'une case sur la même colonne
 			return;
+		if (grille[ls][cs].getSorte().equals(Sortes.MERINGUE) || grille[lt][ct].getSorte().equals(Sortes.MERINGUE))
+			throw new CandyException("Pas possible de bouger la meringue");
 		
 		// Dans tous les autres cas, c'est une exception
 		throw new CandyException("Impossible d'échanger avec un bonbon qui n'est pas situé dans le voisinnage direct");
+	}
+	
+	public boolean estTermine() {
+		// A redéfinir pour éviter un plateau interminable
+		return false;
+	}
+
+	public boolean objectifAtteint() {
+		// A redéfinir pour éviter un plateau interminable
+		return false;
+	}
+	
+	public String getDesciption() {
+		// A redéfinir pour personnaliser la description
+		return "Faire un max de points en jouant à l'infini !";
+	}
+
+
+	public int getSecondesJouees() {
+		return secondesJouees;
+	}
+
+
+	public void setSecondesJouees(int secondesJouees) {
+		this.secondesJouees = secondesJouees;
 	}
 }

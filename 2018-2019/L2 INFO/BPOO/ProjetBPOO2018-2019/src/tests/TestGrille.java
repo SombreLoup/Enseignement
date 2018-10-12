@@ -1,6 +1,6 @@
 package tests;
 
-import modele.Plateau;
+import modele.plateau.Plateau;
 
 public class TestGrille {
 	public static void main(String[] args) {

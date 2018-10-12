@@ -1,8 +1,8 @@
 package modele.combinaisons.detecteurs;
 
 import modele.Bonbon;
-import modele.Plateau;
 import modele.combinaisons.Combinaison;
+import modele.plateau.Plateau;
 
 public class DetecteurCombinaison {
 	

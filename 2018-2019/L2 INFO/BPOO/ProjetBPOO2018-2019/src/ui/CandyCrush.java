@@ -10,12 +10,12 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+
 import javafx.scene.image.Image;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
@@ -25,16 +25,21 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import modele.Bonbon;
 import modele.CandyException;
-import modele.Plateau;
+import modele.PartieCandyCrush;
 import modele.combinaisons.Combinaison;
-import modele.combinaisons.Combinaison3VerticalRaye;
 import modele.combinaisons.detecteurs.DetecteurCombinaison;
+import modele.plateau.Plateau;
+import modele.plateau.PlateauFactory;
+
+
 
 public class CandyCrush extends Application {
 
@@ -59,7 +64,17 @@ public class CandyCrush extends Application {
 	private Label lScore;
 	private Label lTemps;
 	
-	private	int h,m,s;
+	private	int secondesEcoulees = 0;;
+	private Label lResultat;
+	private Button bArreter;
+	private Button bContinuer;
+	private Timeline timelineChrono;
+	
+	private	int	numeroPlateauCourant=0;
+	private PartieCandyCrush partie;
+	private Label lDescription;
+	
+
 
 	
 	private void rangerComboSpeciale(Combinaison combo, int l, int c) {
@@ -102,62 +117,104 @@ public class CandyCrush extends Application {
 
 			   @Override
 			   public void handle(ActionEvent event) {
-				   s++;
-				   if (s==60) {
-					   m++;
-					   s = 0;
-					   if (m==60) {
-						   h++;
-						   m = 0;
-					   }
-				   }
+				   int s,m;
+				   secondesEcoulees++;
+				   
+				   plateau.setSecondesJouees(secondesEcoulees);
+				   
+				   m = secondesEcoulees / 60;
+				   s = secondesEcoulees % 60;
 			    
-				   lTemps.setText(""+h+":"+m+":"+s);
-			   }
-			   
+				   lTemps.setText(""+m+"m "+s+"s");
+			   }   
 		});
 		
 		
-		Timeline timeline = new Timeline(k);
-		timeline.setCycleCount(Animation.INDEFINITE);
-		timeline.play();
+		timelineChrono = new Timeline(k);
+		timelineChrono.setCycleCount(Animation.INDEFINITE);
+		timelineChrono.play();
 	}
 
 	private void initBarreScore() {
 		GridPane p = new GridPane();
 		p.setHgap(5);
 		
+		
+		
+		HBox hbox = new HBox();
+		lDescription = new Label(plateau.getDesciption());
+		lDescription.setTextFill(Color.web("#C24E36"));
+		lDescription.setFont(Font.font("Cambria", FontWeight.BOLD, 24));
+		hbox.getChildren().add(lDescription);
+		hbox.setAlignment(Pos.CENTER);
+		((BorderPane)root).setTop(hbox);
+		
+		p.add(new Label("    "), 0, 0);
+
+	
 		Label l1 = new Label("Déplacements :");
-		p.add(l1, 0, 0);
+		p.add(l1, 0, 1);
 		GridPane.setHalignment(l1, HPos.RIGHT);
 		
 		lDeplacement = new Label("0");
-		p.add(lDeplacement, 1, 0);
+		p.add(lDeplacement, 1, 1);
 
 		
 		Label l2 = new Label("Score :");
-		p.add(l2, 0, 1);
+		p.add(l2, 0, 2);
 		GridPane.setHalignment(l2, HPos.RIGHT);
 		
 		lScore = new Label("0");
-		p.add(lScore, 1, 1);
+		p.add(lScore, 1, 2);
 		
 		Label l3 = new Label("Temps :");
-		p.add(l3, 0, 2);
+		p.add(l3, 0, 3);
 		GridPane.setHalignment(l3, HPos.RIGHT);
 		
 		
 		lTemps = new Label("0:0:0");
-		p.add(lTemps, 1, 2);
+		p.add(lTemps, 1, 3);
 		
-		p.add(new Label(""), 0, 3);
+		p.add(new Label(""), 0, 4);
 		
-		Button bArreter = new Button("Arrêter");
-		p.add(bArreter, 0, 4);
+		bArreter = new Button("Arrêter");
+		p.add(bArreter, 0, 5);
 		GridPane.setHalignment(bArreter, HPos.RIGHT);
+		bArreter.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				scene.getWindow().hide();
+			}
+		});
 
-		Button bContinuer = new Button("Continuer");
-		p.add(bContinuer, 1, 4);
+		bContinuer = new Button("Continuer");
+		p.add(bContinuer, 1, 5);
+		bContinuer.setDisable(true);
+		bContinuer.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				if (numeroPlateauCourant<partie.size()) {
+					numeroPlateauCourant++;
+					
+					plateau = partie.get(numeroPlateauCourant);
+					lDescription.setText(plateau.getDesciption());
+					lMessage.setText("  ");
+					secondesEcoulees=0;
+					
+					grillePane.setOnDragDetected(new DragDetectedEvent());
+					timelineChrono.play();
+					
+					dessinerGrille();
+				}
+				else {
+					lMessage.setText("La partie est finie !");
+				}	
+				bContinuer.setDisable(true);
+			}
+		});
+		
+		lResultat = new Label("    ");
+		p.add(lResultat, 0, 6);
 		
 		
 		((BorderPane)root).setLeft(p);
@@ -196,8 +253,22 @@ public class CandyCrush extends Application {
 		grillePane.setOnDragOver(new DragOverEvent());
 		grillePane.setOnDragDropped(new DragDroppedEvent());
 
-		plateau = new Plateau(10, 10);
-		plateau.initPlateauAleatoire();
+//		plateau = new PlateauNombreDeplacementsLimite(10, 10, 10);
+//		plateau.initPlateauAleatoire();
+		try {
+			partie = new PartieCandyCrush();
+			partie.add(PlateauFactory.chargerPlateau("plateaux/plateau2.csv"));
+			partie.add(PlateauFactory.chargerPlateau("plateaux/plateau3.csv"));
+			partie.add(PlateauFactory.chargerPlateau("plateaux/plateau4.csv"));
+			
+			
+			plateau = partie.get(numeroPlateauCourant);
+		} catch (CandyException e) {
+			if (lMessage != null)
+				lMessage.setText(e.getMessage());
+			else
+				e.printStackTrace();
+		}
 
 		dessinerGrille();
 	}
@@ -245,8 +316,8 @@ public class CandyCrush extends Application {
 				comboSpeciale.viderCombinaison(plateau);
 				plateau.placerBonbon(comboSpeciale.getBonbonSpecial(), lBonbonSpecial, cBonbonSpecial);
 				dessinerGrille();
-
-				mettreAJourPanneauScore();
+				plateau.incrementerDeplacements();
+				mettreAJourPanneauScore(comboSpeciale);
 
 				comboSpeciale = null;
 
@@ -258,7 +329,7 @@ public class CandyCrush extends Application {
 					plateau.comptabiliser(combo.getNombrePoints());
 					dessinerGrille();
 					
-					mettreAJourPanneauScore();
+					mettreAJourPanneauScore(combo);
 				}
 				else
 					timeline.pause();
@@ -267,11 +338,23 @@ public class CandyCrush extends Application {
 
 		}
 
-		private void mettreAJourPanneauScore() {
-			plateau.comptabiliser(comboSpeciale.getNombrePoints());
-			plateau.incrementerDeplacements();
+		private void mettreAJourPanneauScore(Combinaison combo) {
+			plateau.comptabiliser(combo.getNombrePoints());
 			lScore.setText(""+plateau.getNombrePoints());
 			lDeplacement.setText(""+plateau.getNombreDeplacement());
+			
+			if (plateau.estTermine()) {
+				grillePane.setOnDragDetected(null);
+				timelineChrono.pause();
+				
+				if (plateau.objectifAtteint()) {
+					lMessage.setText("Plateau terminé avec succès !");
+					bContinuer.setDisable(false);
+				}
+				else {
+					lMessage.setText("Plateau échoué !");					
+				}
+			}
 		}
 	}
 

@@ -1,7 +1,7 @@
 package modele.combinaisons;
 
 import modele.Bonbon;
-import modele.Plateau;
+import modele.plateau.Plateau;
 
 public abstract class Combinaison {
 	private	int	ldepart;

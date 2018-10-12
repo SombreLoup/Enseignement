@@ -1,8 +1,8 @@
 package modele.combinaisons;
 
 import modele.Bonbon;
-import modele.Plateau;
 import modele.Sortes;
+import modele.plateau.Plateau;
 
 public class Combinaison4Vertical extends Combinaison {
 
