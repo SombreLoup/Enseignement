@@ -7,7 +7,8 @@ import modele.plateau.Plateau;
 public class PartieCandyCrush {
 	
 	private	ArrayList<Plateau>	listePlateaux = new ArrayList<>();
-	public 	int					score;
+	public 	int					score = 0;
+	public	int					numeroPlateauCourant = 0;
 	
 	public PartieCandyCrush() {
 	}
@@ -31,6 +32,20 @@ public class PartieCandyCrush {
 	public boolean add(Plateau e) {
 		return listePlateaux.add(e);
 	}
+
+	public int getNumeroPlateauCourant() {
+		return numeroPlateauCourant;
+	}
+
+	public void setNumeroPlateauCourant(int numeroPlateauCourant) {
+		this.numeroPlateauCourant = numeroPlateauCourant;
+	}
 	
+	public Plateau getPlateauCourant() {
+		return listePlateaux.get(numeroPlateauCourant);
+	}
 	
+	public void changerPlateau() {
+		numeroPlateauCourant++;
+	}
 }
