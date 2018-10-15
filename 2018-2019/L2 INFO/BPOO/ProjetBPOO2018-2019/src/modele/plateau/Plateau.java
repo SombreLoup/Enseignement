@@ -111,12 +111,12 @@ public class Plateau {
 	}
 
 	private void verifierLegaliteEchange(int ls, int cs, int lt, int ct) throws CandyException {
+		if (grille[ls][cs].getSorte().equals(Sortes.MERINGUE) || grille[lt][ct].getSorte().equals(Sortes.MERINGUE))
+			throw new CandyException("Pas possible de bouger la meringue");
 		if ((lt==ls) && ((ct>=cs-1) || (ct<=cs+1))) // pas plus d'une case sur la même ligne
 			return;
 		if ((ct==cs) && ((lt>=ls-1) || (lt<=ls+1))) // Pas plus d'une case sur la même colonne
 			return;
-		if (grille[ls][cs].getSorte().equals(Sortes.MERINGUE) || grille[lt][ct].getSorte().equals(Sortes.MERINGUE))
-			throw new CandyException("Pas possible de bouger la meringue");
 		
 		// Dans tous les autres cas, c'est une exception
 		throw new CandyException("Impossible d'échanger avec un bonbon qui n'est pas situé dans le voisinnage direct");
