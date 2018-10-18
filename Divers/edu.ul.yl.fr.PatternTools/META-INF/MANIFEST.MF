@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: PluginPattern
-Bundle-SymbolicName: PluginPattern;singleton:=true
+Bundle-Name: PatternTools
+Bundle-SymbolicName: edu.ul.yl.fr.PatternTools;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Require-Bundle: org.eclipse.core.resources,
   org.eclipse.ui,
   org.eclipse.ui.ide,
   org.eclipse.core.runtime
-Automatic-Module-Name: PluginPattern
+Automatic-Module-Name: edu.ul.yl.fr.PatternTools
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

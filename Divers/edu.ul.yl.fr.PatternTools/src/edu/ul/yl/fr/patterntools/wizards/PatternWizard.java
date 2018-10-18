@@ -1,4 +1,4 @@
-package pluginpattern.wizards;
+package edu.ul.yl.fr.patterntools.wizards;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
@@ -26,14 +26,14 @@ import org.eclipse.ui.*;
  * same extension, it will be able to open it.
  */
 
-public class PatternClasseWizard extends Wizard implements INewWizard {
-	private PatternClasseWizardPage page;
+public class PatternWizard extends Wizard implements INewWizard {
+	private PatternWizardPage page;
 	private ISelection selection;
 
 	/**
 	 * Constructor for PatternClasseWizard.
 	 */
-	public PatternClasseWizard() {
+	public PatternWizard() {
 		super();
 		setNeedsProgressMonitor(true);
 	}
@@ -43,7 +43,7 @@ public class PatternClasseWizard extends Wizard implements INewWizard {
 	 */
 	@Override
 	public void addPages() {
-		page = new PatternClasseWizardPage(selection);
+		page = new PatternWizardPage(selection);
 		addPage(page);
 	}
 

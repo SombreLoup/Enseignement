@@ -1,4 +1,4 @@
-package pluginpattern.wizards;
+package edu.ul.yl.fr.patterntools.wizards;
 
 
 import java.io.File;
@@ -8,6 +8,7 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.WizardPage;
@@ -20,6 +21,7 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
@@ -46,13 +48,13 @@ import model.Classe;
  * OR with the extension that matches the expected one (java).
  */
 
-public class PatternClasseWizardPage extends WizardPage {
+public class PatternWizardPage extends WizardPage {
 
 	private static final String DESCRIPTION_PAGE = "Cet assistant vous facilite la création d'une classe en générant automatiquement les fonctions appartenant au modèle standard CPOOA";
 	final public static Device device = Display.getCurrent();
 	final public static Color pourpre = new Color(device, 127, 0, 85);
 	final public static Color bleu = new Color(device, 0, 0, 192);
-	final public static Font fontGras = new Font(device, "Menlo", 12, SWT.BOLD);
+	private static Font fontGras = null;
 	
 	private Classe classe = new Classe("MaClasse");
 	private ToolItem btnAjouter;
@@ -75,13 +77,23 @@ public class PatternClasseWizardPage extends WizardPage {
 	private Composite compositePage;
 	private Text tNomClass;
 	private Composite compositePrincipal;
+	
+	private final static Font getFontGras(Composite parent) {
+	      if (fontGras == null) {
+	    	  fontGras = JFaceResources.getDefaultFont();
+	         FontData fdata = fontGras.getFontData()[0];
+	         fdata.setStyle(SWT.BOLD);
+	         fontGras = new Font(parent.getDisplay(), fdata);
+	      }
+	      return fontGras;
+	   }
 
 	/**
 	 * Constructor for SampleNewWizardPage.
 	 * 
 	 * @param pageName
 	 */
-	public PatternClasseWizardPage(ISelection selection) {
+	public PatternWizardPage(ISelection selection) {
 		super("wizardPage");
 		setTitle("Création d'une nouvelle classe");
 		setDescription(DESCRIPTION_PAGE);
@@ -136,7 +148,7 @@ public class PatternClasseWizardPage extends WizardPage {
 		btnAjouter = new ToolItem(toolbar, SWT.PUSH);
 		
 		String path = this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
-		Image imageBtnAjouter = new Image(compositeDroit.getDisplay(), path+"icones/plus-icon32.png");
+		Image imageBtnAjouter = new Image(compositeDroit.getDisplay(), this.getClass().getClassLoader().getResourceAsStream("icons/plus-icon32.png"));
 		btnAjouter.setImage(imageBtnAjouter);
 		btnAjouter.setToolTipText("Ajouter le champ");
 
@@ -167,7 +179,7 @@ public class PatternClasseWizardPage extends WizardPage {
 		
 		Label lVisibiliteChamp = new Label(compositeGauche, SWT.NONE);
 		lVisibiliteChamp.setText(champ.getVisibilite());
-		lVisibiliteChamp.setFont(fontGras);
+		lVisibiliteChamp.setFont(getFontGras(compositeGauche));
 		lVisibiliteChamp.setForeground(pourpre);
 	
 		Label lTypeChamp = new Label(compositeGauche, SWT.NONE);
@@ -188,12 +200,12 @@ public class PatternClasseWizardPage extends WizardPage {
 		compositeDroit.setLayout(rowLayout);
 		
 		ToolBar toolbar = new ToolBar(compositeDroit, SWT.FLAT | SWT.WRAP | SWT.RIGHT);		 
-		String pathIcones = this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+		String pathicons = this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
 
 		
 		
 		btnMoins = new ToolItem(toolbar, SWT.PUSH);
-		Image imageBtnMoins = new Image(compositeDroit.getDisplay(), pathIcones+"icones/minus-icon32.png");
+		Image imageBtnMoins = new Image(compositeDroit.getDisplay(), this.getClass().getClassLoader().getResourceAsStream("/icons/minus-icon32.png"));
 		btnMoins.setData(champ.getNom());
 		btnMoins.setImage(imageBtnMoins);		    
 		btnMoins.addSelectionListener(listenerBoutons);
@@ -201,7 +213,7 @@ public class PatternClasseWizardPage extends WizardPage {
 		
 		if (! champ.getType().equals("ArrayList")) {
 			btnCons = new ToolItem(toolbar, SWT.CHECK);
-			Image imageBtnCons = new Image(compositeDroit.getDisplay(), pathIcones+"icones/hash-icon32.png");
+			Image imageBtnCons = new Image(compositeDroit.getDisplay(), this.getClass().getClassLoader().getResourceAsStream("/icons/hash-icon32.png"));
 			btnCons.setData(champ.getNom());
 			btnCons.setImage(imageBtnCons);		    
 			btnCons.setSelection(champ.isConstruction());
@@ -212,7 +224,7 @@ public class PatternClasseWizardPage extends WizardPage {
 		
 
 		btnGetter = new ToolItem(toolbar, SWT.CHECK);
-		Image imageBtnGet = new Image(compositeDroit.getDisplay(), pathIcones+"icones/letter-uppercase-G-icon32.png");
+		Image imageBtnGet = new Image(compositeDroit.getDisplay(), this.getClass().getClassLoader().getResourceAsStream("/icons/letter-uppercase-G-icon32.png"));
 		btnGetter.setData(champ.getNom());
 		btnGetter.setImage(imageBtnGet);		    
 		btnGetter.setSelection(champ.isGetter());
@@ -221,7 +233,7 @@ public class PatternClasseWizardPage extends WizardPage {
 
 		if (! champ.getType().equals("ArrayList")) {
 			btnSetter = new ToolItem(toolbar, SWT.CHECK);
-			Image imageBtnSet = new Image(compositeDroit.getDisplay(), pathIcones+"icones/letter-uppercase-S-icon32.png");
+			Image imageBtnSet = new Image(compositeDroit.getDisplay(), this.getClass().getClassLoader().getResourceAsStream("/icons/letter-uppercase-S-icon32.png"));
 			btnSetter.setData(champ.getNom());
 			btnSetter.setImage(imageBtnSet);		    
 			btnSetter.setSelection(champ.isSetter());
@@ -230,7 +242,7 @@ public class PatternClasseWizardPage extends WizardPage {
 		}
 
 		btnEquals = new ToolItem(toolbar, SWT.CHECK);
-		Image imageBtnEquals = new Image(compositeDroit.getDisplay(), pathIcones+"icones/equal-icon32.png");
+		Image imageBtnEquals = new Image(compositeDroit.getDisplay(), this.getClass().getClassLoader().getResourceAsStream("/icons/equal-icon32.png"));
 		btnEquals.setData(champ.getNom());
 		btnEquals.setImage(imageBtnEquals);		    
 		btnEquals.setSelection(champ.isEgalite());
@@ -238,7 +250,7 @@ public class PatternClasseWizardPage extends WizardPage {
 		btnEquals.setToolTipText("Active/désactive le champ dans la fonction equals()");
 
 		btnToString = new ToolItem(toolbar, SWT.CHECK);
-		Image imageBtnToString = new Image(compositeDroit.getDisplay(), pathIcones+"icones/at-icon32.png");
+		Image imageBtnToString = new Image(compositeDroit.getDisplay(), this.getClass().getClassLoader().getResourceAsStream("/icons/at-icon32.png"));
 		btnToString.setData(champ.getNom());
 		btnToString.setImage(imageBtnToString);		    
 		btnToString.setSelection(champ.isAffichage());
@@ -276,7 +288,7 @@ public class PatternClasseWizardPage extends WizardPage {
 		Label lClass = new Label(compositeNom, SWT.NONE);
 		lClass.setText("class ");
 
-		lClass.setFont(fontGras);
+		lClass.setFont(getFontGras(compositeNom));
 		lClass.setForeground(pourpre);
 	}
 
@@ -417,10 +429,8 @@ public class PatternClasseWizardPage extends WizardPage {
 				chemin = "";
 
 				String sElement = firstElement.toString();
-				System.out.println("Element = "+sElement);
 				String delimiteurs = "\\[in";
 				String[] elements = sElement.split(delimiteurs);
-				System.out.println("Il y a "+elements.length+" éléments : ");
 				
 				if (elements.length <=2) {
 					setDescription("L'élément sélectionné n'est pas un package");
@@ -432,12 +442,10 @@ public class PatternClasseWizardPage extends WizardPage {
 				for (int i = 0; i < elements.length; i++) {
 					elements[i] = elements[i].replaceAll("\\]", " ").trim();
 					elements[i] = elements[i].split(" ")[0];
-					System.out.println("Element["+i+"]="+elements[i]);
 				}
 				
 				chemin = elements[2]+"/"+elements[1];
 				
-				System.out.println("Nom du projet : "+elements[elements.length-1]);
 				IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 				IProject projet = root.getProject(elements[elements.length-1]);
 				if (projet == null)
@@ -455,8 +463,6 @@ public class PatternClasseWizardPage extends WizardPage {
 						chemin += "/"+paquets[i];
 					}
 				}
-				
-				System.out.println("Chemin final : "+chemin);
 				
 				return chemin;
 			}

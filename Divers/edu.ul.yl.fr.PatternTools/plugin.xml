@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="Java"
+            id="org.eclipse.jdt.ui.java">
+      </category>
+      <wizard
+            id="edu.ul.yl.fr.patterntools.wizards.PatternWizard"
+            name="Class CPOOA"
+            icon="icons/sample.png"
+            class="edu.ul.yl.fr.patterntools.wizards.PatternWizard"
+            category="org.eclipse.jdt.ui.java">
+      </wizard>
+   </extension>
+
+</plugin>
