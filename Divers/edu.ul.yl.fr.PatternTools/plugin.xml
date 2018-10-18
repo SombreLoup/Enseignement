@@ -11,10 +11,17 @@
       <wizard
             id="edu.ul.yl.fr.patterntools.wizards.PatternWizard"
             name="Class CPOOA"
-            icon="icons/sample.png"
+            icon="icons/Sample.png"
             class="edu.ul.yl.fr.patterntools.wizards.PatternWizard"
             category="org.eclipse.jdt.ui.java">
       </wizard>
    </extension>
+   
+   <extension point="org.eclipse.ui.perspectiveExtensions"> 
+    <perspectiveExtension 
+        targetID="org.eclipse.jdt.ui.JavaPerspective"> 
+        <newWizardShortcut id="edu.ul.yl.fr.patterntools.wizards.PatternWizard"/> 
+    </perspectiveExtension> 
+</extension> 
 
 </plugin>
